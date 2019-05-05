@@ -8,7 +8,7 @@
             <div class="layui-card-header">{{ __('Verify Your Email Address') }}</div>
             <div class="layui-card-body">
                 @if (session('resent'))
-                <blockquote class="layui-elem-quote">
+                <blockquote class="alert alert-success">
                     {{ __('A fresh verification link has been sent to your email address.') }}
                 </blockquote>
                 @endif
