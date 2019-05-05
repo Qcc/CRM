@@ -2,5 +2,6 @@
 @section('title', '首页')
 
 @section('content')
-  <h1>这里是首页</h1>
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">内容主体区域</div>
 @stop

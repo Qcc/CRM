@@ -1,25 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-static-top">
-    <div class="container">
-      <!-- Branding Image -->
-      <a class="navbar-brand " href="{{ url('/') }}">
-        LaraBBS
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left Side Of Navbar -->
-        <ul class="navbar-nav mr-auto">
-  
-        </ul>
-  
-        <!-- Right Side Of Navbar -->
-        <ul class="navbar-nav navbar-right">
-          <!-- Authentication Links -->
-          <li class="nav-item"><a class="nav-link" href="#">登录</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">注册</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<div class="layui-header">
+    <div class="layui-logo">沟通科技商机管理</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="">公海目标</a></li>
+      <li class="layui-nav-item"><a href="">今日任务</a></li>
+      <li class="layui-nav-item"><a href="">客户跟进</a></li>
+      <li class="layui-nav-item"><a href="">我的客户</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          kevin
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">修改密码</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">注销</a></li>
+    </ul>
+</div>
