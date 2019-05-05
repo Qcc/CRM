@@ -19,9 +19,14 @@
 
 <body class="layui-layout-body">
   <div id="app" class="{{ route_class() }}-page layui-layout layui-layout-admin">
-    @include('layouts._header')
-    @include('layouts._side')
-    <div class="layui-body">
+      @include('layouts._header')
+      @auth
+          @include('layouts._side')
+          <div class="layui-body">
+      @endauth
+      @guest
+          <div class="layui-body" style="left:0">
+      @endguest
       @include('shared._messages')
       @yield('content')
     </div>

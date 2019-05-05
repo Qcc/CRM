@@ -1,0 +1,43 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="layadmin-user-login-main">
+                <div class="layadmin-user-login-box layadmin-user-login-header">
+                        <h2>{{ __('Reset Password') }}</h2>
+                        <p>验证邮箱后会发送修改密码链接到邮箱</p>
+                      </div>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" class="layadmin-user-login-box layadmin-user-login-body" action="{{ route('password.email') }}">
+                        @csrf
+
+                        <div class="layui-form-item">
+                            <label for="email" class="layadmin-user-login-icon layui-icon layui-icon-username"></label>
+                                <input type="text" name="email" id="LAY-user-login-username" value="{{ old('email') }}" lay-verify="required"  placeholder="{{ __('E-Mail Address') }}" class="layui-input{{ $errors->has('email') ? ' layui-form-danger' : '' }}">
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+
+                        <div class="layui-form-item">
+                                <button type="submit" class="layui-btn layui-btn-fluid">
+                                    {{ __('Send Password Reset Link') }}
+                                </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@section('title', '首页')
 
 @section('content')
 <div class="layadmin-user-login-main">
@@ -37,4 +36,4 @@
           <div><span><a href="{{ route('register') }}">还没有帐号，点击注册。</a></span></div>
         </form>
       </div>
-@stop
+@endsection
