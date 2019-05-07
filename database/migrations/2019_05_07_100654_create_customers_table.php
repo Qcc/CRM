@@ -15,6 +15,14 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->default(0)->index();
+            $table->integer('company_id')->unsigned()->default(0)->index();
+            $table->string('contact')->comment('关键联系人');
+            $table->string('phone')->comment('电话');
+            $table->string('product')->comment('成交产品');
+            $table->string('contract')->comment('合同');
+            $table->date('expired')->comment('售后到期');
+            $table->integer('money')->comment('成交金额');
             $table->timestamps();
         });
     }
