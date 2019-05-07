@@ -99,7 +99,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 // require('./bootstrap');
-layui.use('element', function () {
+layui.use(['element', 'form', 'table'], function () {
   var element = layui.element;
 });
 

@@ -20,19 +20,10 @@
 <body class="layui-layout-body">
   <div id="app" class="{{ route_class() }}-page layui-layout layui-layout-admin">
       @include('layouts._header')
-      @auth
-          @include('layouts._side')
-          <div class="layui-body">
-      @endauth
-      @guest
-          <div class="layui-body" style="left:0">
-      @endguest
       @include('shared._messages')
       @yield('content')
-    </div>
-    @include('layouts._footer')
+      @include('layouts._footer')
   </div>
-
   <!-- Scripts -->
   <script src="/layui/layui.js"></script>
   <script src="{{ mix('js/app.js') }}"></script>

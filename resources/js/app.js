@@ -7,7 +7,7 @@
 
 // require('./bootstrap');
 
-layui.use('element', function(){
+layui.use(['element','form','table'], function(){
     var element = layui.element;
     
   });
