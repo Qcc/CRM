@@ -35,3 +35,5 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 
 //目标客户
 Route::get('target/secrch', 'TargetsController@secrch')->name('target.secrch');
+Route::get('target/show', 'TargetsController@show')->name('target.show');
+Route::post('target/store', 'TargetsController@store')->name('target.store');

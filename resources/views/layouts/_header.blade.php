@@ -7,6 +7,7 @@
       <li class="layui-nav-item"><a href="">今日任务</a></li>
       <li class="layui-nav-item"><a href="">客户跟进</a></li>
       <li class="layui-nav-item"><a href="">我的客户</a></li>
+      <li class="layui-nav-item"><a href="{{ route('target.show') }}">资料上传</a></li>
     </ul>
     @endauth
     <ul class="layui-nav layui-layout-right">

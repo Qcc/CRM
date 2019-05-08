@@ -4,7 +4,7 @@
 @section('content')
   <div class="layui-row">
     <div class="layui-col-xs10 layui-col-xs-offset1">
-      <div class="grid-demo grid-demo-bg1">
+      <!-- <div class="grid-demo grid-demo-bg1"> -->
           <form class="layui-form" action="">
               <div class="layui-form-item">
                 <label class="layui-form-label">关键字查询</label>
@@ -128,11 +128,22 @@
                       <td>有限责任公司</td>
                       <td>房地产开发（在合法取得土地使用权的范围内进行房地产开发），投资市场营销策划、销售代理、装修设计、房地产经纪服务、物业租售信息服务、物业管理；网络科技研发设计；广告设计与策划；装饰材料、五金材料的销售；国内贸易。(法律、行政法规、国务院决定规定在登记前须经批准的项目除外）^室内外装修工程、园林绿化工程的...</td>
                     </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>深圳市瑞房网络有限公司</td>
+                      <td>王林波</td>
+                      <td>100万人民币</td>
+                      <td>2016-10-13</td>
+                      <td>广东省</td>
+                      <td>深圳市</td>
+                      <td>有限责任公司</td>
+                      <td>房地产开发（在合法取得土地使用权的范围内进行房地产开发），投资市场营销策划、销售代理、装修设计、房地产经纪服务、物业租售信息服务、物业管理；网络科技研发设计；广告设计与策划；装饰材料、五金材料的销售；国内贸易。(法律、行政法规、国务院决定规定在登记前须经批准的项目除外）^室内外装修工程、园林绿化工程的...</td>
+                    </tr>
                     
                   </tbody>
                 </table>
               
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 @stop

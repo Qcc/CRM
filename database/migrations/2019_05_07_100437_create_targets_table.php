@@ -17,14 +17,14 @@ class CreateTargetsTable extends Migration
             $table->increments('id');
             $table->string('company')->unique()->index()->comment('公司名称');
             $table->string('boss')->comment('法定代表人');
-            $table->integer('money')->comment('注册资本');
-            $table->string('moneyType')->comment('资本类型');
+            $table->integer('money')->nullable()->comment('注册资本');
+            $table->string('moneyType')->nullable()->comment('资本类型');
             $table->date('registration')->comment('成立日期');
             $table->string('status')->comment('经营状态');
             $table->string('province')->comment('所属省份');
             $table->string('city')->nullable()->comment('所属市区');
             $table->string('area')->nullable()->comment('所属区县');
-            $table->string('type')->comment('公司类型');
+            $table->string('type')->nullable()->comment('公司类型');
             $table->string('socialCode')->unique()->comment('统一社会信用代码');
             $table->string('phone')->nullable()->comment('企业公示的联系电话');
             $table->string('morePhone')->nullable()->comment('企业公示的联系电话（更多号码）');

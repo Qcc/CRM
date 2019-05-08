@@ -20,8 +20,10 @@
 <body class="layui-layout-body">
   <div id="app" class="{{ route_class() }}-page layui-layout layui-layout-admin">
       @include('layouts._header')
-      @include('shared._messages')
-      @yield('content')
+      <div class="layui-body">
+        @include('shared._messages')
+        @yield('content')
+      </div>
       @include('layouts._footer')
   </div>
   <!-- Scripts -->
