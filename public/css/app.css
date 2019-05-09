@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 .layadmin-user-login-main {
   width: 375px;
   margin: 0 auto;
@@ -95,5 +97,44 @@
   left: 0px;
   margin: 0px auto;
   padding: 30px 0;
+}
+
+/* 分页 */
+
+.pagination-box {
+  position: relative;
+  width: 100%;
+  height: 32px;
+}
+
+.pagination-box .pagination {
+  float: right;
+}
+
+.pagination-box .pagination .active span {
+  color: #03A9F4;
+  padding: 0 10px;
+}
+
+.pagination-box .pagination .disabled span {
+  padding: 0 10px;
+}
+
+.pagination-box .pagination li {
+  float: left;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  height: 30px;
+  border: 1px solid #e2e2e2;
+}
+
+.pagination-box .pagination li a {
+  padding: 0 10px;
+}
+
+.pagination-box .pagination li a:hover {
+  padding: 0 10px;
+  color: #03A9F4;
 }
 

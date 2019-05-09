@@ -9,6 +9,8 @@ use App\Models\Target;
 use App\Models\Log as LLog;
 use Illuminate\Support\Facades\Log;
 use Auth;
+use Carbon\Carbon;
+
 class TargetsController extends Controller
 {
     /**
@@ -16,9 +18,51 @@ class TargetsController extends Controller
      *
      * @return void
      */
-    public function secrch()
+    public function secrch(Request $request,Target $target)
     {
-        return view('pages.target');
+        // 关键字查询
+        $targets = Target::when($request->key, function ($query) use ($request) {
+            return $query->where('company','like', '%'.$request->key.'%')
+                         ->orwhere('businessScope','like', '%'.$request->key.'%');
+            })
+            // 所属行业
+            ->when($request->businessScope, function ($query) use ($request) {
+                $businessScope = explode("-",$request->businessScope);
+                return $query->when($businessScope[0], function ($query) use ($businessScope) {
+                        return $query->orwhere('businessScope','like', '%'.$businessScope[0].'%');
+                    })->when(isset($businessScope[1]), function ($query) use ($businessScope) {
+                        return $query->orwhere('businessScope','like', '%'.$businessScope[1].'%');
+                    })->when(isset($businessScope[2]), function ($query) use ($businessScope) {
+                        return $query->orwhere('businessScope','like', '%'.$businessScope[2].'%');
+                    })->when(isset($businessScope[3]), function ($query) use ($businessScope) {
+                        return $query->orwhere('businessScope','like', '%'.$businessScope[3].'%');
+                    })->when(isset($businessScope[4]), function ($query) use ($businessScope) {
+                        return $query->orwhere('businessScope','like', '%'.$businessScope[4].'%');
+                    });
+            })
+            // 注册资金查询
+            ->when($request->money, function ($query) use ($request) {
+                $money = explode("-",$request->money);
+                return $query->whereBetween('money',[$money[0], $money[1]]);
+            })
+            // 跟进记录
+            ->when($request->contacted, function ($query) use ($request) {
+                return $query->where('contacted',$request->contacted == "on" ? true:false);
+            })
+            // 所属城市
+            ->when($request->city, function ($query) use ($request) {
+                return $query->where('city',$request->city);
+            })
+            // 成立日期查询
+            ->when($request->registration, function ($query) use ($request) {
+                $registration = explode("-",$request->registration);
+                $year1 = Carbon::parse("-".($registration[0]*365)." days")->toDateString();
+                $year2 = Carbon::parse("-".($registration[1]*365)." days")->toDateString();
+                return $query->whereBetween('registration',[$year2, $year1]);
+            })->select(['id','company','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
+            'address','webAddress','businessScope','follow','contacted',
+            ])->paginate(100);
+        return view('pages.target.secrch',compact('targets'));
     }
     /**
      * 显示批量上传客户资料
@@ -27,7 +71,7 @@ class TargetsController extends Controller
      */
     public function show()
     {
-        return view('pages.create');
+        return view('pages.target.show');
     }
     /**
      * 批量上传客户资料保存
@@ -44,6 +88,7 @@ class TargetsController extends Controller
         // 判断是否有文件上传，并赋值给$file
 		if($file = $request->file){
             ini_set('memory_limit', -1);
+            set_time_limit(0);
             $reader = ReaderFactory::create(Type::XLSX);
             $reader->setShouldFormatDates(true);
             $reader->open($file);
@@ -54,9 +99,7 @@ class TargetsController extends Controller
                         break;
                     }
                     if($index != 1){
-                        Log::info($row);
                         $money = explode('万',$row[2]);
-                        Log::info($money);
                         try {
                             $target = Target::updateOrCreate(
                                 ['company' => $row[0], 'socialCode' => $row[9]],
@@ -83,6 +126,10 @@ class TargetsController extends Controller
                     }
                 }
             }
+            $data = [
+                'code' => 0,
+                'msg' => '上传成功'
+            ];
             $user = Auth::user();
             LLog::write($user->name."(".$user->email.")"." 导入了".$count."条公司信息");
         }

@@ -14,6 +14,18 @@ layui.use(['element','form','table','upload'], function(){
     var form = layui.form;
     var table = layui.table;
     
+    // 目标客户搜索页面
+    if($(".target-secrch-page").length === 1){
+      table.init('targets-table', { //转化静态表格
+        toolbar: '#toolbarTarget',
+        defaultToolbar: ['filter'],
+        limit:100,
+      });
+    }
+
+    // 资料上传页面
+    if($(".target-show-page").length === 1){
+
     //多文件列表示例
   var demoListView = $('#demoList')
   ,uploadListIns = upload.render({
@@ -71,5 +83,8 @@ layui.use(['element','form','table','upload'], function(){
       tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
       tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
     }
+    });
+  }
+
   });
-  });
+
