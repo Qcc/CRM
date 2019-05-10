@@ -4,7 +4,7 @@
 @section('content')
   <div class="layui-row">
     <div class="layui-col-xs10 layui-col-xs-offset1">
-          <form class="layui-form" action="{{ route('target.secrch') }}">
+          <form class="layui-form" method="GET" lay-filter="secrchTarget" action="{{ route('target.secrch') }}">
               <div class="layui-form-item">
                 <div class="layui-row">
                   <div class="layui-col-xs8">
@@ -97,10 +97,18 @@
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                         <th lay-data="{field:'company', width:200}">公司</th>
-                        <th lay-data="{field:'contacted', width:86, hide:true}">跟进记录</th>
-                        <th lay-data="{field:'follow', width:86, hide:true}">状态</th>
+                        <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'有':'无'} }">跟进记录</th>
+                        <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
+                          if(d.follow == 'target'){
+                            return '无';
+                          }else if(d.follow == 'follow'){
+                            return '跟进中';
+                          }else{
+                            return '已成交';
+                          }
+                          return d.contacted==1?'有':'无'}}">状态</th>
                         <th lay-data="{field:'boss', width:80}">法人</th>
-                        <th lay-data="{field:'money', width:86}">注册资金</th>
+                        <th lay-data="{field:'money', width:86,templet: function(d){return d.money+'万'} }">注册资金</th>
                         <th lay-data="{field:'moneyType', width:86,hide:true}">资本类型</th>
                         <th lay-data="{field:'registration', width:105}">成立日期</th>
                         <th lay-data="{field:'status', width:86, hide:true}">经营状态</th>

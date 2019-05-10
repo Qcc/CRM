@@ -104,13 +104,7 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
   var element = layui.element;
   var upload = layui.upload;
   var form = layui.form;
-  var table = layui.table;
-  var laytpl = layui.laytpl; // 重新定义模版分隔符
-  // laytpl.config({
-  //   open: '<%',
-  //   close: '%>'
-  // });
-  //  cookie操作
+  var table = layui.table; //  cookie操作
 
   var cookie = {
     set: function set(key, val, time) {
