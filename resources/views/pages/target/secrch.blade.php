@@ -4,7 +4,7 @@
 @section('content')
   <div class="layui-row">
     <div class="layui-col-xs10 layui-col-xs-offset1">
-          <form class="layui-form" action="">
+          <form class="layui-form" action="{{ route('target.secrch') }}">
               <div class="layui-form-item">
                 <div class="layui-row">
                   <div class="layui-col-xs8">

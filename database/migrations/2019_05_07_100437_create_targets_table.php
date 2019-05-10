@@ -33,7 +33,7 @@ class CreateTargetsTable extends Migration
             $table->string('email')->nullable()->comment('企业公示的邮箱');
             $table->string('businessScope')->nullable()->comment('经营范围');
             // 'target' 目标客户, 'follow' 跟进中, 'complate'成交客户
-            $table->enum('follow', ['target', 'follow', 'complate'])->default('target')->comment('跟进状态');
+            $table->enum('follow', ['可跟进', '跟进中', '成交'])->default('target')->comment('跟进状态');
             $table->boolean('contacted')->default(false)->comment('跟进过');
             $table->timestamps();
         });

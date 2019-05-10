@@ -10,6 +10,7 @@ use App\Models\Log as LLog;
 use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cookie;
 
 class TargetsController extends Controller
 {
@@ -62,7 +63,9 @@ class TargetsController extends Controller
             })->select(['id','company','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
             'address','webAddress','businessScope','follow','contacted',
             ])->paginate(100);
-        return view('pages.target.secrch',compact('targets'));
+            $cookie = Cookie::make('querys_for_js', json_encode($request->all()), 1, $path = '/', $domain = null, $secure = false, $httpOnly = false);
+        return response()->view('pages.target.secrch',compact('targets'))->cookie($cookie);
+        // return view('pages.target.secrch',compact('targets'))->withCookie(Cookie::make('querys', implode(",", $request->all()),10));
     }
     /**
      * 显示批量上传客户资料
