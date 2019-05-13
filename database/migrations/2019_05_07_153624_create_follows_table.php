@@ -24,6 +24,8 @@ class CreateFollowsTable extends Migration
             $table->string('product')->comment('意向产品');
             $table->text('difficulties')->comment('公关难点');
             $table->date('expired')->comment('预计成交时间');
+            $table->date('schedule')->comment('下次联系提醒');
+            $table->date('countdown')->comment('跟进截至日期');
             $table->integer('money')->comment('预计成交金额');
             $table->timestamps();
         });

@@ -34,6 +34,6 @@ Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('ver
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 //目标客户
-Route::get('target/secrch', 'TargetsController@secrch')->name('target.secrch');
-Route::get('target/show', 'TargetsController@show')->name('target.show');
-Route::post('target/store', 'TargetsController@store')->name('target.store');
+Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch');
+Route::get('company/upload', 'CompanysController@upload')->name('company.upload');
+Route::post('company/store', 'CompanysController@store')->name('company.store');

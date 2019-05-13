@@ -153,8 +153,8 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
 
   };
 
-  if ($(".target-secrch-page").length === 1) {
-    table.init('targets-table', {
+  if ($(".company-secrch-page").length === 1) {
+    table.init('companys-table', {
       //转化静态表格
       toolbar: '#toolbarTarget',
       defaultToolbar: ['filter'],
@@ -165,12 +165,12 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
   } // 资料上传页面
 
 
-  if ($(".target-show-page").length === 1) {
+  if ($(".company-show-page").length === 1) {
     //多文件列表示例
     var demoListView = $('#demoList'),
         uploadListIns = upload.render({
       elem: '#testList',
-      url: '/target/store',
+      url: '/company/store',
       accept: 'file',
       data: {
         _token: $('meta[name="csrf-token"]').attr('content')

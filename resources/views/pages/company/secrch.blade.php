@@ -4,7 +4,7 @@
 @section('content')
   <div class="layui-row">
     <div class="layui-col-xs10 layui-col-xs-offset1">
-          <form class="layui-form" method="GET" lay-filter="secrchTarget" action="{{ route('target.secrch') }}">
+          <form class="layui-form" method="GET" lay-filter="secrchTarget" action="{{ route('company.secrch') }}">
               <div class="layui-form-item">
                 <div class="layui-row">
                   <div class="layui-col-xs8">
@@ -92,14 +92,14 @@
                 </div>
               </div>
               
-              <table lay-filter="targets-table" id="targets-table">
+              <table lay-filter="companys-table" id="companys-table">
                   <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                        <th lay-data="{field:'company', width:200}">公司</th>
+                        <th lay-data="{field:'name', width:200}">公司</th>
                         <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'有':'无'} }">跟进记录</th>
                         <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
-                          if(d.follow == 'target'){
+                          if(d.follow == 'company'){
                             return '无';
                           }else if(d.follow == 'follow'){
                             return '跟进中';
@@ -123,31 +123,31 @@
                     </tr> 
                   </thead>
                   <tbody>
-                    @foreach($targets as $index => $target)
+                    @foreach($companys as $index => $company)
                     <tr>
                       <td></td>
-                      <td>{{ $target->company }}</td>
-                      <td>{{ $target->contacted }}</td>
-                      <td>{{ $target->follow }}</td>
-                      <td>{{ $target->boss }}</td>
-                      <td>{{ $target->money }}</td>
-                      <td>{{ $target->moneyType }}</td>
-                      <td>{{ $target->registration }}</td>
-                      <td>{{ $target->status }}</td>
-                      <td>{{ $target->province }}</td>
-                      <td>{{ $target->city }}</td>
-                      <td>{{ $target->area }}</td>
-                      <td>{{ $target->type }}</td>
-                      <td>{{ $target->socialCode }}</td>
-                      <td>{{ $target->address }}</td>
-                      <td>{{ $target->webAddress }}</td>
-                      <td>{{ $target->businessScope }}</td>
+                      <td>{{ $company->name }}</td>
+                      <td>{{ $company->contacted }}</td>
+                      <td>{{ $company->follow }}</td>
+                      <td>{{ $company->boss }}</td>
+                      <td>{{ $company->money }}</td>
+                      <td>{{ $company->moneyType }}</td>
+                      <td>{{ $company->registration }}</td>
+                      <td>{{ $company->status }}</td>
+                      <td>{{ $company->province }}</td>
+                      <td>{{ $company->city }}</td>
+                      <td>{{ $company->area }}</td>
+                      <td>{{ $company->type }}</td>
+                      <td>{{ $company->socialCode }}</td>
+                      <td>{{ $company->address }}</td>
+                      <td>{{ $company->webAddress }}</td>
+                      <td>{{ $company->businessScope }}</td>
                     </tr>
                     @endforeach
                   </tbody>
                 </table>
           <div class="pagination-box">
-              {!! $targets->appends(Request::except('page'))->render() !!}
+              {!! $companys->appends(Request::except('page'))->render() !!}
           </div>
     </div>
   </div>

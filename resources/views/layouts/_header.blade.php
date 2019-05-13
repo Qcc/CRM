@@ -3,11 +3,11 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     @auth
     <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="{{ route('target.secrch') }}">公海目标</a></li>
+      <li class="layui-nav-item"><a href="{{ route('company.secrch') }}">公海目标</a></li>
       <li class="layui-nav-item"><a href="">今日目标</a></li>
       <li class="layui-nav-item"><a href="">客户跟进</a></li>
       <li class="layui-nav-item"><a href="">我的客户</a></li>
-      <li class="layui-nav-item"><a href="{{ route('target.show') }}">资料上传</a></li>
+      <li class="layui-nav-item"><a href="{{ route('company.upload') }}">资料上传</a></li>
     </ul>
     @endauth
     <ul class="layui-nav layui-layout-right">

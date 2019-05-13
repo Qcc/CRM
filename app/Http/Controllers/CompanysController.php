@@ -5,25 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\ReaderFactory;
-use App\Models\Target;
+use App\Models\Company;
 use App\Models\Log as LLog;
 use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 
-class TargetsController extends Controller
+class CompanysController extends Controller
 {
     /**
      * 搜索公海目标客户
      *
      * @return void
      */
-    public function secrch(Request $request,Target $target)
+    public function secrch(Request $request,Company $company)
     {
         // 关键字查询
-        $targets = Target::when($request->key, function ($query) use ($request) {
-            return $query->where('company','like', '%'.$request->key.'%')
+        $companys = Company::when($request->key, function ($query) use ($request) {
+            return $query->where('name','like', '%'.$request->key.'%')
                          ->orwhere('businessScope','like', '%'.$request->key.'%');
             })
             // 所属行业
@@ -60,28 +60,28 @@ class TargetsController extends Controller
                 $year1 = Carbon::parse("-".($registration[0]*365)." days")->toDateString();
                 $year2 = Carbon::parse("-".($registration[1]*365)." days")->toDateString();
                 return $query->whereBetween('registration',[$year2, $year1]);
-            })->select(['id','company','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
+            })->select(['id','name','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
             'address','webAddress','businessScope','follow','contacted',
             ])->paginate(100);
+            // 关键字查询
             $cookie = Cookie::make('querys_for_js', json_encode($request->all()), 1, $path = '/', $domain = null, $secure = false, $httpOnly = false);
-        return response()->view('pages.target.secrch',compact('targets'))->cookie($cookie);
-        // return view('pages.target.secrch',compact('targets'))->withCookie(Cookie::make('querys', implode(",", $request->all()),10));
+        return response()->view('pages.company.secrch',compact('companys'))->cookie($cookie);
     }
     /**
      * 显示批量上传客户资料
      *
      * @return void
      */
-    public function show()
+    public function upload()
     {
-        return view('pages.target.show');
+        return view('pages.company.upload');
     }
     /**
      * 批量上传客户资料保存
      *
      * @return void
      */
-    public function store(Request $request,Target $target)
+    public function store(Request $request,Company $company)
     {
         //初始化数据,默认是失败的
 		$data = [
@@ -104,8 +104,8 @@ class TargetsController extends Controller
                     if($index != 1){
                         $money = explode('万',$row[2]);
                         try {
-                            $target = Target::updateOrCreate(
-                                ['company' => $row[0], 'socialCode' => $row[9]],
+                            $company = Company::updateOrCreate(
+                                ['name' => $row[0], 'socialCode' => $row[9]],
                                 ['boss' =>$row[1],
                                  'money' =>is_numeric($money[0])?$money[0]:0,
                                  'moneyType' =>$money[1]??'人民币',

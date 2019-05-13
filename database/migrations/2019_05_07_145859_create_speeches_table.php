@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 class CreateSpeechesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 电话营销话术.
      *
      * @return void
      */
