@@ -13,8 +13,8 @@
 
   <!-- Styles -->
   <link href="/layui/css/layui.css" rel="stylesheet">
+  @yield('styles')
   <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
 </head>
 
 <body class="layui-layout-body">
@@ -28,6 +28,7 @@
   </div>
   <!-- Scripts -->
   <script src="/layui/layui.js"></script>
+  @yield('script')
   <script src="{{ mix('js/app.js') }}"></script>
 </body>
 

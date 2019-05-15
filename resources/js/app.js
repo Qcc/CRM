@@ -160,6 +160,26 @@ layui.use(['element','form','table','upload'], function(){
         });
   }
 
+  // 反馈页面
+  if($('.company-show-page').length == 1){
+    if ($('#record-editor').length == 1) {
+			var editor = new Simditor({
+				textarea: $('#record-editor'),
+				toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'ol', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'],
+				upload: {
+					url: "/topics/upload_image",
+					//工具条都包含哪些内容
+					params: {
+						_token: $('meta[name="csrf-token"]').attr('content')
+					},
+					fileKey: 'upload_file',
+					connectionCount: 3,
+					leaveConfirm: '文件上传中，关闭此页面将取消上传。'
+				},
+				pasteImage: true,
+			});
+		}
+  }
   
 
   });

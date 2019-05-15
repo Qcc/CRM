@@ -38,3 +38,6 @@ Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch'
 Route::get('company/upload', 'CompanysController@upload')->name('company.upload');
 Route::post('company/store', 'CompanysController@store')->name('company.store');
 Route::post('company/locking', 'CompanysController@locking')->name('company.locking');
+// 今日目标 客户跟进
+Route::get('company/follow', 'CompanysController@follow')->name('company.follow');
+Route::get('company/follow/{company}', 'CompanysController@show')->name('company.show');

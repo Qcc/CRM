@@ -163,4 +163,21 @@ class CompanysController extends Controller
 
         return $data;
     }
+
+    // 跟进客户列表
+    public function follow(Company $company)
+    {
+        $user = Auth::user();
+        $follows = Redis::smembers('target_'.$user->id);
+        $companys = $company->find($follows);
+        return view('pages.company.follow',compact('companys'));
+    }
+    // 跟进客户
+    public function show(Request $request, Company $company)
+    {
+        $user = Auth::user();
+        $follows = Redis::smembers('target_'.$user->id);
+        $companys = $company->find($follows);
+        return view('pages.company.show',compact('companys','company'));
+    }
 }

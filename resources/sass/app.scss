@@ -1,22 +1,25 @@
-
 // Fonts
 // @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
-.color-red{
+.color-red {
     color: $red;
 }
-.color-gre{
+
+.color-gre {
     color: $green;
 }
-.color-ind{
+
+.color-ind {
     color: $indigo;
 }
-.color-blue{
+
+.color-blue {
     color: $blue;
 }
+
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 .layadmin-user-login-main {
@@ -24,8 +27,10 @@
     margin: 0 auto;
     box-sizing: border-box;
 }
-#LAY-user-login, .layadmin-user-display-show {
-    display: block!important;
+
+#LAY-user-login,
+.layadmin-user-display-show {
+    display: block !important;
 }
 
 .layadmin-user-login {
@@ -36,6 +41,7 @@
     min-height: 100%;
     box-sizing: border-box;
 }
+
 .layadmin-user-login-header {
     text-align: center;
 }
@@ -43,9 +49,11 @@
 .layadmin-user-login-box {
     padding: 20px;
 }
+
 .layadmin-user-login-body .layui-form-item {
     position: relative;
 }
+
 .layadmin-user-login-icon {
     position: absolute;
     left: 1px;
@@ -55,17 +63,22 @@
     text-align: center;
     color: #d2d2d2;
 }
+
 .layadmin-user-login-body .layui-form-item .layui-input {
     padding-left: 38px;
 }
+
 .layadmin-user-jump-change {
     float: right;
 }
 
 .layadmin-link {
-    color: #029789!important;
+    color: #029789 !important;
 }
-[lay-href], [lay-tips], [layadmin-event] {
+
+[lay-href],
+[lay-tips],
+[layadmin-event] {
     cursor: pointer;
 }
 
@@ -77,28 +90,33 @@
     border: 1px solid transparent;
     border-radius: .25rem;
 }
+
 .alert-primary {
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
 }
+
 .alert-success {
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
 }
+
 .alert-danger {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
+
 .alert-warning {
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;
 }
 
-.company-secrch-page>.layui-body,.company-upload-page>.layui-body{
+.company-secrch-page>.layui-body,
+.company-upload-page>.layui-body {
     left: 0px;
     margin: 0px auto;
     padding: 30px 0;
@@ -115,7 +133,7 @@
 .pagination-box .pagination {
     float: right;
 }
- 
+
 .pagination-box .pagination .active span {
     color: #03A9F4;
     padding: 0 10px;
@@ -141,4 +159,38 @@
 .pagination-box .pagination li a:hover {
     padding: 0 10px;
     color: #03A9F4;
+}
+
+// 今日目标
+.company-follow-page {
+
+    .taday-body {
+        display: block;
+        padding: 10px 15px;
+        background-color: #f8f8f8;
+        color: #999;
+        border-radius: 2px;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+
+        h3 {
+            padding-bottom: 10px;
+            font-size: 12px;
+        }
+
+        p>cite {
+            font-style: normal;
+            font-size: 30px;
+            font-weight: 300;
+            color: #009688;
+        }
+    }
+
+    .taday-body:hover {
+        background-color: #CFCFCF;
+        color: #888;
+    }
+}
+.simditor .simditor-body{
+    min-height: 100px!important;
 }
