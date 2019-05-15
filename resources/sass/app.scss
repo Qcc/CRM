@@ -191,6 +191,25 @@
         color: #888;
     }
 }
-.simditor .simditor-body{
-    min-height: 100px!important;
+.company-show-page{
+
+    .simditor .simditor-body{
+        min-height: 100px!important;
+    }
+    .company-info{
+        .phone{
+            background: #38c172;
+            color: #fff;
+            font-size: 40px;
+            line-height: 50px;
+        }
+        h2{
+            color: #555;
+        }
+        p{
+            line-height: 30px;
+            color: #555;
+            font-size: 15px;
+        }
+    }
 }

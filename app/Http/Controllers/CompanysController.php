@@ -180,4 +180,22 @@ class CompanysController extends Controller
         $companys = $company->find($follows);
         return view('pages.company.show',compact('companys','company'));
     }
+    // 跟进客户 提交反馈
+    public function followUp(Request $request, Company $company)
+    {
+        $user = Auth::user();
+        if(Redis::sismember('target_'.$user->id,$request->company)){
+            Log::info('返回200');
+            $follows = Redis::smembers('target_'.$user->id);
+            $companys = $company->find($follows);
+            if($request->next == -1){
+                return view('pages.company.follow',compact('companys'));
+            }else{
+                return redirect(route('company.show',$request->next));
+            }
+        }else{
+            Log::info('返回200');
+            return abort(404);
+        }
+    }
 }

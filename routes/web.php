@@ -41,3 +41,4 @@ Route::post('company/locking', 'CompanysController@locking')->name('company.lock
 // 今日目标 客户跟进
 Route::get('company/follow', 'CompanysController@follow')->name('company.follow');
 Route::get('company/follow/{company}', 'CompanysController@show')->name('company.show');
+Route::post('company/followUp', 'CompanysController@followUp')->name('company.followUp');

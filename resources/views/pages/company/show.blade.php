@@ -9,7 +9,10 @@
               <div class="layui-card">
                   <div class="layui-card-header">客户跟进</div>
                   <div class="layui-card-body">
-                      <form class="layui-form" action="">
+                      <form class="layui-form" method="POST" action="{{ route('company.followUp') }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="company" value="{{ $company->id }}">
+                          <input type="hidden" name="next" value="{{ nextCompany($company,$companys) }}">
                           <div class="layui-form-item">
                                 <textarea name="content" class="form-control" id="record-editor" rows="1" cols="10" placeholder="请填入客户跟进内容。">{{ old('content' ) }}</textarea>
                           </div>
@@ -71,9 +74,17 @@
           <div class="layui-col-xs4">
               <div class="layui-card">
                   <div class="layui-card-header">客户资料</div>
-                  <div class="layui-card-body">
+                  <div class="layui-card-body company-info">
                     <h2>{{ $company->name }}</h2>
-                    <p></p>
+                    <p>联系人 <strong>{{ $company->boss }}</strong></p>
+                    <p class="phone">{{ format_phone($company->phone,'-') }}</p>
+                    <p >{{ $company->morePhone }}</p>
+                    <p>{{ $company->email }}</p>
+                    <p>注册资金 {{ $company->money }}万{{ $company->moneyType }}</p>
+                    <p>成立日期 {{ $company->registration }}</p>
+                    <p>{{ $company->address }}</p>
+                    <p>{{ $company->webAddress }}</p>
+                    <p>{{ $company->businessScope }}</p>
                   </div>
               </div>
           </div>
