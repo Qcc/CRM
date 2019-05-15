@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
+.color-red {
+  color: #e3342f;
+}
+
+.color-gre {
+  color: #38c172;
+}
+
+.color-ind {
+  color: #6574cd;
+}
+
+.color-blue {
+  color: #3490dc;
+}
+
 .layadmin-user-login-main {
   width: 375px;
   margin: 0 auto;

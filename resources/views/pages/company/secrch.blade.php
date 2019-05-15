@@ -98,16 +98,19 @@
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                         <th lay-data="{field:'id', width:80, hide:true}">ID</th>
                         <th lay-data="{field:'name', width:200}">公司</th>
-                        <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'有':'无'} }">跟进记录</th>
+                        <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'<span class=color-red>有</span>':'无'} }">跟进记录</th>
                         <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
-                          if(d.follow == 'company'){
-                            return '无';
+                          if(d.follow == 'target'){
+                            return '<span class=color-gre>可跟进</span>';
+                          }else if(d.follow == 'locking'){
+                            return '<span class=color-red>锁定中</span>';
                           }else if(d.follow == 'follow'){
-                            return '跟进中';
+                            return '<span class=color-ind>跟进中</span>';
+                          }else if(d.follow == 'complate'){
+                            return '<span class=color-blue>已成交</span>';
                           }else{
-                            return '已成交';
-                          }
-                          return d.contacted==1?'有':'无'}}">状态</th>
+                            return '无';
+                          } }}">状态</th>
                         <th lay-data="{field:'boss', width:80}">法人</th>
                         <th lay-data="{field:'money', width:86,templet: function(d){return d.money+'万'} }">注册资金</th>
                         <th lay-data="{field:'moneyType', width:86,hide:true}">资本类型</th>

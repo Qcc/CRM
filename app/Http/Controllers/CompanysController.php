@@ -149,11 +149,12 @@ class CompanysController extends Controller
 			'msg' => '选取公司失败'
         ];
         $list = json_decode($request->list,true);
-        $userId = Auth::id();
+        $user = Auth::user();
         foreach ($list as $id) {
             $company->where('id',$id)->update(['follow' => 'locking']);
-            Redis::sadd('target_'.$userId,$id);
+            Redis::sadd('target_'.$user->id,$id);
         }
+        LLog::write($user->name."(".$user->email.")"." 选取了".count($list)." 家公司，准备跟进");
         $data = [
 			'code' => 0,
 			'msg' => '选取公司成功',

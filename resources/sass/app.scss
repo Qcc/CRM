@@ -5,6 +5,18 @@
 // Variables
 @import 'variables';
 
+.color-red{
+    color: $red;
+}
+.color-gre{
+    color: $green;
+}
+.color-ind{
+    color: $indigo;
+}
+.color-blue{
+    color: $blue;
+}
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 .layadmin-user-login-main {
