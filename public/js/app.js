@@ -161,11 +161,63 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
       limit: 100
     });
     var formInput = JSON.parse(decodeURIComponent(cookie.get('querys_for_js')));
-    form.val("secrchTarget", formInput);
+    form.val("secrchTarget", formInput); // 选取目标公司跟进
+
+    $("#getcompany").click(function (e) {
+      var checkStatus = table.checkStatus('companys-table'); // userList即为基础参数id对应的值
+
+      var selectCount = checkStatus.data.length; // 获取选中行数量，可作为是否有选中行的条件
+
+      var data = checkStatus.data.map(function (item, index) {
+        return item.logId;
+      });
+      console.log(data);
+
+      if (selectCount == 0) {
+        layer.msg('您没有选取任何公司', function () {});
+        return false;
+      }
+
+      $(this).attr('disabled', true);
+      layer.load(2);
+      var ids = new Array(selectCount);
+
+      for (var i = 0; i < selectCount; i++) {
+        ids[i] = checkStatus.data[i].id;
+      }
+
+      var jsonIds = JSON.stringify(ids);
+      $.ajax({
+        method: 'POST',
+        url: '/company/locking',
+        ContentType: 'application/json',
+        data: {
+          list: jsonIds
+        },
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(data) {
+          layer.closeAll('loading');
+
+          if (data.code == 0) {
+            data.list.forEach(function (id) {
+              $("tr[data-index=" + (id - 1) + "]").remove();
+            });
+            layer.msg('成功选取' + data.list.length + '个客户'); //获取客户成功 刷新页面
+
+            window.location.reload();
+          }
+
+          $('#getcompany').removeAttr('disabled');
+        }
+      });
+      return false;
+    });
   } // 资料上传页面
 
 
-  if ($(".company-show-page").length === 1) {
+  if ($(".company-upload-page").length === 1) {
     //多文件列表示例
     var demoListView = $('#demoList'),
         uploadListIns = upload.render({

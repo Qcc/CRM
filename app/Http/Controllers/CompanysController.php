@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Redis;
 
 class CompanysController extends Controller
 {
@@ -136,6 +137,29 @@ class CompanysController extends Controller
             $user = Auth::user();
             LLog::write($user->name."(".$user->email.")"." 导入了".$count."条公司信息");
         }
+        return $data;
+    }
+
+    // 选取公司并当天锁定，其他职员不允许选取。
+    public function locking(Request $request,Company $company)
+    {
+        //初始化数据,默认是失败的
+		$data = [
+			'code' => 1,
+			'msg' => '选取公司失败'
+        ];
+        $list = json_decode($request->list,true);
+        $userId = Auth::id();
+        foreach ($list as $id) {
+            $company->where('id',$id)->update(['follow' => 'locking']);
+            Redis::sadd('target_'.$userId,$id);
+        }
+        $data = [
+			'code' => 0,
+			'msg' => '选取公司成功',
+			'list' => $list
+        ];
+
         return $data;
     }
 }

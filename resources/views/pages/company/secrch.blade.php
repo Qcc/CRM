@@ -92,10 +92,11 @@
                 </div>
               </div>
               
-              <table lay-filter="companys-table" id="companys-table">
+              <table lay-filter="companys-table" id="companys-table" lay-filter="companys-table">
                   <thead>
                     <tr>
                         <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+                        <th lay-data="{field:'id', width:80, hide:true}">ID</th>
                         <th lay-data="{field:'name', width:200}">公司</th>
                         <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'有':'无'} }">跟进记录</th>
                         <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
@@ -126,6 +127,7 @@
                     @foreach($companys as $index => $company)
                     <tr>
                       <td></td>
+                      <td>{{ $company->id }}</td>
                       <td>{{ $company->name }}</td>
                       <td>{{ $company->contacted }}</td>
                       <td>{{ $company->follow }}</td>
@@ -153,7 +155,7 @@
   </div>
   <script type="text/html" id="toolbarTarget">
     <div class="layui-btn-container">
-      <button class="layui-btn layui-btn-sm" lay-event="getCheckData">我来跟进</button>
+      <button class="layui-btn layui-btn-sm" id="getcompany">我来跟进</button>
     </div>
   </script>
 @stop

@@ -37,3 +37,4 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch');
 Route::get('company/upload', 'CompanysController@upload')->name('company.upload');
 Route::post('company/store', 'CompanysController@store')->name('company.store');
+Route::post('company/locking', 'CompanysController@locking')->name('company.locking');
