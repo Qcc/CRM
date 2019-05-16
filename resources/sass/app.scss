@@ -19,6 +19,9 @@
 .color-blue {
     color: $blue;
 }
+.color-drak {
+    color: $drak;
+}
 
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
@@ -161,8 +164,8 @@
     color: #03A9F4;
 }
 
-// 今日目标
-.company-follow-page {
+// 今日目标             //客户跟进
+.company-follow-page,.follow-follow-page {
 
     .taday-body {
         display: block;
@@ -191,25 +194,33 @@
         color: #888;
     }
 }
-.company-show-page{
 
-    .simditor .simditor-body{
-        min-height: 100px!important;
+.company-show-page {
+
+    .simditor .simditor-body {
+        min-height: 100px !important;
     }
-    .company-info{
-        .phone{
+
+    .company-info {
+        .phone {
             background: #38c172;
             color: #fff;
             font-size: 40px;
             line-height: 50px;
         }
-        h2{
+
+        h2 {
             color: #555;
         }
-        p{
+
+        p {
             line-height: 30px;
             color: #555;
             font-size: 15px;
+
+            strong {
+                font-size: 20px;
+            }
         }
     }
 }

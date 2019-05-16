@@ -16,6 +16,10 @@
   color: #3490dc;
 }
 
+.color-drak {
+  color: #555;
+}
+
 .layadmin-user-login-main {
   width: 375px;
   margin: 0 auto;
@@ -154,7 +158,8 @@
   color: #03A9F4;
 }
 
-.company-follow-page .taday-body {
+.company-follow-page .taday-body,
+.follow-follow-page .taday-body {
   display: block;
   padding: 10px 15px;
   background-color: #f8f8f8;
@@ -164,19 +169,22 @@
   -webkit-transition: all 0.3s;
 }
 
-.company-follow-page .taday-body h3 {
+.company-follow-page .taday-body h3,
+.follow-follow-page .taday-body h3 {
   padding-bottom: 10px;
   font-size: 12px;
 }
 
-.company-follow-page .taday-body p > cite {
+.company-follow-page .taday-body p > cite,
+.follow-follow-page .taday-body p > cite {
   font-style: normal;
   font-size: 30px;
   font-weight: 300;
   color: #009688;
 }
 
-.company-follow-page .taday-body:hover {
+.company-follow-page .taday-body:hover,
+.follow-follow-page .taday-body:hover {
   background-color: #CFCFCF;
   color: #888;
 }
@@ -200,5 +208,9 @@
   line-height: 30px;
   color: #555;
   font-size: 15px;
+}
+
+.company-show-page .company-info p strong {
+  font-size: 20px;
 }
 

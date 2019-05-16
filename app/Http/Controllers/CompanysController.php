@@ -176,25 +176,11 @@ class CompanysController extends Controller
     public function show(Request $request, Company $company)
     {
         $user = Auth::user();
-        $follows = Redis::smembers('target_'.$user->id);
-        $companys = $company->find($follows);
-        return view('pages.company.show',compact('companys','company'));
-    }
-    // 跟进客户 提交反馈
-    public function followUp(Request $request, Company $company)
-    {
-        $user = Auth::user();
-        if(Redis::sismember('target_'.$user->id,$request->company)){
-            Log::info('返回200');
+        if(Redis::sismember('target_'.$user->id,$request->company->id)){
             $follows = Redis::smembers('target_'.$user->id);
             $companys = $company->find($follows);
-            if($request->next == -1){
-                return view('pages.company.follow',compact('companys'));
-            }else{
-                return redirect(route('company.show',$request->next));
-            }
+            return view('pages.company.show',compact('companys','company'));
         }else{
-            Log::info('返回200');
             return abort(404);
         }
     }

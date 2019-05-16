@@ -17,16 +17,15 @@ class CreateFollowsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->default(0)->index();
             $table->integer('company_id')->unsigned()->default(0)->index();
-            $table->string('contact')->comment('关键联系人');
-            $table->string('phone')->comment('电话');
-            $table->string('qq')->comment('QQ');
-            $table->string('email')->comment('邮箱');
-            $table->string('product')->comment('意向产品');
-            $table->text('difficulties')->comment('公关难点');
-            $table->date('expired')->comment('预计成交时间');
-            $table->date('schedule')->comment('下次联系提醒');
-            $table->date('countdown')->comment('跟进截至日期');
-            $table->integer('money')->comment('预计成交金额');
+            $table->string('contact')->nullable()->comment('关键联系人');
+            $table->string('phone')->nullable()->comment('电话');
+            $table->string('email')->nullable()->comment('邮箱');
+            $table->string('product')->nullable()->comment('意向产品');
+            $table->text('difficulties')->nullable()->comment('公关难点');
+            $table->date('expired')->nullable()->comment('预计成交时间');
+            $table->dateTime('schedule')->nullable()->comment('下次联系提醒');
+            $table->dateTime('countdown')->comment('跟进截至日期');
+            $table->integer('money')->nullable()->comment('预计成交金额');
             $table->timestamps();
         });
     }
