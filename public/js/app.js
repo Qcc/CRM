@@ -99,14 +99,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 // require('./bootstrap');
-layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate'], function () {
+layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], function () {
   var $ = layui.$;
   var element = layui.element;
   var upload = layui.upload;
   var form = layui.form;
   var table = layui.table;
   var util = layui.util;
-  var laydate = layui.laydate; //  cookie操作
+  var laydate = layui.laydate;
+  var layer = layui.layer; //  cookie操作
 
   var cookie = {
     set: function set(key, val, time) {
@@ -322,6 +323,16 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate'], function ()
   laydate.render({
     elem: '#schedule',
     type: 'datetime'
+  }); // 完成销售转换为正式客户
+
+  $('.customer-btn').on('click', function () {
+    var reportform = layer.open({
+      type: 1,
+      area: '600px',
+      title: '提交合同',
+      content: $('#customer-form')
+    });
+    return false;
   });
 });
 

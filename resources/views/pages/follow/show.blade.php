@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="layui-col-xs6" style="text-align: right;">
                                   <button class="layui-btn" lay-submit="" lay-filter="follow-btn">提交反馈</button>
-                                  <button class="layui-btn layui-btn-warm complate-btn">成交</button>
+                                  <button class="layui-btn layui-btn-warm customer-btn">成交</button>
                                 </div>
                               </div>
                             </div>
@@ -64,6 +64,8 @@
       </div>
   </div>
 @stop
+
+@include('pages.follow._customer_form')
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/styles/simditor.css') }}">

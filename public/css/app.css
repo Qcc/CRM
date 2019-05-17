@@ -20,6 +20,10 @@
   color: #555;
 }
 
+.pr {
+  text-align: right;
+}
+
 .layadmin-user-login-main {
   width: 375px;
   margin: 0 auto;

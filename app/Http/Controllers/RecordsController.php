@@ -39,7 +39,8 @@ class RecordsController extends Controller
             if($request->email){
                 $email = "<p>发送了邮件，内容是</p>";
             }
-            $record->content = $request->content.$email.$feed;
+            $author = "<p class='pr'>跟进人:".$user->name."</p>";
+            $record->content = $request->content.$email.$feed.$author;
             $record->user_id = Auth::id();
             $record->company_id = $request->company_id;
             $record->feed = $request->feed;

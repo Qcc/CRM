@@ -7,7 +7,7 @@
 
 // require('./bootstrap');
 
-layui.use(['element','form','table','upload', 'util', 'laydate',], function(){
+layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], function(){
     var $ = layui.$;
     var element = layui.element;
     var upload = layui.upload;
@@ -15,6 +15,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate',], function(){
     var table = layui.table;
     var util = layui.util;
     var laydate = layui.laydate;
+    var layer = layui.layer;
   
     //  cookie操作
     var cookie = {
@@ -185,28 +186,39 @@ layui.use(['element','form','table','upload', 'util', 'laydate',], function(){
 
   if($('.follow-show-page').length == 1){
     //商机跟进倒计时
-  var thisTimer, setCountdown = function(y, M, d, H, m, s){
-    var endTime = new Date($('#countdown').attr('endTime')) //结束日期
-    ,serverTime = new Date($('#countdown').attr('now')); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
-     
-    clearTimeout(thisTimer);
-    util.countdown(endTime, serverTime, function(date, serverTime, timer){
-      var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-      $('#countdown').html(str);
-      thisTimer = timer;
+    var thisTimer, setCountdown = function(y, M, d, H, m, s){
+      var endTime = new Date($('#countdown').attr('endTime')) //结束日期
+      ,serverTime = new Date($('#countdown').attr('now')); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+
+      clearTimeout(thisTimer);
+      util.countdown(endTime, serverTime, function(date, serverTime, timer){
+        var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
+        $('#countdown').html(str);
+        thisTimer = timer;
+      });
+    };
+    setCountdown();
+    }
+    //预计成交时间
+    laydate.render({
+      elem: '#expired'
     });
-  };
-  setCountdown();
-  }
-  //预计成交时间
-  laydate.render({
-    elem: '#expired'
-  });
-  //下次联系提醒
-  laydate.render({
-    elem: '#schedule'
-    ,type: 'datetime'
-  });
+    //下次联系提醒
+    laydate.render({
+      elem: '#schedule'
+      ,type: 'datetime'
+    });
+
+    // 完成销售转换为正式客户
+    $('.customer-btn').on('click',function(){
+      var reportform = layer.open({
+        type: 1,
+        area: '600px',
+        title: '提交合同',
+        content: $('#customer-form'),
+      });
+      return false;
+    });
 
   });
 
