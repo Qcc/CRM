@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Follow extends Model
 {
-    
+    protected $fillable = [ 'contact', 'phone', 'product', 'difficulties', 'expired', 'schedule', 'money'];
+
+    /**
+     * 获得跟进该客户的的客户基础资料
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
     
 }

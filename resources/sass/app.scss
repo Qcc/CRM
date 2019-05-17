@@ -195,6 +195,25 @@
     }
 }
 
+.follow-show-page{
+    .simditor .simditor-body {
+        min-height: 100px !important;
+    }
+    .layui-input-block{
+        margin-left: 0;
+    }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 0px;
+    }
+    .layui-form-item{
+        .short-input{
+            width: 162px;
+        }
+        .no-right{
+            margin-right: 0px;
+        }
+    }
+}
 .company-show-page {
 
     .simditor .simditor-body {

@@ -189,6 +189,26 @@
   color: #888;
 }
 
+.follow-show-page .simditor .simditor-body {
+  min-height: 100px !important;
+}
+
+.follow-show-page .layui-input-block {
+  margin-left: 0;
+}
+
+.follow-show-page .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+  margin-top: 0px;
+}
+
+.follow-show-page .layui-form-item .short-input {
+  width: 162px;
+}
+
+.follow-show-page .layui-form-item .no-right {
+  margin-right: 0px;
+}
+
 .company-show-page .simditor .simditor-body {
   min-height: 100px !important;
 }

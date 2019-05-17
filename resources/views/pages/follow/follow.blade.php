@@ -2,7 +2,7 @@
 @section('title', '今日目标')
 
 @section('content')
-@include('layouts._side')
+@include('layouts._follow_side')
    <div style="padding: 15px;background-color: #F2F2F2;">
     <div class="layui-card">
       <div class="layui-card-body ">

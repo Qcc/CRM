@@ -18,7 +18,7 @@ class CreateRecordsTable extends Migration
             $table->integer('company_id')->unsigned()->default(0)->index();
             $table->integer('user_id')->unsigned()->default(0)->index();
             $table->text('content');
-            $table->enum('feed', ['lucky', 'wrongnumber', 'noneed'])->default('lucky')->comment('跟进状态');
+            $table->enum('feed', ['follow', 'lucky', 'wrongnumber', 'noneed'])->default('follow')->comment('跟进状态');
             $table->timestamps();
         });
     }

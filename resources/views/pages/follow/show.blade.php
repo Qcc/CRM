@@ -2,29 +2,30 @@
 @section('title', '今日目标')
 
 @section('content')
-@include('layouts._company_side')
+@include('layouts._follow_side')
    <div style="padding: 15px;background-color: #F2F2F2;">
       <div class="layui-row layui-col-space10">
           <div class="layui-col-xs8">
               <div class="layui-card">
                   <div class="layui-card-header">跟进反馈</div>
                   <div class="layui-card-body">
-                      <form class="layui-form" method="POST" action="{{ route('record.store') }}">
+                      <form class="layui-form" method="POST" action="{{ route('follow.storeRecord') }}">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <input type="hidden" name="company_id" value="{{ $company->id }}">
-                          <input type="hidden" name="next" value="{{ nextCompany($company,$companys) }}">
                           <div class="layui-form-item">
                                 <textarea name="content" class="form-control" id="record-editor" rows="1" cols="10" placeholder="请填入客户跟进内容。">{{ old('content' ) }}</textarea>
                           </div>
                           <div class="layui-form-item">
-                              <div class="layui-input-block" style="text-align: right;">
-                                <input type="radio" name="feed" value="lucky" title="保持联系" checked="">
-                                <input type="radio" name="feed" value="noneed" title="没有需要">
-                                <input type="radio" name="feed" value="wrongnumber" title="号码不正确">
-                                  @if($company->email != '')
-                                  <input type="checkbox" name="email" lay-skin="primary" checked="" title="发送邮件">
-                                  @endif
-                                <button class="layui-btn" lay-submit="" lay-filter="record-btn">提交反馈</button>
+                              <div class="layui-input-block" style="margin-left: 0;">
+                                <div class="layui-col-xs6">
+                                  <div class="layui-inline" style="margin-right: 100px;" title="请在商机保护期内完成订单，到期后商机将被放入公海目标">
+                                    <p>商机保留 <span class="layui-word-aux" id="countdown" now="{{ now() }}" endTime="{{ $company->follow()->first()->countdown }}"></span></p>  
+                                  </div>
+                                </div>
+                                <div class="layui-col-xs6" style="text-align: right;">
+                                  <button class="layui-btn" lay-submit="" lay-filter="follow-btn">提交反馈</button>
+                                  <button class="layui-btn layui-btn-warm complate-btn">成交</button>
+                                </div>
                               </div>
                             </div>
                       </form>
@@ -39,7 +40,13 @@
           </div>
           <div class="layui-col-xs4">
               <div class="layui-card">
-                  <div class="layui-card-header">客户资料</div>
+                  <div class="layui-card-header">完善客户信息</div>
+                  <div class="layui-card-body company-info">
+                      @include('pages.follow._follow_form',['follow'=>$company->follow()->first()])
+                  </div>
+              </div>
+              <div class="layui-card">
+                  <div class="layui-card-header">基本资料</div>
                   <div class="layui-card-body company-info">
                     <h2>{{ $company->name }}</h2>
                     <p>联系人 <strong>{{ $company->boss }}</strong></p>

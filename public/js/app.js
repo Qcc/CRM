@@ -99,12 +99,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 // require('./bootstrap');
-layui.use(['element', 'form', 'table', 'upload'], function () {
+layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate'], function () {
   var $ = layui.$;
   var element = layui.element;
   var upload = layui.upload;
   var form = layui.form;
-  var table = layui.table; //  cookie操作
+  var table = layui.table;
+  var util = layui.util;
+  var laydate = layui.laydate; //  cookie操作
 
   var cookie = {
     set: function set(key, val, time) {
@@ -273,7 +275,7 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
   } // 反馈页面
 
 
-  if ($('.company-show-page').length == 1) {
+  if ($('.company-show-page').length == 1 || $('.follow-show-page').length == 1) {
     if ($('#record-editor').length == 1) {
       var editor = new Simditor({
         textarea: $('#record-editor'),
@@ -292,6 +294,35 @@ layui.use(['element', 'form', 'table', 'upload'], function () {
       });
     }
   }
+
+  if ($('.follow-show-page').length == 1) {
+    //商机跟进倒计时
+    var thisTimer,
+        setCountdown = function setCountdown(y, M, d, H, m, s) {
+      var endTime = new Date($('#countdown').attr('endTime')) //结束日期
+      ,
+          serverTime = new Date($('#countdown').attr('now')); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+
+      clearTimeout(thisTimer);
+      util.countdown(endTime, serverTime, function (date, serverTime, timer) {
+        var str = date[0] + '天' + date[1] + '时' + date[2] + '分' + date[3] + '秒';
+        $('#countdown').html(str);
+        thisTimer = timer;
+      });
+    };
+
+    setCountdown();
+  } //预计成交时间
+
+
+  laydate.render({
+    elem: '#expired'
+  }); //下次联系提醒
+
+  laydate.render({
+    elem: '#schedule',
+    type: 'datetime'
+  });
 });
 
 /***/ }),
