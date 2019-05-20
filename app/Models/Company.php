@@ -14,8 +14,22 @@ class Company extends Model
         return $this->hasMany(Record::class);
     }
 
+    /**
+     * 基础资料关联跟进客户
+     *
+     * @return void
+     */
     public function follow()
     {
         return $this->hasOne(Follow::class);
+    }
+    /**
+     * 基础资料关联正式客户
+     *
+     * @return void
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
     }
 }

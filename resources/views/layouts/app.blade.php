@@ -22,6 +22,7 @@
       @include('layouts._header')
       <div class="layui-body">
         @include('shared._messages')
+        @include('shared._error')
         @yield('content')
       </div>
       @include('layouts._footer')

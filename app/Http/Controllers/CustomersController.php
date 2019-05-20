@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Customer;
+use Auth;
 
 class CustomersController extends Controller
 {
     /**客户成交转为正式客户 */
-    public function store(Request $request)
+    public function store(CustomerRequest $request, Customer $customer)
     {
-        dd($request->all());
+        // dd($request->all());
+        $customer->fill($request->all());
+        $customer->user_id = Auth::id();
+        $customer->save();
+        return redirect()->route('follow.follow')->with('success', '客户资料保存成功');
     }
 
     /**
@@ -57,5 +64,11 @@ class CustomersController extends Controller
         }else{
             return $data;
         }
+    }
+
+    public function show(Request $request, Customer $customer)
+    {
+        $customers = $customer->with('company')->paginate(10);
+        return view('pages.customer.show',compact('customers'));
     }
 }

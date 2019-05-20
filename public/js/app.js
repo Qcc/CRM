@@ -394,7 +394,15 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       var item = this.item; //文件保存失败
       //do something
     }
-  });
+  }); // 正式客户展示
+
+  if ($('.customers-show-page').length == 1) {
+    table.init('customers-table', {
+      //转化静态表格
+      defaultToolbar: ['filter'],
+      limit: 10
+    });
+  }
 });
 
 /***/ }),

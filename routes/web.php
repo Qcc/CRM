@@ -51,3 +51,6 @@ Route::post('follow/storeRecord', 'FollowsController@storeRecord')->name('follow
 // 正式客户 合同上传
 Route::post('customers/store', 'CustomersController@store')->name('customers.store');
 Route::post('customers/upload', 'CustomersController@upload')->name('customers.upload');
+
+// 正式客户资料
+Route::get('customers/show', 'CustomersController@show')->name('customers.show');

@@ -24,6 +24,7 @@ class CreateCustomersTable extends Migration
             $table->date('completion_date')->comment('成交日期');
             $table->date('expired')->comment('售后到期');
             $table->integer('money')->comment('成交金额');
+            $table->text('comment')->nullable()->comment('项目备注信息');
             $table->timestamps();
         });
     }

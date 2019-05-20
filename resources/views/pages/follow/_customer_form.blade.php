@@ -12,7 +12,7 @@
         
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text" name="phone" lay-verify="phone" autocomplete="off" value="{{ old('phone',$follow->phone) }}" placeholder="电话" class="layui-input">
+              <input type="text" name="phone" autocomplete="off" value="{{ old('phone',$follow->phone) }}" placeholder="电话" class="layui-input">
             </div>
           </div>
         
@@ -47,7 +47,7 @@
    
   <div class="layui-form-item">
     <div class="layui-input-block">
-        <textarea placeholder="项目备注信息" name="difficulties"  class="layui-textarea">{{ old('difficulties',$follow->difficulties) }}</textarea>
+        <textarea placeholder="项目备注信息" name="comment"  class="layui-textarea">{{ old('comment',$follow->difficulties) }}</textarea>
     </div>
   </div>
   <div class="layui-form-item">

@@ -9,7 +9,7 @@ use App\Models\Record;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use Auth;
-use Illuminate\Support\Arr;
+use App\Http\Requests\FollowRequest;
 
 class FollowsController extends Controller
 {
@@ -33,11 +33,14 @@ class FollowsController extends Controller
             return abort(404);
         }
     }
-    public function store(Request $request, Follow $follow)
+    public function store(FollowRequest $request, Follow $follow)
     {
         // dd($request->all());
-        $data = Arr::except($request->all(), ['_token']);
-        $follow->fill(array_diff($data,array(null)));
+        // $data = Arr::except($request->all(), ['_token']);
+        // $follow->fill(array_diff($data,array(null)));
+        // $follow->save();
+        $follow->fill($request->all());
+        $follow->user_id = Auth::id();
         $follow->save();
         return back()->with('success', '客户信息保存完成!');
     }
