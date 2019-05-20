@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('phone')->comment('电话');
             $table->string('product')->comment('成交产品');
             $table->string('contract')->comment('合同');
+            $table->date('completion_date')->comment('成交日期');
             $table->date('expired')->comment('售后到期');
             $table->integer('money')->comment('成交金额');
             $table->timestamps();

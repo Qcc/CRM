@@ -107,7 +107,11 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   var table = layui.table;
   var util = layui.util;
   var laydate = layui.laydate;
-  var layer = layui.layer; //  cookie操作
+  var layer = layui.layer; // flash 提示信息关闭
+
+  $('.alert>i').on('click', function () {
+    $('.flash-message').remove();
+  }); //  cookie操作
 
   var cookie = {
     set: function set(key, val, time) {
@@ -329,10 +333,67 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
     var reportform = layer.open({
       type: 1,
       area: '600px',
-      title: '提交合同',
+      title: '提交合同(提交后不能修改，请核对信息是否正确)',
       content: $('#customer-form')
     });
     return false;
+  }); // 自定义表单验证
+
+  form.verify({
+    contract: function contract(value, item) {
+      //value：表单的值、item：表单的DOM对象
+      if (value == "") {
+        return '合同必须上传';
+      }
+    }
+  }); //拖拽上传合同
+
+  upload.render({
+    elem: '#contract',
+    url: '/customers/upload',
+    accept: 'file' //允许上传的文件类型
+    ,
+    data: {
+      _token: $('meta[name="csrf-token"]').attr('content')
+    },
+    exts: 'pdf|rar',
+    size: 10240 //最大允许上传的文件大小
+    ,
+    choose: function choose(obj) {
+      //将每次选择的文件追加到文件队列
+      // var files = obj.pushFile();
+      //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+      obj.preview(function (index, file, result) {
+        console.log(index); //得到文件索引
+
+        console.log(file); //得到文件对象
+
+        $('.upload-done>ul').append("<li class=index_" + index + "><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>" + file.name + "</li>"); //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+        //这里还可以做一些 append 文件列表 DOM 的操作
+        //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+        //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+      });
+    },
+    done: function done(res, index, upload) {
+      console.log(index); //得到文件索引
+      //假设code=0代表上传成功
+
+      if (res.code == 0) {
+        $(".index_" + index + ">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
+
+        if ($(".contract").val() == "") {
+          $(".contract").val(res.data.src);
+        } else {
+          $(".contract").val($(".contract").val() + ";" + res.data.src);
+        }
+      } else {
+        $(".index_" + index + ">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-close color-red");
+      } //获取当前触发上传的元素，一般用于 elem 绑定 class 的情况，注意：此乃 layui 2.1.0 新增
+
+
+      var item = this.item; //文件保存失败
+      //do something
+    }
   });
 });
 

@@ -65,7 +65,7 @@
   </div>
 @stop
 
-@include('pages.follow._customer_form')
+@include('pages.follow._customer_form',['follow'=>$company->follow()->first(),'company'=> $company])
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/styles/simditor.css') }}">

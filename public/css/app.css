@@ -92,6 +92,19 @@
   border-radius: 0.25rem;
 }
 
+.alert i {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+  cursor: pointer;
+  transition: all 0.6s;
+}
+
+.alert i:hover {
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+}
+
 .alert-primary {
   color: #004085;
   background-color: #cce5ff;
@@ -211,6 +224,23 @@
 
 .follow-show-page .layui-form-item .no-right {
   margin-right: 0px;
+}
+
+.customer-form .layui-input-block {
+  margin-left: 0px;
+}
+
+.customer-form .short-input {
+  width: 150px;
+}
+
+.customer-form .no-right {
+  margin-right: 0px;
+}
+
+.customer-form .upload-done ul > li {
+  padding: 2px 10px;
+  color: #888;
 }
 
 .company-show-page .simditor .simditor-body {

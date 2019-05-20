@@ -48,3 +48,6 @@ Route::get('follow/follow', 'FollowsController@follow')->name('follow.follow');
 Route::get('follow/follow/{company}', 'FollowsController@show')->name('follow.show');
 Route::post('follow/store/{follow}', 'FollowsController@store')->name('follow.store');
 Route::post('follow/storeRecord', 'FollowsController@storeRecord')->name('follow.storeRecord');
+// 正式客户 合同上传
+Route::post('customers/store', 'CustomersController@store')->name('customers.store');
+Route::post('customers/upload', 'CustomersController@upload')->name('customers.upload');
