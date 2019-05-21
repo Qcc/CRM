@@ -399,6 +399,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   if ($('.customers-show-page').length == 1) {
     table.init('customers-table', {
       //转化静态表格
+      toolbar: '#toolbarTarget',
       defaultToolbar: ['filter'],
       limit: 10
     });

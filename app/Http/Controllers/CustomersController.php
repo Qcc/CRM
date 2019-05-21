@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Customer;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class CustomersController extends Controller
 {
@@ -68,7 +69,13 @@ class CustomersController extends Controller
 
     public function show(Request $request, Customer $customer)
     {
-        $customers = $customer->with('company')->paginate(10);
+        if($request->name){
+            $customers = $customer->whereHas('company',function($query) use ($request){
+                $query->where('name','like', '%'.$request->name.'%');
+            })->paginate(10);
+        }else{
+            $customers = $customer->with('company')->paginate(10);
+        }
         return view('pages.customer.show',compact('customers'));
     }
 }
