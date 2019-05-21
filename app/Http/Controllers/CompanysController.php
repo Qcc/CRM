@@ -150,18 +150,28 @@ class CompanysController extends Controller
         ];
         $list = json_decode($request->list,true);
         $user = Auth::user();
+        // 选取计数
         $count = 0;
+        // 最大跟进客户数量
+        $max = '';
         foreach ($list as $id) {
+            // 获取已经作为目标客户的公司数量
+            $already = Redis::scard('target_'.$user->id);
+            if($already >= 100){
+                $max = ',同时跟进的目标客户不能超过100家。';
+                break;
+            }
             $result = $company->where('id',$id)->where('follow','target')->update(['follow' => 'locking']);
             if($result){
                 // 将目标公司id 放入目标客户 集合中
                 Redis::sadd('target_'.$user->id,$id);
+                $count++;
             }
         }
         LLog::write($user->name."(".$user->email.")"." 成功选取了".count($list)." 家公司，准备跟进");
         $data = [
 			'code' => 0,
-			'msg' => '选取公司成功',
+			'msg' => '成功选取了'.$count.'家客户'.$max,
 			'list' => $list
         ];
 

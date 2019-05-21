@@ -13,12 +13,12 @@ use Carbon\Carbon;
 class RecordsController extends Controller
 {
     /**
-	 * 保存提交的反馈
+	 * 陌生客户提交首次反馈 保存提交的反馈
 	 *
 	 * @param Request $request
 	 * @return void
 	 */
-	public function store(Request $request, Company $company, Record $record, Follow $follow)
+	public function Store(Request $request, Company $company, Record $record, Follow $follow)
 	{
 
         // 将目标公司的状态修改为跟进中 follow
@@ -53,6 +53,7 @@ class RecordsController extends Controller
             $record->user_id = $user->id;
             $record->company_id = $request->company_id;
             $record->feed = $request->feed;
+            $record->familiar = true;
             $record->save();
             if($request->feed == 'lucky'){
                 // 将有效商机转化为 持续跟进的客户 商机默认保留 60天 过期将重新放入公海

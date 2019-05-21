@@ -36,7 +36,7 @@ function format_phone($phone,$separator)
  */
 function nextCompany($company,$companys)
 {
-    if(count($companys) == 0){
+    if(count($companys) == 1){
         return -1;
     }else{
         foreach ($companys as $item) {

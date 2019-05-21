@@ -17,7 +17,7 @@
                 <tbody id="demoList"></tbody>
               </table>
             </div>
-            <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+            <button type="button" class="layui-btn" id="uploadAction">开始上传</button>
           </div> 
     </div>
 </div>

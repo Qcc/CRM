@@ -211,7 +211,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
             data.list.forEach(function (id) {
               $("tr[data-index=" + (id - 1) + "]").remove();
             });
-            layer.msg('成功选取' + data.list.length + '家客户'); //获取客户成功 刷新页面
+            layer.msg(data.msg); //获取客户成功 刷新页面
 
             window.location.reload();
           }
@@ -236,7 +236,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       },
       multiple: true,
       auto: false,
-      bindAction: '#testListAction',
+      bindAction: '#uploadAction',
       choose: function choose(obj) {
         var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
         //读取本地文件
@@ -276,6 +276,10 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
         tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
       }
+    });
+    $('#uploadAction').on('click', function () {
+      $(this).addClass('layui-btn-disabled');
+      $(this).attr('disabled', true);
     });
   } // 反馈页面
 
