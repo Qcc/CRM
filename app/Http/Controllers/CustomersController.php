@@ -6,18 +6,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Customer;
+use App\Models\Company;
+use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Log;
 
 class CustomersController extends Controller
 {
     /**客户成交转为正式客户 */
-    public function store(CustomerRequest $request, Customer $customer)
+    public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
     {
         // dd($request->all());
         $customer->fill($request->all());
         $customer->user_id = Auth::id();
         $customer->save();
+        // 更新客户资料状态为 订单完成
+        $company->where('id',$request->company_id)->update(['follow' => 'complate']);
+        // 删除跟进中的客户
+        $follow->whereHas('company',function($query) use ($request){
+            $query->where('id', $request->company_id);
+        })->delete();
         return redirect()->route('follow.follow')->with('success', '客户资料保存成功');
     }
 

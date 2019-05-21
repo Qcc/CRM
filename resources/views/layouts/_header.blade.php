@@ -3,11 +3,11 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     @auth
     <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="{{ route('company.secrch') }}">公海目标</a></li>
-      <li class="layui-nav-item"><a href="{{ route('company.follow') }}">今日目标</a></li>
-      <li class="layui-nav-item"><a href="{{ route('follow.follow') }}">客户跟进</a></li>
-      <li class="layui-nav-item"><a href="{{ route('customers.show') }}">我的客户</a></li>
-      <li class="layui-nav-item"><a href="{{ route('company.upload') }}">资料上传</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('company.secrch'),'layui-this') }}"><a href="{{ route('company.secrch') }}">公海目标</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('company.follow') || if_route('company.show'),'layui-this') }}"><a href="{{ route('company.follow') }}">今日目标</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('follow.follow') || if_route('follow.show'),'layui-this') }}"><a href="{{ route('follow.follow') }}">客户跟进</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('customers.show'),'layui-this') }}"><a href="{{ route('customers.show') }}">我的客户</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('company.upload'),'layui-this') }}"><a href="{{ route('company.upload') }}">资料上传</a></li>
     </ul>
     @endauth
     <ul class="layui-nav layui-layout-right">

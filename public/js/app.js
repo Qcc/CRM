@@ -211,7 +211,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
             data.list.forEach(function (id) {
               $("tr[data-index=" + (id - 1) + "]").remove();
             });
-            layer.msg('成功选取' + data.list.length + '个客户'); //获取客户成功 刷新页面
+            layer.msg('成功选取' + data.list.length + '家客户'); //获取客户成功 刷新页面
 
             window.location.reload();
           }

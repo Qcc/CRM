@@ -1,7 +1,7 @@
 <form class="layui-form customer-form" id="customer-form" lay-filter="customer-form" method="POST" action="{{ route('customers.store') }}" style="display:none;margin: 10px 40px 10px 20px;">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" class="contract" lay-verify="contract" name="contract">
-  <input type="hidden" class="company_id" name="company_id" value="{{ $company->id }}">
+  <input type="hidden" class="company_id" name="company_id" value="{{ $follow->company->id }}">
   <div class="layui-row layui-col-space10">
       <div class="layui-col-xs7">
           <div class="layui-form-item">
@@ -27,10 +27,10 @@
         
           <div class="layui-form-item">
             <div class="layui-input-inline short-input">
-                <input type="text" name="completion_date" class="layui-input" id="completion_date" value="{{ old('completion_date', $follow->expired) }}" placeholder="成交时间">
+                <input type="text" name="completion_date" lay-verify="date" class="layui-input" id="completion_date" value="{{ old('completion_date', $follow->expired) }}" placeholder="成交时间">
             </div>
             <div class="layui-input-inline short-input no-right">
-                <input type="text" name="expired" class="layui-input" id="expired" value="{{ old('expired',$follow->schedule) }}" placeholder="售后到期">
+                <input type="text" name="expired" lay-verify="date" class="layui-input" id="expired" value="{{ old('expired') }}" placeholder="售后到期">
             </div>
           </div>
       </div>

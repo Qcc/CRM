@@ -13,25 +13,18 @@ use App\Http\Requests\FollowRequest;
 
 class FollowsController extends Controller
 {
-    public function follow(Company $company)
+    public function follow(Follow $follow)
     {
-        $user = Auth::user();
-        $follows = Redis::smembers('target_'.$user->id);
-        $companys = $company->find($follows);
-        return view('pages.follow.follow',compact('companys'));
+        $follows = $follow->with('company')->get();
+        return view('pages.follow.follow',compact('follows'));
     }
 
     // 跟进客户
-    public function show(Request $request, Company $company)
+    public function show(Follow $follow)
     {
-        $user = Auth::user();
-        if(Redis::sismember('target_'.$user->id,$request->company->id)){
-            $follows = Redis::smembers('target_'.$user->id);
-            $companys = $company->find($follows);
-            return view('pages.follow.show',compact('companys','company'));
-        }else{
-            return abort(404);
-        }
+        $follows = $follow->with('company')->get();
+        return view('pages.follow.show',compact('follows','follow'));
+        
     }
     public function store(FollowRequest $request, Follow $follow)
     {

@@ -1,6 +1,6 @@
 <form class="layui-form" method="POST" action="{{ route('follow.store',$follow->id) }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" class="company_id" name="company_id" value="{{ $company->id }}">
+        <input type="hidden" class="company_id" name="company_id" value="{{ $follow->company->id }}">
         <div class="layui-form-item">
           <div class="layui-input-block">
             <input type="text" name="contact" lay-verify="title" autocomplete="off" value="{{ old('contact',$follow->contact) }}" placeholder="关键联系人" class="layui-input">

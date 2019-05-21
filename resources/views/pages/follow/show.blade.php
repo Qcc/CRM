@@ -11,7 +11,7 @@
                   <div class="layui-card-body">
                       <form class="layui-form" method="POST" action="{{ route('follow.storeRecord') }}">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <input type="hidden" name="company_id" value="{{ $company->id }}">
+                          <input type="hidden" name="company_id" value="{{ $follow->company->id }}">
                           <div class="layui-form-item">
                                 <textarea name="content" class="form-control" id="record-editor" rows="1" cols="10" placeholder="请填入客户跟进内容。">{{ old('content' ) }}</textarea>
                           </div>
@@ -19,7 +19,7 @@
                               <div class="layui-input-block" style="margin-left: 0;">
                                 <div class="layui-col-xs6">
                                   <div class="layui-inline" style="margin-right: 100px;" title="请在商机保护期内完成订单，到期后商机将被放入公海目标">
-                                    <p>商机保留 <span class="layui-word-aux" id="countdown" now="{{ now() }}" endTime="{{ $company->follow()->first()->countdown }}"></span></p>  
+                                    <p>商机保留 <span class="layui-word-aux" id="countdown" now="{{ now() }}" endTime="{{ $follow->countdown }}"></span></p>  
                                   </div>
                                 </div>
                                 <div class="layui-col-xs6" style="text-align: right;">
@@ -34,7 +34,7 @@
                       <div class="layui-card">
                         <div class="layui-card-header">跟进记录</div>
                         <div class="layui-card-body">
-                            @include('pages.company._records',['records'=>$company->records()->orderBy('created_at','desc')->get()])
+                            @include('pages.company._records',['records'=>$follow->company->records()->orderBy('created_at','desc')->get()])
                   </div>
               </div>
           </div>
@@ -42,22 +42,22 @@
               <div class="layui-card">
                   <div class="layui-card-header">完善客户信息</div>
                   <div class="layui-card-body company-info">
-                      @include('pages.follow._follow_form',['follow'=>$company->follow()->first()])
+                      @include('pages.follow._follow_form')
                   </div>
               </div>
               <div class="layui-card">
                   <div class="layui-card-header">基本资料</div>
                   <div class="layui-card-body company-info">
-                    <h2>{{ $company->name }}</h2>
-                    <p>联系人 <strong>{{ $company->boss }}</strong></p>
-                    <p class="phone">{{ format_phone($company->phone,'-') }}</p>
-                    <p >{{ $company->morePhone }}</p>
-                    <p>{{ $company->email }}</p>
-                    <p>注册资金 {{ $company->money }}万{{ $company->moneyType }}</p>
-                    <p>成立日期 {{ $company->registration }}</p>
-                    <p>{{ $company->address }}</p>
-                    <p>{{ $company->webAddress }}</p>
-                    <p>{{ $company->businessScope }}</p>
+                    <h2>{{ $follow->company->name }}</h2>
+                    <p>联系人 <strong>{{ $follow->company->boss }}</strong></p>
+                    <p class="phone">{{ format_phone($follow->company->phone,'-') }}</p>
+                    <p >{{ $follow->company->morePhone }}</p>
+                    <p>{{ $follow->company->email }}</p>
+                    <p>注册资金 {{ $follow->company->money }}万{{ $follow->company->moneyType }}</p>
+                    <p>成立日期 {{ $follow->company->registration }}</p>
+                    <p>{{ $follow->company->address }}</p>
+                    <p>{{ $follow->company->webAddress }}</p>
+                    <p>{{ $follow->company->businessScope }}</p>
                   </div>
               </div>
           </div>
@@ -65,7 +65,7 @@
   </div>
 @stop
 
-@include('pages.follow._customer_form',['follow'=>$company->follow()->first(),'company'=> $company])
+@include('pages.follow._customer_form')
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/styles/simditor.css') }}">

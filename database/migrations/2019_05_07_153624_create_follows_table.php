@@ -16,7 +16,7 @@ class CreateFollowsTable extends Migration
         Schema::create('follows', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->default(0)->index();
-            $table->integer('company_id')->unsigned()->default(0)->index();
+            $table->integer('company_id')->unsigned()->unique()->index();
             $table->string('contact')->nullable()->comment('关键联系人');
             $table->string('phone')->nullable()->comment('电话');
             $table->string('product')->nullable()->comment('意向产品');

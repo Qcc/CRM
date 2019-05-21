@@ -150,11 +150,15 @@ class CompanysController extends Controller
         ];
         $list = json_decode($request->list,true);
         $user = Auth::user();
+        $count = 0;
         foreach ($list as $id) {
-            $company->where('id',$id)->update(['follow' => 'locking']);
-            Redis::sadd('target_'.$user->id,$id);
+            $result = $company->where('id',$id)->where('follow','target')->update(['follow' => 'locking']);
+            if($result){
+                // 将目标公司id 放入目标客户 集合中
+                Redis::sadd('target_'.$user->id,$id);
+            }
         }
-        LLog::write($user->name."(".$user->email.")"." 选取了".count($list)." 家公司，准备跟进");
+        LLog::write($user->name."(".$user->email.")"." 成功选取了".count($list)." 家公司，准备跟进");
         $data = [
 			'code' => 0,
 			'msg' => '选取公司成功',
@@ -168,6 +172,7 @@ class CompanysController extends Controller
     public function follow(Company $company)
     {
         $user = Auth::user();
+        // 返回集合 'target_'.$user->id 中的所有成员
         $follows = Redis::smembers('target_'.$user->id);
         $companys = $company->find($follows);
         return view('pages.company.follow',compact('companys'));
@@ -176,7 +181,16 @@ class CompanysController extends Controller
     public function show(Request $request, Company $company)
     {
         $user = Auth::user();
+        // 判断 $request->company->id 元素是否是集合 'target_'.$user->id 的成员
         if(Redis::sismember('target_'.$user->id,$request->company->id)){
+            // 将目标公司的状态修改为跟进中 follow
+            // $company->where('id',$request->company->id)->update(['follow' => 'follow']);
+            // 修改状态后将公司从目标客户中删除，转为跟进客户
+            // Redis::srem('target_'.$user->id,$request->company->id);
+            // 将目标公司id 放入跟进客户 集合中
+            // Redis::sadd('follow_'.$user->id,$id);
+
+            // 返回集合 'target_'.$user->id 中的所有成员
             $follows = Redis::smembers('target_'.$user->id);
             $companys = $company->find($follows);
             return view('pages.company.show',compact('companys','company'));
