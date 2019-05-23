@@ -44,17 +44,23 @@ class RecordsController extends Controller
                 case 'wrongnumber': $feed = '<p>电话号码不正确，无法联系。</p>';
                 break;
             }
-            if($request->email){
-                // 暂时保留发送邮件功能
-                $email = "<p>发送了邮件，内容是</p>";
-            }
             $author = "<p class='pr'>跟进人:".$user->name."</p>";
-            $record->content = $request->content.$email.$feed.$author;
+            $record->content = $request->content.$feed.$author;
             $record->user_id = $user->id;
             $record->company_id = $request->company_id;
             $record->feed = $request->feed;
             $record->familiar = true;
             $record->save();
+            if($request->email){
+                // 发送邮件后记录跟进日志，暂时保留发送邮件功能
+                $record = new Record;
+                $record->user_id = $user->id;
+                $record->company_id = $request->company_id;
+                $record->feed = 'email';
+                $record->familiar = false;
+                $record->content = "<p>发送了邮件，内容是</p>";
+                $record->save();            
+            }
             if($request->feed == 'lucky'){
                 // 将有效商机转化为 持续跟进的客户 商机默认保留 60天 过期将重新放入公海
                 $follow->countdown = Carbon::parse('+60 days');
