@@ -9,6 +9,8 @@ use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EdmShipped;
 
 class RecordsController extends Controller
 {
@@ -52,6 +54,7 @@ class RecordsController extends Controller
             $record->familiar = true;
             $record->save();
             if($request->email){
+                Mail::to('kevin@kouton.com')->send(new EdmShipped());
                 // 发送邮件后记录跟进日志，暂时保留发送邮件功能
                 $record = new Record;
                 $record->user_id = $user->id;
