@@ -47,6 +47,7 @@ Route::post('record/store', 'RecordsController@store')->name('record.store');
 Route::get('follow/follow', 'FollowsController@follow')->name('follow.follow');
 Route::get('follow/follow/{follow}', 'FollowsController@show')->name('follow.show');
 Route::post('follow/store/{follow}', 'FollowsController@store')->name('follow.store');
+Route::post('follow/delay/{follow}', 'FollowsController@delay')->name('follow.delay');
 Route::post('follow/storeRecord', 'FollowsController@storeRecord')->name('follow.storeRecord');
 // 正式客户 合同上传
 Route::post('customers/store', 'CustomersController@store')->name('customers.store');

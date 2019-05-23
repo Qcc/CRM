@@ -21,16 +21,16 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-inline short-input">
-              <input type="text" name="expired" class="layui-input" id="expired" value="{{ old('expired', $follow->expired) }}" placeholder="预计成交时间">
+              <input type="text" name="expired" autocomplete="off" class="layui-input" id="expired" value="{{ old('expired', $follow->expired) }}" placeholder="预计成交时间">
           </div>
           <div class="layui-input-inline short-input no-right">
-              <input type="text" name="schedule" class="layui-input" id="schedule" value="{{ old('schedule',$follow->schedule) }}" placeholder="下次联系提醒">
+              <input type="text" name="schedule" autocomplete="off" class="layui-input" id="schedule" value="{{ old('schedule',$follow->schedule) }}" placeholder="下次联系提醒">
           </div>
         </div>
          
         <div class="layui-form-item">
           <div class="layui-input-block">
-              <textarea placeholder="公关难点" name="difficulties"  class="layui-textarea">{{ old('difficulties',$follow->difficulties) }}</textarea>
+              <textarea placeholder="公关难点" autocomplete="off" name="difficulties"  class="layui-textarea">{{ old('difficulties',$follow->difficulties) }}</textarea>
           </div>
         </div>
         <div class="layui-form-item">

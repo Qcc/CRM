@@ -125,4 +125,13 @@ class FollowsController extends Controller
         $record->save();
         return back()->with('success', '客户跟进反馈保存成功!');
     }
+
+    public function delay(Follow $follow)
+    {
+        if($follow->delayCount > 0){
+            $follow->update(['countdown'=>Carbon::parse($follow->countdown)->addDays(10),'delayCount'=>$follow->delayCount--]);
+            return back()->with('success', '延期成功!');
+        }
+        return back()->with('danger', '延期次数已经用完!');
+    }
 }

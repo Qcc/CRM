@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // 每天午夜解除当天 选定 但未跟进的目标客户 锁定状态
+        $schedule->command('Empty:Target')->daily();
     }
 
     /**

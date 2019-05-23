@@ -6,13 +6,13 @@
       <div class="layui-col-xs7">
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text" name="contact" lay-verify="title" autocomplete="off" value="{{ old('contact',$follow->contact) }}" placeholder="关键联系人" class="layui-input">
+              <input type="text" name="contact" autocomplete="off" lay-verify="title" autocomplete="off" value="{{ old('contact',$follow->contact) }}" placeholder="关键联系人" class="layui-input">
             </div>
           </div>
         
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <input type="text" name="phone" autocomplete="off" value="{{ old('phone',$follow->phone) }}" placeholder="电话" class="layui-input">
+              <input type="text" name="phone" autocomplete="off" autocomplete="off" value="{{ old('phone',$follow->phone) }}" placeholder="电话" class="layui-input">
             </div>
           </div>
         
@@ -27,10 +27,10 @@
         
           <div class="layui-form-item">
             <div class="layui-input-inline short-input">
-                <input type="text" name="completion_date" lay-verify="date" class="layui-input" id="completion_date" value="{{ old('completion_date', $follow->expired) }}" placeholder="成交时间">
+                <input type="text" name="completion_date" autocomplete="off" lay-verify="date" class="layui-input" id="completion_date" value="{{ old('completion_date', $follow->expired) }}" placeholder="成交时间">
             </div>
             <div class="layui-input-inline short-input no-right">
-                <input type="text" name="expired" lay-verify="date" class="layui-input" id="expired" value="{{ old('expired') }}" placeholder="售后到期">
+                <input type="text" name="expired" autocomplete="off" lay-verify="date" class="layui-input" id="expired" value="{{ old('expired') }}" placeholder="售后到期">
             </div>
           </div>
       </div>

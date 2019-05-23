@@ -15,6 +15,7 @@ class Follow extends Model
         'difficulties', 
         'expired', 
         'schedule', 
+        'countdown',
         'money'
     ];
 
