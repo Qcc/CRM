@@ -407,6 +407,13 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       defaultToolbar: ['filter'],
       limit: 10
     });
+  } // 个人设置页面
+
+
+  if ($('.user-settings-page').length == 1) {
+    table.init('smtps-table', {//转化静态表格
+      // toolbar: '#toolbarTarget',
+    });
   }
 });
 

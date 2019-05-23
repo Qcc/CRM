@@ -38,4 +38,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //一个用户可以添加多条SMTP记录，一对多
+    public function smtps()
+    {
+        return $this->hasMany(Smtp::class);
+    }
 }

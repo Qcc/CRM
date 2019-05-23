@@ -33,6 +33,10 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
+// 基础资料设置
+Route::get('user/settings', 'UsersController@settings')->name('user.settings');
+Route::post('user/settings/store', 'UsersController@setStore')->name('user.setStore');
+
 //目标客户
 Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch');
 Route::get('company/upload', 'CompanysController@upload')->name('company.upload');

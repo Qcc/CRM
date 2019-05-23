@@ -129,6 +129,7 @@
   border-color: #ffeeba;
 }
 
+.user-settings-page > .layui-body,
 .root-page > .layui-body,
 .customers-show-page > .layui-body,
 .company-secrch-page > .layui-body,

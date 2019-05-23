@@ -25,13 +25,13 @@
             <li class="layui-nav-item"><a href="{{ route('login') }}">登录</a></li>
         @endguest
         @auth
-      <li class="layui-nav-item">
+      <li class="layui-nav-item {{ active_class(if_route('user.settings'),'layui-this') }}">
         <a href="javascript:;">
           <img src="{{ Auth::user()->avatar }}" class="layui-nav-img">
           {{ Auth::user()->name }}
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
+          <dd><a href="{{ route('user.settings') }}">基础资料</a></dd>
           <dd><a href="">修改密码</a></dd>
         </dl>
       </li>

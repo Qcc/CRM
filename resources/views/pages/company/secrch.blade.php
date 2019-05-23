@@ -29,12 +29,6 @@
                       <option value="">请选择市</option>
                       <option value="深圳市" selected="">深圳市</option>
                       <option value="北京市">北京市</option>
-                      <option value="上海市">上海市</option>
-                      <option value="广州市">广州市</option>
-                      <option value="武汉市">武汉市</option>
-                      <option value="杭州市">杭州市</option>
-                      <option value="成都市">成都市</option>
-                      <option value="西安市">西安市</option>
                     </select>
                   </div>
                   <div class="layui-input-inline" title="目标客户是否有业务员跟进过，电话、邮件、拜访等">
