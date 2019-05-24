@@ -9,7 +9,6 @@ use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 
 class RecordsController extends Controller
 {
@@ -52,17 +51,6 @@ class RecordsController extends Controller
             $record->feed = $request->feed;
             $record->familiar = true;
             $record->save();
-            if($request->email){
-                $company = $company->find($request->company_id);
-                // 发送邮件后记录跟进日志，暂时保留发送邮件功能
-                $record = new Record;
-                $record->user_id = $user->id;
-                $record->company_id = $request->company_id;
-                $record->feed = 'email';
-                $record->familiar = false;
-                $record->content = "<p>发送了邮件，内容是</p>";
-                $record->save();            
-            }
             if($request->feed == 'lucky'){
                 // 将有效商机转化为 持续跟进的客户 商机默认保留 60天 过期将重新放入公海
                 $follow->countdown = Carbon::parse('+60 days');
