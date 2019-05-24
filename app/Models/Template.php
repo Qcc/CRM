@@ -8,6 +8,7 @@ class Template extends Model
 {
     protected $fillable =  [
         'user_id',
+        'name',
         'title',
         'content',
     ];

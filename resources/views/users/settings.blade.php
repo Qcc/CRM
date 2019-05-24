@@ -63,15 +63,28 @@
         </div>
     
         <div class="layui-card">
-          <div class="layui-card-header">邮件模版</div>
+          <div class="layui-card-header">
+                <div class="layui-row">
+                  <div class="layui-col-xs6">邮件模版</div>
+                  <div class="layui-col-xs6" style="text-align: right;">
+                    <a class="storetpl-action" href="javascript:;" title="添加邮件模版"><i class="layui-icon layui-icon-add-1"></i></a>
+                  </div>
+                </div>
+          </div>
           <div class="layui-card-body">
-            卡片式面板面板通常用于非白色背景色的主体内<br>
-            从而映衬出边框投影
+                @foreach ($templates as $template)
+                <div class="layui-card templates">
+                    <div class="layui-card-header">{{ $template->name }}</div>
+                    <div class="layui-card-body">
+                        <div>Template</div>
+                    </div>
+                </div>
+                @endforeach
           </div>
         </div> 
     </div>    
 </div>
-
+<!-- 编辑SMTP服务器 -->
 <form class="layui-form editSmtp-form" method="POST" lay-filter="editSmtp" id="editSmtp" style="display:none;margin: 10px 10px 10px 20px;">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="id">  
@@ -116,6 +129,7 @@
         </div>
     </div>
 </form>
+<!-- 添加smtp服务器 -->
 <form class="layui-form editSmtp-form" method="POST" lay-filter="storeSmtp" id="storeSmtp" action="{{ route('smtp.store') }}" style="display:none;margin: 10px 10px 10px 20px;">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="layui-form-item">
@@ -152,6 +166,40 @@
       <div class="layui-form-item">
           <div class="layui-input-block" style="text-align: right">
             <button class="layui-btn" lay-submit="" lay-filter="storeSmtp-btn">新增</button>
+        </div>
+    </div>
+</form>
+<!-- 添加邮件模版 -->
+<form class="layui-form tpl-form" method="POST" lay-filter="tpl-form" id="tpl-form" action="{{ route('tpl.store') }}" style="display:none;margin: 10px 10px 10px 20px;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="layui-row">
+        <div class="layui-col-xs2">
+            <p>可用字段</p>
+            <p>公司名称:tpl_company_name</p>
+            <p>联系人:tpl_company_contact</p>
+            <p>姓氏:tpl_company_lastname</p>
+            <p>公司名称:tpl_company_name</p>
+        </div>
+        <div class="layui-col-xs10">
+            <div class="layui-form-item">
+                  <div class="layui-input-inline input-long">
+                      <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="请输入邮件标题" class="layui-input">
+                  </div>
+                  <div class="layui-input-inline">
+                      <input type="text" name="name" lay-verify="required|title" autocomplete="off" placeholder="请输入模版名称" class="layui-input">
+                  </div>
+              </div>
+          
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                        <textarea placeholder="请输入邮件内容" name="content" rows="15" cols="10" class="layui-textarea"></textarea>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-input-block" style="text-align: right">
+                    <button class="layui-btn" lay-submit="" lay-filter="storeSmtp-btn">保存</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>

@@ -229,8 +229,22 @@
   margin-right: 0px;
 }
 
-.user-settings-page .editSmtp-form .layui-input-block {
+.user-settings-page .editSmtp-form .layui-input-block,
+.user-settings-page .tpl-form .layui-input-block {
   margin-left: 0px;
+}
+
+.user-settings-page .editSmtp-form .input-long,
+.user-settings-page .tpl-form .input-long {
+  width: 700px;
+}
+
+.user-settings-page .templates {
+  margin: 0 10px 10px 10px;
+  display: inline-block;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  width: 185px;
+  height: 140px;
 }
 
 .user-settings-page .layui-upload-img {

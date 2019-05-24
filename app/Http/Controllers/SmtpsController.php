@@ -36,19 +36,19 @@ class SmtpsController extends Controller
         $template->fill($request->all());
         $template->user_id = Auth::id();
         $template->save();
-        return back()->with('success', 'SMTP服务器新增成功!');
+        return back()->with('success', '邮件模版新增成功!');
     }
 
     public function TplEdit(Request $request, Template $template)
     {
         $template->find($request->id)->update($request->all());
         
-        return back()->with('success', 'SMTP服务器修改成功!');
+        return back()->with('success', '邮件模版修改成功!');
     }
 
     public function TplDestroy(Request $request, Template $template)
     {
         $template->find($request->id)->delete();
-        return back()->with('success', 'SMTP服务器删除成功!');
+        return back()->with('success', '邮件模版删除成功!');
     }
 }

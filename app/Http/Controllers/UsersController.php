@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Smtp;
+use App\Models\Template;
 use Auth;
 
 class UsersController extends Controller
@@ -13,9 +14,10 @@ class UsersController extends Controller
         dd();
     }
 
-    public function settings(Smtp $smtp)
+    public function settings(Smtp $smtp, Template $template)
     {   $user = Auth::user();
         $smtps = $smtp->where('user_id',$user->id)->get();
-        return view('users.settings',compact('smtps'));
+        $templates = $template->get();
+        return view('users.settings',compact('smtps','templates'));
     }
 }

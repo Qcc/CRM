@@ -442,6 +442,18 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         title: '添加SMTP服务器',
         content: $('#storeSmtp')
       });
+    }); // 添加邮件模版
+
+    $('.storetpl-action').on('click', function () {
+      $(this).attr('disabled', true);
+      layer.open({
+        type: 1,
+        area: '1200px',
+        shade: 0,
+        anim: 1,
+        title: '添加邮件模版器',
+        content: $('#tpl-form')
+      });
     });
   }
 });
