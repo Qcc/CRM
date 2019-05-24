@@ -282,7 +282,6 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         //do something
       }
     })
-
     // 正式客户展示
     if($('.customers-show-page').length == 1 ){
       table.init('customers-table', { //转化静态表格
@@ -291,31 +290,37 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         limit:10,
       });
     }
+    // 用户管理页面
+    
+    if($('.system-users-page').length == 1 ){
+      table.init('users-table', { //转化静态表格
+        // toolbar: '#toolbarTarget',
+      });
+         //监听行单击事件（单击事件为：rowDouble）
+         table.on('row(users-table)', function(obj){
+          var data = obj.data;
+  
+          // 表单初始赋值
+          form.val("user-form", data);
+          layer.open({
+              type: 1,
+              area: '500px',
+              shade: 0,
+              anim: 1,
+              title: '修改用户',
+              content: $('#user-form'),
+          });
+          //标注选中样式
+          obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+    }
     // 个人设置页面
     if($('.user-settings-page').length == 1 ){
       table.init('smtps-table', { //转化静态表格
         // toolbar: '#toolbarTarget',
       });
 
-          //监听行单击事件（单击事件为：rowDouble）
-      table.on('row(smtps-table)', function(obj){
-        var data = obj.data;
-
-        // 表单初始赋值
-        form.val("editSmtp", data);
-        layer.open({
-            type: 1,
-            area: '500px',
-            shade: 0,
-            anim: 1,
-            title: '修改SMTP服务器',
-            content: $('#editSmtp'),
-        });
-
-
-        //标注选中样式
-        obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-      });
+       
       // 添加SMTP服务器
       $('.storeSmtp-action').on('click',function(){
         $(this).attr('disabled', true);
