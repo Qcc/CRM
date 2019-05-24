@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status')->default(true)->comment('用户状态');
+            // 软删除
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

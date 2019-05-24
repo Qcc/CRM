@@ -222,6 +222,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       var reportform = layer.open({
         type: 1,
         area: '600px',
+        anim: 1,
         title: '提交合同(提交后不能修改，请核对信息是否正确)',
         content: $('#customer-form'),
       });
@@ -295,6 +296,40 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       table.init('smtps-table', { //转化静态表格
         // toolbar: '#toolbarTarget',
       });
+
+          //监听行单击事件（单击事件为：rowDouble）
+      table.on('row(smtps-table)', function(obj){
+        var data = obj.data;
+
+        // 表单初始赋值
+        form.val("editSmtp", data);
+        layer.open({
+            type: 1,
+            area: '500px',
+            shade: 0,
+            anim: 1,
+            title: '修改SMTP服务器',
+            content: $('#editSmtp'),
+        });
+
+
+        //标注选中样式
+        obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+      });
+      // 添加SMTP服务器
+      $('.storeSmtp-action').on('click',function(){
+        $(this).attr('disabled', true);
+        layer.open({
+          type: 1,
+          area: '500px',
+          shade: 0,
+          anim: 1,
+          title: '添加SMTP服务器',
+          content: $('#storeSmtp'),
+        });
+      });
     }
+
+
   });
 

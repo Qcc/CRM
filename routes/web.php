@@ -36,6 +36,15 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 // 基础资料设置
 Route::get('user/settings', 'UsersController@settings')->name('user.settings');
 Route::post('user/settings/store', 'UsersController@setStore')->name('user.setStore');
+// smtp服务器增删改查
+Route::post('user/smtp/store', 'SmtpsController@store')->name('smtp.store');
+Route::post('user/smtp/edit', 'SmtpsController@edit')->name('smtp.edit');
+Route::post('user/smtp/destroy', 'SmtpsController@destroy')->name('smtp.destroy');
+// smtp邮件模版增删改查
+Route::post('user/smtp/tplstore', 'SmtpsController@TplStore')->name('tpl.store');
+Route::post('user/smtp/tpledit', 'SmtpsController@TplEdit')->name('tpl.edit');
+Route::post('user/smtp/tpldestroy', 'SmtpsController@TplDestroy')->name('tpl.destroy');
+
 
 //目标客户
 Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch');

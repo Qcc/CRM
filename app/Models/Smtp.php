@@ -9,6 +9,7 @@ class Smtp extends Model
     // 只允许用户修改content字段
     protected $fillable = [
         'user_id', 
+        'name',
         'smtp', 
         'port', 
         'username', 
