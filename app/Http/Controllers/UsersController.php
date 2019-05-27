@@ -29,7 +29,7 @@ class UsersController extends Controller
         if($request->name){
             $users = User::where('name','like','%'.$request->name.'%')->withTrashed()->orderBy('created_at','desc')->paginate(10);
         }else{
-            $users = User::withTrashed()->orderBy('created_at','desc')->paginate(10);
+            $users = User::withTrashed()->orderBy('created_at','desc')->with('permissions')->paginate(10);
         }
         return view('pages.system.users',compact('users'));
     }
@@ -50,6 +50,18 @@ class UsersController extends Controller
         }
         if($request->email != $user->email){
             $data['email'] = $request->email;
+        }
+        if($request->permissions != null){
+            if($request->permissions =='1'){
+                $user->givePermissionTo('manager');
+            }else{
+                // 至少保留一个管理员
+                if(count(User::permission('manager')->get()) > 1){
+                    $user->revokePermissionTo('manager');
+                }else{
+                    return back()->with('danger', '至少保留一个活动的管理员!'); 
+                }
+            }
         }
         if($request->password != null){
             $data['password'] = Hash::make($request->password);

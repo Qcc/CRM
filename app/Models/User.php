@@ -51,9 +51,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->attributes['password'] = bcrypt($value);
     }
 
-    //一个用户可以添加多条SMTP记录，一对多
-    public function smtps()
+    //一个用户可以添加多条speeche记录，一对多
+    public function speeches()
     {
-        return $this->hasMany(Smtp::class);
+        return $this->hasMany(speeche::class);
     }
 }

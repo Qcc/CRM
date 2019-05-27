@@ -15,9 +15,10 @@ class CreateSpeechesTable extends Migration
     {
         Schema::create('speeches', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->default(0)->index();
             $table->string('product');
             $table->string('ask');
-            $table->string('answer');
+            $table->string('answer')->nullable();
             $table->timestamps();
         });
     }

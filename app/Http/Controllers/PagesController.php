@@ -10,4 +10,9 @@ class PagesController extends Controller
     {
         return view('pages.root');
     }
+    
+    public function show(Request $request)
+    {
+        dd($request);
+    }
 }

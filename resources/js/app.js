@@ -325,7 +325,6 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
          //监听行单击事件（单击事件为：rowDouble）
          table.on('row(users-table)', function(obj){
           var data = obj.data;
-  
           // 表单初始赋值
           form.val("user-form", data);
           layer.open({
@@ -365,6 +364,49 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       });
     }
 
+    //销售话术管理
+    if($('.speechs-index-page').length == 1){
+      table.init('speechs-table', { //转化静态表格
+        // toolbar: '#toolbarTarget',
+      });
+        // 添加用户
+        $('.add-speechs').on('click',function(){
+          layer.open({
+            type: 1,
+            area: '500px',
+            shade: 0,
+            anim: 1,
+            title: '添加标准回答',
+            content: $('#speech-add-form'),
+          });
+        });
+
+        //监听行工具事件
+        table.on('tool(speechs-table)', function(obj){
+          var data = obj.data;
+          //console.log(obj)
+          if(obj.event === 'del'){
+            $('#speech_id').val(data.id);
+            layer.confirm('真的删除行么', function(index){
+              event.preventDefault(); document.getElementById('speech-destroy').submit();
+              obj.del();
+              layer.close(index);
+            });
+          } else if(obj.event === 'edit'){
+              var data = obj.data;
+              // 表单初始赋值
+              form.val("speech-form", data);
+              layer.open({
+                  type: 1,
+                  area: '500px',
+                  shade: 0,
+                  anim: 1,
+                  title: '修改标准回答',
+                  content: $('#speech-form'),
+              });
+          }
+        });
+    }
 
   });
 

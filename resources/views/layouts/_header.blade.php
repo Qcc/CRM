@@ -12,8 +12,7 @@
           <dl class="layui-nav-child">
             <dd><a href="{{ route('company.upload') }}">资料上传</a></dd>
             <dd><a href="{{ route('system.users') }}">用户管理</a></dd>
-            <dd><a href="">权限管理</a></dd>
-            <dd><a href="">销售话术</a></dd>
+            <dd><a href="{{ route('speechs.index') }}">销售话术</a></dd>
             <dd><a href="">系统设置</a></dd>
           </dl>
         </li>

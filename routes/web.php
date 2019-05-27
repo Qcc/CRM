@@ -64,3 +64,11 @@ Route::post('customers/upload', 'CustomersController@upload')->name('customers.u
 
 // 正式客户资料
 Route::get('customers/show', 'CustomersController@show')->name('customers.show');
+
+// 销售话术
+Route::get('speechs/index', 'SpeechsController@index')->name('speechs.index');
+Route::post('speech/store', 'SpeechsController@store')->name('speech.store');
+Route::post('speech/update', 'SpeechsController@update')->name('speech.update');
+Route::post('speech/destroy', 'SpeechsController@destroy')->name('speech.destroy');
+// 通用设置
+Route::get('speechs/show', 'PagesController@show')->name('settings.show');
