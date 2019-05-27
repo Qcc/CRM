@@ -191,14 +191,9 @@ class CompanysController extends Controller
         $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
             // 本月拨打电话
         $callCountOfMonth = 0;
-        // 本月发送邮件
-        $emailCountOfMonth = 0;
         // 本月有效商机
         $businessCountOfMonth = 0;
         foreach ($recordsOfMonth as $r) {
-            if($r->feed == 'email'){
-                $emailCountOfMonth++;
-            }
             if($r->familiar == true){
                 $callCountOfMonth++;
             }
@@ -221,14 +216,9 @@ class CompanysController extends Controller
             ->whereBetween('created_at',[Carbon::now()->today(),Carbon::now()->tomorrow()])->get();
         // 当天拨打电话
         $callCountOfDay = 0;
-        // 当天发送邮件
-        $emailCountOfDay = 0;
         // 当天有效商机
         $businessCountOfDay = 0;
         foreach ($recordsOfDay as $r) {
-            if($r->feed == 'email'){
-                $emailCountOfDay++;
-            }
             if($r->familiar == true){
                 $callCountOfDay++;
             }
@@ -249,12 +239,10 @@ class CompanysController extends Controller
         // 本月 当天 业绩统计
         $achievement = [
             'callCountOfMonth' => $callCountOfMonth,
-            'emailCountOfMonth' => $emailCountOfMonth,
             'businessCountOfMonth' => $businessCountOfMonth,
             'cusCountOfMonth' => $cusCountOfMonth,
             'moneyOfMonth' => $moneyOfMonth,
             'callCountOfDay' => $callCountOfDay,
-            'emailCountOfDay' => $emailCountOfDay,
             'businessCountOfDay' => $businessCountOfDay,
             'cusCountOfDay' => $cusCountOfDay,
             'moneyOfDay' => $moneyOfDay,

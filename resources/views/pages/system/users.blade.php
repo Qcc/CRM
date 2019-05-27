@@ -70,7 +70,7 @@
 
     <div class="layui-form-item" pane="">
         <div class="layui-input-block">
-            <input type="radio" name="delete_at" value="1" title="正常">
+            <input type="radio" name="delete_at" value="1" title="启用">
             <input type="radio" name="delete_at" value="0" title="禁用">
         </div>
     </div>

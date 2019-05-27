@@ -41,17 +41,19 @@ class UsersController extends Controller
      */
     public function userStore(Request $request, User $user)
     {
-        dd($request->all());
         $data = $request->all();
         if($request->password){
             $data['password'] = Hash::make($request->password);
         }
         $user = User::find($data['id']);
         $user->fill($data);
-        if($data['delete_at'] == '1'){
-            $user->restore();
-        }else{
-            $user->delete();
+        if($request->delete_at){
+            if($data['delete_at'] == '1'){
+                $user->restore();
+            }
+            if($data['delete_at'] == '0'){
+                $user->delete();
+            }
         }
         $user->save();
         return back()->with('success', '用户户信息修改完成!');

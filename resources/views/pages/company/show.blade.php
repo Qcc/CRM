@@ -21,9 +21,6 @@
                                 <input type="radio" name="feed" value="lucky" title="保持联系" checked="">
                                 <input type="radio" name="feed" value="noneed" title="没有需要">
                                 <input type="radio" name="feed" value="wrongnumber" title="号码不正确">
-                                  @if($company->email != '')
-                                  <input type="checkbox" name="email" lay-skin="primary" checked="" title="发送邮件">
-                                  @endif
                                 <button class="layui-btn" lay-submit="" lay-filter="record-btn">提交反馈</button>
                               </div>
                             </div>

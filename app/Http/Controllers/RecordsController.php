@@ -35,7 +35,6 @@ class RecordsController extends Controller
                 return back()->withInput()->with('danger', '反馈结果不能少于10个字。');
             }
             $feed='';
-            $email='';
             switch($request->feed){
                 case 'lucky': $feed = '<p>电话号码正确，可以继续跟进。</p>';
                 break;
@@ -69,9 +68,9 @@ class RecordsController extends Controller
             $follows = Redis::smembers('target_'.$user->id);
             $companys = $company->find($follows);
             if($request->next == -1){
-                return view('pages.company.follow',compact('companys'));
+                return view('pages.company.follow',compact('companys'))->with('success', '反馈成功，目标客户已经全部联系完!');
             }else{
-                return redirect(route('company.show',$request->next));
+                return redirect(route('company.show',$request->next))->with('success', '反馈成功,继续联系更多客户!');
             }
         }else{
             return abort(404);
