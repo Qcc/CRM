@@ -156,9 +156,29 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       date.setTime(date.getTime() - 10000); //将date设置为过去的时间
 
       document.cookie = key + "=v; expires =" + date.toGMTString(); //设置cookie
-    } // 目标客户搜索页面
+    } // 修改密码
 
   };
+  $('#password-btn').on('click', function () {
+    layer.open({
+      type: 1,
+      area: '500px',
+      shade: 0,
+      anim: 1,
+      title: '添加用户',
+      content: $('#user-password')
+    }); // 表单验证
+
+    form.verify({
+      password: [/^[\S]{6,25}$/, '密码必须6到25位，且不能出现空格'],
+      password_confirmation: function password_confirmation(value) {
+        console.log(value);
+        if (value === "") return "密码不能为空";
+        var pwd = $('input[name=password').val();
+        if (pwd !== value) return "两次次输入的密码不一致！";
+      }
+    });
+  }); // 目标客户搜索页面
 
   if ($(".company-secrch-page").length === 1) {
     table.init('companys-table', {

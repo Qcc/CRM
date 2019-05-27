@@ -38,6 +38,8 @@ Route::get('user/settings', 'UsersController@settings')->name('user.settings');
 Route::get('system/users', 'UsersController@users')->name('system.users');
 Route::post('system/user/update', 'UsersController@update')->name('user.update');
 Route::post('system/user/store', 'UsersController@store')->name('user.store');
+Route::post('system/user/store', 'UsersController@store')->name('user.store');
+Route::post('system/user/password/{users}', 'UsersController@password')->name('user.password');
 
 
 //目标客户

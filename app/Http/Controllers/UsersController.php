@@ -27,9 +27,9 @@ class UsersController extends Controller
      */
     public function users(Request $request, User $user){
         if($request->name){
-            $users = User::where('name','like','%'.$request->name.'%')->withTrashed()->paginate(10);
+            $users = User::where('name','like','%'.$request->name.'%')->withTrashed()->orderBy('created_at','desc')->paginate(10);
         }else{
-            $users = User::withTrashed()->paginate(10);
+            $users = User::withTrashed()->orderBy('created_at','desc')->paginate(10);
         }
         return view('pages.system.users',compact('users'));
     }
@@ -70,11 +70,46 @@ class UsersController extends Controller
 
     public function store(UserRequest $request, User $user)
     {
+        $avatars = [
+            'avatar001.png',
+            'avatar002.png',
+            'avatar003.png',
+            'avatar004.png',
+            'avatar005.png',
+            'avatar006.png',
+            'avatar007.png',
+            'avatar008.png',
+            'avatar009.png',
+            'avatar010.png',
+            'avatar011.png',
+            'avatar012.png',
+            'avatar013.png',
+        ];
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
+        // 随机选择一个头像
+        $user->avatar = asset('images/avatar/'.$avatars[array_rand($avatars)]);
         $user->save();
         return back()->with('success', '添加用户成功!');
+    }
+
+    // 用户修改密码
+    public function password(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'oldPassword' => 'bail|required|max:30',
+            'password' => 'bail|required|confirmed|min:6|max:30',
+        ]);
+        if($user->password == Hash::make($request->password)){
+
+            $request->user()->fill([
+                'password' => Hash::make($request->password)
+                ])->save();
+        }else{
+            return back()->with('danger', '密码不正确，更新密码失败！');
+        }
+        return back()->with('success', '密码更新成功！');
     }
 }

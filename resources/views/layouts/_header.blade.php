@@ -31,7 +31,7 @@
         </a>
         <dl class="layui-nav-child">
           <dd><a href="{{ route('user.settings') }}">基础资料</a></dd>
-          <dd><a href="">修改密码</a></dd>
+          <dd><a href="javascript:;" id="password-btn">修改密码</a></dd>
         </dl>
       </li>
       <li class="layui-nav-item"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">注销</a>
@@ -42,3 +42,31 @@
       @endauth
     </ul>
 </div>
+<form class="layui-form" method="POST" id="user-password" action="{{ route('user.password',Auth::id()) }}" lay-filter="user-password" style="display:none;margin-right: 80px;">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">旧密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="oldPassword" lay-verify="required|password" autocomplete="off" placeholder="请输入旧密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" lay-verify="required|password" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password_confirmation" lay-verify="required|password_confirmation" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn submit" lay-submit="" lay-filter="form-btn">确定</button>
+        </div>
+    </div>
+</form>

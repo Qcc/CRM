@@ -90,7 +90,6 @@
     </div>
 </form>
 <form class="layui-form" method="POST" id="user-add-form" action="{{ route('user.store') }}" lay-filter="user-add-form" style="display:none;margin-right: 80px;">
-        <input type="hidden" name="id">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
