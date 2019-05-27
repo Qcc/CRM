@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Auth;
 use Hash;
@@ -39,23 +40,41 @@ class UsersController extends Controller
      * @param User $user
      * @return void
      */
-    public function userStore(Request $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $data = $request->all();
-        if($request->password){
+        $data = [];
+        // 获取所有用户包括软删除用户 withTrashed 方法来获取包括软删除模型在内的模型
+        $user = User::withTrashed()->find($request->id);
+        if($request->name != $user->name){
+            $data['name'] = $request->name;
+        }
+        if($request->email != $user->email){
+            $data['email'] = $request->email;
+        }
+        if($request->password != null){
             $data['password'] = Hash::make($request->password);
         }
-        $user = User::find($data['id']);
-        $user->fill($data);
-        if($request->delete_at){
-            if($data['delete_at'] == '1'){
+        if(count($data) != 0){
+            $user->update($data);
+        }
+        if($request->deleted_at != null){
+            if($request->deleted_at == '1'){
                 $user->restore();
-            }
-            if($data['delete_at'] == '0'){
+            }else{
                 $user->delete();
             }
+            $user->save();
         }
+        return back()->with('success', '用户信息修改完成!');
+    }
+
+    public function store(UserRequest $request, User $user)
+    {
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
         $user->save();
-        return back()->with('success', '用户户信息修改完成!');
+        return back()->with('success', '添加用户成功!');
     }
 }

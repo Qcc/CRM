@@ -430,6 +430,21 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       }); //标注选中样式
 
       obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+    }); // 添加用户
+
+    $('.add-users').on('click', function () {
+      layer.open({
+        type: 1,
+        area: '500px',
+        shade: 0,
+        anim: 1,
+        title: '添加用户',
+        content: $('#user-add-form')
+      }); // 表单验证
+
+      form.verify({
+        password: [/^[\S]{6,25}$/, '密码必须6到25位，且不能出现空格']
+      });
     });
   } // 个人设置页面
 
@@ -437,30 +452,6 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   if ($('.user-settings-page').length == 1) {
     table.init('smtps-table', {//转化静态表格
       // toolbar: '#toolbarTarget',
-    }); // 添加SMTP服务器
-
-    $('.storeSmtp-action').on('click', function () {
-      $(this).attr('disabled', true);
-      layer.open({
-        type: 1,
-        area: '500px',
-        shade: 0,
-        anim: 1,
-        title: '添加SMTP服务器',
-        content: $('#storeSmtp')
-      });
-    }); // 添加邮件模版
-
-    $('.storetpl-action').on('click', function () {
-      $(this).attr('disabled', true);
-      layer.open({
-        type: 1,
-        area: '1200px',
-        shade: 0,
-        anim: 1,
-        title: '添加邮件模版器',
-        content: $('#tpl-form')
-      });
     });
   }
 });

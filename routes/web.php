@@ -36,7 +36,8 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 // 基础资料设置
 Route::get('user/settings', 'UsersController@settings')->name('user.settings');
 Route::get('system/users', 'UsersController@users')->name('system.users');
-Route::post('system/user/store', 'UsersController@userStore')->name('user.setStore');
+Route::post('system/user/update', 'UsersController@update')->name('user.update');
+Route::post('system/user/store', 'UsersController@store')->name('user.store');
 
 
 //目标客户
