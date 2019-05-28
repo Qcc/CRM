@@ -13,7 +13,7 @@
             <dd><a href="{{ route('company.upload') }}">资料上传</a></dd>
             <dd><a href="{{ route('system.users') }}">用户管理</a></dd>
             <dd><a href="{{ route('speechs.index') }}">销售话术</a></dd>
-            <dd><a href="">系统设置</a></dd>
+            <dd><a href="{{ route('settings.show') }}">系统设置</a></dd>
           </dl>
         </li>
     </ul>
@@ -41,6 +41,7 @@
       @endauth
     </ul>
 </div>
+@auth
 <form class="layui-form" method="POST" id="user-password" action="{{ route('user.password',Auth::id()) }}" lay-filter="user-password" style="display:none;margin-right: 80px;">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="layui-form-item">
@@ -69,3 +70,4 @@
         </div>
     </div>
 </form>
+@endauth

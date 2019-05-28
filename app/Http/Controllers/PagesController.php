@@ -13,6 +13,6 @@ class PagesController extends Controller
     
     public function show(Request $request)
     {
-        dd($request);
+        return view('pages.system.setting');
     }
 }

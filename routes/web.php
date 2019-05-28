@@ -71,4 +71,4 @@ Route::post('speech/store', 'SpeechsController@store')->name('speech.store');
 Route::post('speech/update', 'SpeechsController@update')->name('speech.update');
 Route::post('speech/destroy', 'SpeechsController@destroy')->name('speech.destroy');
 // 通用设置
-Route::get('speechs/show', 'PagesController@show')->name('settings.show');
+Route::get('system/show', 'PagesController@show')->name('settings.show');
