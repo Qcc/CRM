@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Auth;
-use Hash;
 
 class UsersController extends Controller
 {
@@ -64,7 +63,7 @@ class UsersController extends Controller
             }
         }
         if($request->password != null){
-            $data['password'] = Hash::make($request->password);
+            $data['password'] = bcrypt($request->password);
         }
         if(count($data) != 0){
             $user->update($data);

@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
             // 不等于 60，做密码加密处理
             $value = bcrypt($value);
         }
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = $value;
     }
 
     //一个用户可以添加多条speeche记录，一对多
