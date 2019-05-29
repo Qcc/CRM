@@ -315,3 +315,23 @@
         }
     }
 }
+
+.settings-show-page{
+    .business{
+        .btn{
+            text-align: right;
+        }
+    }
+    .notice{
+        .layui-input-block{
+            margin-left: 0px;
+        }
+        .btn{
+            text-align: right;
+        }
+        .tips{
+            font-size: 12px;
+            color: #aaa;
+        }
+    }
+}

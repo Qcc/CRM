@@ -288,3 +288,20 @@
   color: #03A9F4;
 }
 
+.settings-show-page .business .btn {
+  text-align: right;
+}
+
+.settings-show-page .notice .layui-input-block {
+  margin-left: 0px;
+}
+
+.settings-show-page .notice .btn {
+  text-align: right;
+}
+
+.settings-show-page .notice .tips {
+  font-size: 12px;
+  color: #aaa;
+}
+
