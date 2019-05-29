@@ -64,6 +64,7 @@ Route::post('customers/upload', 'CustomersController@upload')->name('customers.u
 
 // 正式客户资料
 Route::get('customers/show', 'CustomersController@show')->name('customers.show');
+Route::post('customers/check', 'CustomersController@check')->name('customers.check');
 
 // 销售话术
 Route::get('speechs/index', 'SpeechsController@index')->name('speechs.index');
@@ -72,3 +73,6 @@ Route::post('speech/update', 'SpeechsController@update')->name('speech.update');
 Route::post('speech/destroy', 'SpeechsController@destroy')->name('speech.destroy');
 // 通用设置
 Route::get('system/show', 'PagesController@show')->name('settings.show');
+Route::post('system/store', 'PagesController@store')->name('settings.store');
+Route::post('system/update', 'PagesController@update')->name('settings.update');
+Route::post('system/destroy', 'PagesController@destroy')->name('settings.destroy');

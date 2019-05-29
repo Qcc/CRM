@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class CustomersController extends Controller
 {
-    /**客户成交转为正式客户 */
+    /**客户成交转为审批正式客户 */
     public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
     {
         // dd($request->all());
@@ -21,7 +21,7 @@ class CustomersController extends Controller
         $customer->user_id = Auth::id();
         $customer->save();
         // 更新客户资料状态为 订单完成
-        $company->where('id',$request->company_id)->update(['follow' => 'complate']);
+        // $company->where('id',$request->company_id)->update(['follow' => 'complate']);
         // 删除跟进中的客户
         $follow->whereHas('company',function($query) use ($request){
             $query->where('id', $request->company_id);
@@ -85,5 +85,35 @@ class CustomersController extends Controller
             $customers = $customer->with('company')->paginate(10);
         }
         return view('pages.customer.show',compact('customers'));
+    }
+    
+    public function check(Request $request, Customer $customer)
+    {
+        $count = 0;
+        $ele = explode(',',$request->ids);
+        foreach ($ele as $id) {
+            if($request->type == 'approve'){
+                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>'complate']);
+                if($res){
+                    $count++;
+                }
+            }else if($request->type == 'dismissed'){
+                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>'dismissed']);
+                if($res){
+                    $count++;
+                }
+            }
+        }
+        return back()->with('success', '成功审核'.$count.'条数据!');
+    }
+
+    public function update()
+    {
+        return back()->with('success', '订单资料更新成功!');
+    }
+    
+    public function destroy()
+    {
+        return back()->with('success', '订单已经删除!');
     }
 }

@@ -15,6 +15,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 class CompanysController extends Controller
 {
@@ -236,6 +237,11 @@ class CompanysController extends Controller
             $cusCountOfDay++;
             $moneyOfDay += $c->money;
         }
+        // 缓存通知设置
+		$notice = Cache::rememberForever('notice', function (){
+            $n = \DB::table('settings')->where('name','notice')->first();
+            return $n->data;
+        });
         // 本月 当天 业绩统计
         $achievement = [
             'callCountOfMonth' => $callCountOfMonth,
@@ -246,6 +252,7 @@ class CompanysController extends Controller
             'businessCountOfDay' => $businessCountOfDay,
             'cusCountOfDay' => $cusCountOfDay,
             'moneyOfDay' => $moneyOfDay,
+            'notice' => $notice,
         ];
         return view('pages.company.follow',compact('companys','achievement'));
     }

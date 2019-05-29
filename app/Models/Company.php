@@ -30,6 +30,6 @@ class Company extends Model
      */
     public function customer()
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasMany(Customer::class);
     }
 }

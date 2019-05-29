@@ -6,8 +6,9 @@
    <div style="padding: 15px;background-color: #F2F2F2;">
     <div class="layui-card">
       <div class="layui-card-body ">
-          <blockquote class="layui-elem-quote">欢迎管理员：
-              <span class="x-red">test</span>！当前时间:2018-04-25 20:50:53
+          <blockquote class="layui-elem-quote">
+              <i class="layui-icon layui-icon-speaker"></i>  
+              {!! $achievement['notice'] !!}
           </blockquote>
       </div>
     </div>
@@ -40,7 +41,7 @@
               <a href="javascript:;" class="taday-body">
                 <h3>合同金额</h3>
                 <p>
-                    <cite>￥{{ $achievement['moneyOfMonth'] }}.00</cite></p>
+                    <cite>￥{{ $achievement['moneyOfMonth'] }}<span style="font-size: 20px">.00</span></cite></p>
             </a>
             </div>
         </div>

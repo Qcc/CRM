@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\FollowRequest;
+use Illuminate\Support\Facades\Cache;
 
 class FollowsController extends Controller
 {
@@ -31,6 +32,7 @@ class FollowsController extends Controller
                 $businessCountOfMonth++;
             }
         }
+        // 本月客户
         $customersOfMonth = $customer->where('user_id',$user->id)
         ->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
         // 本月成交客户
@@ -41,41 +43,37 @@ class FollowsController extends Controller
             $cusCountOfMonth++;
             $moneyOfMonth += $c->money;
         }
-        // 当天
-        $recordsOfDay = $record->where('user_id',$user->id)
-            ->whereBetween('created_at',[Carbon::now()->today(),Carbon::now()->tomorrow()])->get();
-        // 当天拨打电话
-        $callCountOfDay = 0;
-        // 当天有效商机
-        $businessCountOfDay = 0;
-        foreach ($recordsOfDay as $r) {
-            if($r->familiar == true){
-                $callCountOfDay++;
-            }
-            if($r->feed == 'lucky'){
-                $businessCountOfDay++;
-            }
+
+        // 上个月客户
+        $customersOfLastMonth = $customer->where('user_id',$user->id)
+        ->whereBetween('created_at',[Carbon::now()->subMonth()->firstOfMonth(),Carbon::now()->subMonth()->lastOfMonth()->addDays(1)])->get();
+        // 上个月成交金额
+        $moneyOfLastMonth = 0;
+        foreach ($customersOfLastMonth as $c) {
+            $moneyOfLastMonth += $c->money;
         }
-        $customersOfDay = $customer->where('user_id',$user->id)
-        ->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
-        // 当天成交客户
-        $cusCountOfDay = 0;
-        $moneyOfDay = 0;
-        // 当天成交金额
-        foreach ($customersOfDay as $c) {
-            $cusCountOfDay++;
-            $moneyOfDay += $c->money;
-        }
-        // 本月 当天 业绩统计
+        
+        // 缓存通知设置
+		$notice = Cache::rememberForever('notice', function (){
+            $n = \DB::table('settings')->where('name','notice')->first();
+            return $n->data;
+        });
+        // 本月等级由上个月决定
+        $thisMonth = howLevel($moneyOfLastMonth);
+        // 下个月等级由本月决定
+        $lastMonth = howLevel($moneyOfMonth);
+
+        // 本月 业绩统计
         $achievement = [
             'callCountOfMonth' => $callCountOfMonth,
             'businessCountOfMonth' => $businessCountOfMonth,
             'cusCountOfMonth' => $cusCountOfMonth,
             'moneyOfMonth' => $moneyOfMonth,
-            'callCountOfDay' => $callCountOfDay,
-            'businessCountOfDay' => $businessCountOfDay,
-            'cusCountOfDay' => $cusCountOfDay,
-            'moneyOfDay' => $moneyOfDay,
+            'levelOfMonth' => $thisMonth->name,
+            'commissionOfMonth' => $thisMonth->commission,
+            'nextMonthLevel' => $lastMonth->name,
+            'nextMonthCommission' => $lastMonth->commission,
+            'notice' => $notice,
         ];
         return view('pages.follow.follow',compact('follows', 'achievement'));
     }

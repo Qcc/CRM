@@ -21,7 +21,7 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-inline short-input">
-              <input type="text" name="expired" autocomplete="off" class="layui-input" id="expired" value="{{ old('expired', $follow->expired) }}" placeholder="预计成交时间">
+              <input type="text" name="expired" autocomplete="off" class="layui-input" id="expected" value="{{ old('expired', $follow->expired) }}" placeholder="预计成交时间">
           </div>
           <div class="layui-input-inline short-input no-right">
               <input type="text" name="schedule" autocomplete="off" class="layui-input" id="schedule" value="{{ old('schedule',$follow->schedule) }}" placeholder="下次联系提醒">

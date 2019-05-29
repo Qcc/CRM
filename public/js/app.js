@@ -345,7 +345,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
 
 
   laydate.render({
-    elem: '#expired'
+    elem: '#expected'
   }); //下次联系提醒
 
   laydate.render({
@@ -360,6 +360,16 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
       anim: 1,
       title: '提交合同(提交后不能修改，请核对信息是否正确)',
       content: $('#customer-form')
+    }); //售后到期
+
+    laydate.render({
+      elem: '#expired',
+      trigger: 'click'
+    }); //售后到期
+
+    laydate.render({
+      elem: '#completion_date',
+      trigger: 'click'
     });
     return false;
   }); // 自定义表单验证
@@ -422,11 +432,76 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   }); // 正式客户展示
 
   if ($('.customers-show-page').length == 1) {
+    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check !== 'complate'){ }}\n        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n        <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u64A4\u9500</a>\n        {{#  }else{ }}\n        <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u518D\u7B7E\u7EA6</a>\n        {{#  } }}\n        </script>";
+    $('#customersEdit-box').html(editBar);
     table.init('customers-table', {
       //转化静态表格
       toolbar: '#toolbarTarget',
       defaultToolbar: ['filter'],
       limit: 10
+    }); // 审核事件
+
+    table.on('toolbar(customers-table)', function (obj) {
+      var checkStatus = table.checkStatus('customers-table');
+
+      if (obj.event == 'CheckStatus') {
+        if (checkStatus.data.length == 0) {
+          layer.msg('没有选择任何行');
+          return false;
+        }
+
+        var data = checkStatus.data;
+        var ids = [];
+
+        for (var i = 0; i < data.length; i++) {
+          ids.push(data[i].id);
+        }
+
+        $('#check-ids').val(ids);
+        layer.confirm('请审核,共计' + data.length + '行', {
+          btn: ['批准', '驳回'] //按钮
+
+        }, function () {
+          $('#check-type').val('approve');
+          $('#check-form').submit();
+        }, function () {
+          $('#check-type').val('dismissed');
+          $('#check-form').submit();
+        });
+      }
+    }); //监听行工具事件 修改 删除 事件
+
+    table.on('tool(customers-table)', function (obj) {
+      var data = obj.data; //console.log(obj)
+
+      if (obj.event === 'del') {
+        $('#destroy-id').val(obj.data.id);
+        layer.confirm('真的删除行么', function (index) {
+          $('#destroy-form').submit();
+          obj.del();
+          layer.close(index);
+        });
+      } else if (obj.event === 'edit') {
+        form.val("customer-form", obj.data);
+        layer.alert(JSON.stringify(obj.data));
+        var reportform = layer.open({
+          type: 1,
+          area: '600px',
+          anim: 1,
+          title: '修改合同(提交后不能修改，请核对信息是否正确)',
+          content: $('#customer-form')
+        }); //售后到期
+
+        laydate.render({
+          elem: '#expired',
+          trigger: 'click'
+        }); //售后到期
+
+        laydate.render({
+          elem: '#completion_date',
+          trigger: 'click'
+        });
+      }
     });
   } // 用户管理页面
 

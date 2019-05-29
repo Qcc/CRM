@@ -284,12 +284,17 @@
   font-size: 20px;
 }
 
-.customers-show-page .layui-table-cell a {
+.customers-show-page .layui-table-cell .download {
   color: #03A9F4;
 }
 
 .settings-show-page .business .btn {
   text-align: right;
+}
+
+.settings-show-page .performance .btn {
+  text-align: center;
+  margin-left: 0px;
 }
 
 .settings-show-page .notice .layui-input-block {
@@ -303,5 +308,10 @@
 .settings-show-page .notice .tips {
   font-size: 12px;
   color: #aaa;
+}
+
+.settings-show-page .layui-body,
+.customers-show-page .layui-body {
+  padding-top: 0px;
 }
 

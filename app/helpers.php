@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Cache;
 
 function route_class()
 {
@@ -44,5 +45,27 @@ function nextCompany($company,$companys)
                 return $item->id;
             }
         }
+    }
+}
+
+function howLevel($money)
+{
+    // 缓存业绩等级设置
+	$level = Cache::rememberForever('level', function (){
+        $l = \DB::table('settings')->where('name','level')->first();
+        return json_decode($l->data); 
+    });
+    if($money >= $level->level_6->performance){
+        return $level->level_6;
+    }else if($money >= $level->level_5->performance){
+        return $level->level_5;
+    }else if($money >= $level->level_4->performance){
+        return $level->level_4;
+    }else if($money >= $level->level_4->performance){
+        return $level->level_3;
+    }else if($money >= $level->level_2->performance){
+        return $level->level_2;
+    }else{
+        return $level->level_1;
     }
 }

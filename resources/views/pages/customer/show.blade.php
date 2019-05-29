@@ -10,6 +10,16 @@
                   <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                   <th lay-data="{field:'id', width:80, hide:true}">ID</th>
                   <th lay-data="{field:'name', width:200}">公司</th>
+                  <th lay-data="{field:'check', width:100,templet: function(d){ 
+                    if(d.check == 'check'){
+                      return '<span class=color-ind>审核中</span>';
+                    }else if(d.check == 'dismissed'){
+                      return '<span class=color-red>已驳回</span>';
+                    }else if(d.check == 'complate'){
+                      return '<span class=color-gre>已完成</span>';
+                    }else{
+                      return '无';
+                    } }}">审核</th>
                   <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'<span class=color-red>有</span>':'无'} }">跟进记录</th>
                   <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
                     if(d.follow == 'target'){
@@ -23,20 +33,21 @@
                     }else{
                       return '无';
                     } }}">状态</th>
-                  <th lay-data="{field:'contact',width:80}">联系人</th>
-                  <th lay-data="{field:'phone',width:120}">电话</th>
+                  <th lay-data="{field:'company_id',width:80, hide:true}">公司ID</th>                  
+                  <th lay-data="{field:'contact',width:80, hide:true}">联系人</th>
+                  <th lay-data="{field:'phone',width:120, hide:true}">电话</th>
                   <th lay-data="{field:'product',width:100}">已购产品</th>
                   <th lay-data="{field:'contract',width:100,templet: function(d){ 
                     var a = d.contract.split(';');
                     console.log(a);
                     var list = '';
                     for(var i in a) {  
-                      list += ' <a href='+a[i]+'>下载</a> '  
+                      list += ' <a class=download href='+a[i]+'>下载</a> '  
                     };
                     return list}}">合同</th>
-                  <th lay-data="{field:'completion_date',width:105}">购买日期</th>
+                  <th lay-data="{field:'completion_date',width:105, hide:true}">购买日期</th>
                   <th lay-data="{field:'expired',width:105}">续费/售后到期</th>
-                  <th lay-data="{field:'money',width:100}">合同金额</th>
+                  <th lay-data="{field:'contract_money',width:100}">合同金额</th>
                   <th lay-data="{field:'comment'}">项目备注</th>
                   <th lay-data="{field:'boss', hide:true, width:80}">公司法人</th>
                   <th lay-data="{field:'money', hide:true, width:86,templet: function(d){return d.money+'万'} }">注册资金</th>
@@ -51,6 +62,7 @@
                   <th lay-data="{field:'address', width:200, hide:true}">地址</th>
                   <th lay-data="{field:'webAddress', width:130, hide:true}">网址</th>
                   <th lay-data="{field:'businessScope', hide:true,}">经营范围</th>
+                  <th lay-data="{fixed: 'right', width:120,toolbar:'#customersEdit'}">操作</th>
               </tr> 
             </thead>
             <tbody>
@@ -59,15 +71,17 @@
                 <td></td>
                 <td>{{ $customer->id }}</td>
                 <td>{{ $customer->company->name }}</td>
+                <td>{{ $customer->check }}</td>
                 <td>{{ $customer->company->contacted }}</td>
                 <td>{{ $customer->company->follow }}</td>
+                <td>{{ $customer->company->id }}</td>
                 <td>{{ $customer->contact  }}</td>
                 <td>{{ $customer->phone  }}</td>
                 <td>{{ $customer->product  }}</td>
                 <td>{{ $customer->contract  }}</td>
                 <td>{{ $customer->completion_date  }}</td>
                 <td>{{ $customer->expired  }}</td>
-                <td>{{ $customer->money  }}</td>
+                <td>{{ $customer->contract_money  }}</td>
                 <td>{{ $customer->comment  }}</td>
                 <td>{{ $customer->company->boss }}</td>
                 <td>{{ $customer->company->money }}</td>
@@ -91,6 +105,9 @@
         </div>
     </div>
 </div>
+<div id="customersEdit-box">
+
+</div>
 <script type="text/html" id="toolbarTarget">
   <form class="layui-form">
     <div class="layui-form-item">
@@ -99,7 +116,19 @@
       </div>
       <div class="layui-input-inline">
         <button class="layui-btn" lay-submit lay-filter="">查找</button>
+        <button class="layui-btn layui-btn-normal" type='button' lay-event="CheckStatus">审核</button>
       </div>
     </div>
+  </form>
 </script>
+<form id="check-form" action="{{ route('customers.check') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    <input id='check-ids' type="hidden" name="ids">
+    <input id='check-type' type="hidden" name="type">
+</form>
+<form id="destroy-form" action="{{ route('settings.destroy') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    <input id='destroy-id' type="hidden" name="id">
+</form>
 @stop
+@include('pages.customer._customer_form')
