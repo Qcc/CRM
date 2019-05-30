@@ -291,7 +291,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         obj.preview(function(index, file, result){
           console.log(index); //得到文件索引
           console.log(file); //得到文件对象
-          $('.upload-done>ul').append("<li class=index_"+index+"><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>"+ file.name +"</li>");
+          $('.upload-done>ul').append("<li class=upload_"+index+" data-file="+file.name+"><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>"+ file.name +"</li>");
           //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
           //这里还可以做一些 append 文件列表 DOM 的操作
           //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
@@ -299,14 +299,14 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         });
       }
       ,done: function(res, index, upload){
-        console.log(index); //得到文件索引
         //假设code=0代表上传成功
         if(res.code == 0){
-          $(".index_"+index+">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
+          $(".upload_"+index+">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
+          var fileName = $(".upload_"+index).attr('data-file')
           if($(".contract").val() == ""){
-            $(".contract").val(res.data.src);
+            $(".contract").val(res.data.src +"?name=" + fileName);
           }else{
-            $(".contract").val($(".contract").val()+";"+res.data.src);
+            $(".contract").val($(".contract").val()+";"+res.data.src +"?name=" + file.name);
           }
         }else{
           $(".index_"+index+">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-close color-red");
@@ -326,7 +326,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">撤销</a>
         {{#  }else{ }}
-        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">再签约</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">续签</a>
         {{#  } }}
         </script>`
       $('#customersEdit-box').html(editBar);
@@ -374,7 +374,6 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
           });
         } else if(obj.event === 'edit'){
           form.val("customer-form", obj.data);
-          layer.alert(JSON.stringify(obj.data));
           var reportform = layer.open({
             type: 1,
             area: '600px',
@@ -392,6 +391,21 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
             elem: '#completion_date',
             trigger: 'click'
           });
+          // 自定义表单验证
+          form.verify({
+            contract: function(value, item){ //value：表单的值、item：表单的DOM对象
+              if(value == ""){
+                return '合同必须上传';
+              }
+            }
+          });
+          var contract= $('.contract').val();
+          if(contract.length != 0){
+            var contract = contract.split(";");
+            for (let i = 0; i < contract.length; i++) {
+              $('.upload-done>ul').append("<li class=index_"+i+"><i class='layui-icon layui-icon-ok color-gre'></i>合同</li>");              
+            }
+          }
         }
       });
     }

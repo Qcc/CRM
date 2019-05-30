@@ -28,4 +28,14 @@ class SpeechRequest extends FormRequest
             'ask' => 'required|min:5',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'product.required' => '适用产品不能为空，无产品可填 “通用”',
+            'product.min' => '适用产品最少需要2个字',
+            'ask.required' => '客户提问不能为空',
+            'ask.min' => '客户体温不能少于5个字',
+        ];
+    }
 }

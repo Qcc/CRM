@@ -41,7 +41,7 @@
                   <a href="javascript:;" class="taday-body">
                     <h3>合同金额</h3>
                     <p>
-                        <cite>￥{{ $achievement['moneyOfMonth'] }}<span style="font-size: 20px">.00</span></cite></p>
+                        <cite>￥{{ $achievement['moneyOfMonth'] }}</cite></p>
                 </a>
                 </div>
                 <div class="layui-col-xs2">

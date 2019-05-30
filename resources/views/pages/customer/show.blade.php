@@ -126,7 +126,7 @@
     <input id='check-ids' type="hidden" name="ids">
     <input id='check-type' type="hidden" name="type">
 </form>
-<form id="destroy-form" action="{{ route('settings.destroy') }}" method="POST" style="display: none;">
+<form id="destroy-form" action="{{ route('customers.destroy') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
     <input id='destroy-id' type="hidden" name="id">
 </form>

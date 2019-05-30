@@ -13,10 +13,10 @@ class Follow extends Model
         'phone', 
         'product', 
         'difficulties', 
-        'expired', 
+        'expected', 
         'schedule', 
         'countdown',
-        'money'
+        'contract_money'
     ];
 
     /**

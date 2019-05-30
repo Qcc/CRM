@@ -21,11 +21,11 @@ class CreateFollowsTable extends Migration
             $table->string('phone')->nullable()->comment('电话');
             $table->string('product')->nullable()->comment('意向产品');
             $table->text('difficulties')->nullable()->comment('公关难点');
-            $table->date('expired')->nullable()->comment('预计成交时间');
+            $table->date('expected')->nullable()->comment('预计成交时间');
             $table->dateTime('schedule')->nullable()->comment('下次联系提醒');
             $table->dateTime('countdown')->comment('跟进截至日期');
             $table->integer('delayCount')->default(2)->comment('延期次数');
-            $table->float('money')->nullable()->comment('预计成交金额');
+            $table->float('contract_money')->nullable()->comment('预计成交金额');
             $table->timestamps();
         });
     }

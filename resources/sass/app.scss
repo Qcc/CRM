@@ -28,6 +28,24 @@
     text-align: right;
 }
 
+.upload-done {
+    li {
+        position: relative;
+    }
+
+    li:after {
+        content: "×";
+        color: #FF5722;
+        font-size: 20px;
+        width: 20px;
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+    }
+}
+
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 .layadmin-user-login-main {

@@ -16,7 +16,6 @@ class CustomersController extends Controller
     /**客户成交转为审批正式客户 */
     public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
     {
-        // dd($request->all());
         $customer->fill($request->all());
         $customer->user_id = Auth::id();
         $customer->save();

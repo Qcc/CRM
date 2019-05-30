@@ -403,23 +403,22 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
 
         console.log(file); //得到文件对象
 
-        $('.upload-done>ul').append("<li class=index_" + index + "><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>" + file.name + "</li>"); //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+        $('.upload-done>ul').append("<li class=upload_" + index + " data-file=" + file.name + "><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>" + file.name + "</li>"); //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
         //这里还可以做一些 append 文件列表 DOM 的操作
         //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
         //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
       });
     },
     done: function done(res, index, upload) {
-      console.log(index); //得到文件索引
       //假设code=0代表上传成功
-
       if (res.code == 0) {
-        $(".index_" + index + ">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
+        $(".upload_" + index + ">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
+        var fileName = $(".upload_" + index).attr('data-file');
 
         if ($(".contract").val() == "") {
-          $(".contract").val(res.data.src);
+          $(".contract").val(res.data.src + "?name=" + fileName);
         } else {
-          $(".contract").val($(".contract").val() + ";" + res.data.src);
+          $(".contract").val($(".contract").val() + ";" + res.data.src + "?name=" + file.name);
         }
       } else {
         $(".index_" + index + ">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-close color-red");
@@ -432,7 +431,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   }); // 正式客户展示
 
   if ($('.customers-show-page').length == 1) {
-    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check !== 'complate'){ }}\n        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n        <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u64A4\u9500</a>\n        {{#  }else{ }}\n        <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u518D\u7B7E\u7EA6</a>\n        {{#  } }}\n        </script>";
+    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check !== 'complate'){ }}\n        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n        <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u64A4\u9500</a>\n        {{#  }else{ }}\n        <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  } }}\n        </script>";
     $('#customersEdit-box').html(editBar);
     table.init('customers-table', {
       //转化静态表格
@@ -483,7 +482,6 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         });
       } else if (obj.event === 'edit') {
         form.val("customer-form", obj.data);
-        layer.alert(JSON.stringify(obj.data));
         var reportform = layer.open({
           type: 1,
           area: '600px',
@@ -500,7 +498,25 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         laydate.render({
           elem: '#completion_date',
           trigger: 'click'
+        }); // 自定义表单验证
+
+        form.verify({
+          contract: function contract(value, item) {
+            //value：表单的值、item：表单的DOM对象
+            if (value == "") {
+              return '合同必须上传';
+            }
+          }
         });
+        var contract = $('.contract').val();
+
+        if (contract.length != 0) {
+          var contract = contract.split(";");
+
+          for (var i = 0; i < contract.length; i++) {
+            $('.upload-done>ul').append("<li class=index_" + i + "><i class='layui-icon layui-icon-ok color-gre'></i>合同</li>");
+          }
+        }
       }
     });
   } // 用户管理页面

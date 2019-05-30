@@ -16,12 +16,12 @@
             <input type="text" name="product" lay-verify="title" autocomplete="off" value="{{ old('product', $follow->product) }}" placeholder="意向产品" class="layui-input">
           </div>
           <div class="layui-input-inline short-input no-right">
-            <input type="text" name="money" lay-verify="number" autocomplete="off" value="{{ old('money', $follow->money) }}" placeholder="预计金额" class="layui-input">
+            <input type="text" name="contract_money" lay-verify="number" autocomplete="off" value="{{ old('contract_money', $follow->contract_money) }}" placeholder="预计金额" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
           <div class="layui-input-inline short-input">
-              <input type="text" name="expired" autocomplete="off" class="layui-input" id="expected" value="{{ old('expired', $follow->expired) }}" placeholder="预计成交时间">
+              <input type="text" name="expected" autocomplete="off" class="layui-input" id="expected" value="{{ old('expected', $follow->expected) }}" placeholder="预计成交时间">
           </div>
           <div class="layui-input-inline short-input no-right">
               <input type="text" name="schedule" autocomplete="off" class="layui-input" id="schedule" value="{{ old('schedule',$follow->schedule) }}" placeholder="下次联系提醒">

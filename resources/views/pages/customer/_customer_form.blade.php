@@ -1,4 +1,4 @@
-<form class="layui-form customer-form" id="customer-form" lay-filter="customer-form" method="POST" action="{{ route('customers.store') }}" style="display:none;margin: 10px 40px 10px 20px;">
+<form class="layui-form customer-form" id="customer-form" lay-filter="customer-form" method="POST" action="{{ route('customers.update') }}" style="display:none;margin: 10px 40px 10px 20px;">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" class="contract" lay-verify="contract" name="contract">
   <input type="hidden" class="company_id" name="company_id" value="">

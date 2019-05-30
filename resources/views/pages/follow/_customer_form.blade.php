@@ -21,7 +21,7 @@
               <input type="text" name="product" lay-verify="title" autocomplete="off" value="{{ old('product', $follow->product) }}" placeholder="成交产品" class="layui-input">
             </div>
             <div class="layui-input-inline short-input no-right">
-              <input type="text" name="contract_money" lay-verify="number" autocomplete="off" value="{{ old('contract_money', $follow->money) }}" placeholder="合同金额" class="layui-input">
+              <input type="text" name="contract_money" lay-verify="number" autocomplete="off" value="{{ old('contract_money', $follow->contract_money) }}" placeholder="合同金额" class="layui-input">
             </div>
           </div>
         

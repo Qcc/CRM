@@ -210,7 +210,7 @@ class CompanysController extends Controller
         // 本月成交金额
         foreach ($customersOfMonth as $c) {
             $cusCountOfMonth++;
-            $moneyOfMonth += $c->money;
+            $moneyOfMonth += $c->contract_money;
         }
         // 当天
         $recordsOfDay = $record->where('user_id',$user->id)
@@ -235,7 +235,7 @@ class CompanysController extends Controller
         // 当天成交金额
         foreach ($customersOfDay as $c) {
             $cusCountOfDay++;
-            $moneyOfDay += $c->money;
+            $moneyOfDay += $c->contract_money;
         }
         // 缓存通知设置
 		$notice = Cache::rememberForever('notice', function (){

@@ -15,7 +15,7 @@ class Customer extends Model
         'contract', 
         'completion_date', 
         'expired', 
-        'money', 
+        'contract_money', 
         'comment', 
     ];
 

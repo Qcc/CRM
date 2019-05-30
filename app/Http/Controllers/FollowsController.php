@@ -41,7 +41,7 @@ class FollowsController extends Controller
         // 本月成交金额
         foreach ($customersOfMonth as $c) {
             $cusCountOfMonth++;
-            $moneyOfMonth += $c->money;
+            $moneyOfMonth += $c->contract_money;
         }
 
         // 上个月客户
@@ -50,7 +50,7 @@ class FollowsController extends Controller
         // 上个月成交金额
         $moneyOfLastMonth = 0;
         foreach ($customersOfLastMonth as $c) {
-            $moneyOfLastMonth += $c->money;
+            $moneyOfLastMonth += $c->contract_money;
         }
         
         // 缓存通知设置
