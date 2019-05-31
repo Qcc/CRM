@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'user_id', 
         'company_id', 
@@ -17,6 +19,7 @@ class Customer extends Model
         'expired', 
         'contract_money', 
         'comment', 
+        'check', 
     ];
 
     /**
@@ -25,5 +28,11 @@ class Customer extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    //一个订单对应一个职员 一对一关系
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

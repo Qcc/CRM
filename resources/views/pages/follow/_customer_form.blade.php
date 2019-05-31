@@ -42,13 +42,13 @@
                     <p>点击上传合同(只支持PDF或者RAR文件上传)</p>
                   </div>
 
-                <input type="file" style="display: none;" id="aetherupload-resource" onchange="aetherupload(this).setGroup('file').setSavedPathField('#aetherupload-savedpath').setPreprocessRoute('/aetherupload/preprocess').setUploadingRoute('/aetherupload/uploading').success(uploadDoneCallback).upload();"/>
+                <input type="file" style="display: none;" id="aetherupload-resource" onchange="aetherupload(this).setGroup('contract').setSavedPathField('#aetherupload-savedpath').setPreprocessRoute('/aetherupload/preprocess').setUploadingRoute('/aetherupload/uploading').success(uploadDoneCallback).upload();"/>
                 <!--需要一个名为aetherupload-resource的id，用以标识上传的文件，setGroup(...)设置分组名，setSavedPathField(...)设置资源存储路径的保存节点，setPreprocessRoute(...)设置预处理路由，setUploadingRoute(...)设置上传分块路由，success(...)可用于声名上传成功后的回调方法名。默认为选择文件后触发上传，也可根据需求手动更改为特定事件触发，如点击提交表单时-->
                 <div class="progress " style="height: 6px;margin-bottom: 2px;margin-top: 10px;width: 200px;">
                     <div id="aetherupload-progressbar" style="background:#5FB878;height:6px;width:0;"></div><!--需要一个名为aetherupload-progressbar的id，用以标识进度条-->
                 </div>
                 <span style="font-size:12px;color:#aaa;" id="aetherupload-output"></span><!--需要一个名为aetherupload-output的id，用以标识提示信息-->
-                <input type="hidden" class="contract" lay-verify="contract" name="contract" id="aetherupload-savedpath"><!--需要一个自定义名称的id，以及一个自定义名称的name值, 用以标识资源储存路径自动填充位置，默认id为aetherupload-savedpath，可根据setSavedPathField(...)设置为其它任意值-->
+                <input type="hidden" lay-verify="contract" name="contract" id="aetherupload-savedpath"><!--需要一个自定义名称的id，以及一个自定义名称的name值, 用以标识资源储存路径自动填充位置，默认id为aetherupload-savedpath，可根据setSavedPathField(...)设置为其它任意值-->
             </div>
             <div id="upload-contract-result"></div>
         </div>
@@ -63,7 +63,7 @@
   </div>
   <div class="layui-form-item">
       <div class="layui-input-block">
-        <button class="layui-btn layui-btn-normal layui-btn-lg" lay-submit="" lay-filter="more-info">确认，并转为正式客户</button>
+        <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="more-info">确认，并转为正式客户</button>
       </div>
     </div>
 

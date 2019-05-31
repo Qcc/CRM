@@ -252,6 +252,15 @@
   cursor: pointer;
 }
 
+.layui-form-item .delete-contract {
+  cursor: pointer;
+}
+
+.layui-form-item #upload-contract-result {
+  padding-right: 20px;
+  word-wrap: break-word;
+}
+
 .user-settings-page .layui-upload-img {
   max-width: 180px;
 }

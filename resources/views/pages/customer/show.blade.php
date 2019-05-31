@@ -10,6 +10,7 @@
                   <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
                   <th lay-data="{field:'id', width:80, hide:true}">ID</th>
                   <th lay-data="{field:'name', width:200}">公司</th>
+                  <th lay-data="{field:'user', width:80, hide:true}">销售</th>
                   <th lay-data="{field:'check', width:100,templet: function(d){ 
                     if(d.check == 'check'){
                       return '<span class=color-ind>审核中</span>';
@@ -37,14 +38,9 @@
                   <th lay-data="{field:'contact',width:80, hide:true}">联系人</th>
                   <th lay-data="{field:'phone',width:120, hide:true}">电话</th>
                   <th lay-data="{field:'product',width:100}">已购产品</th>
-                  <th lay-data="{field:'contract',width:100,templet: function(d){ 
-                    var a = d.contract.split(';');
-                    console.log(a);
-                    var list = '';
-                    for(var i in a) {  
-                      list += ' <a class=download href='+a[i]+'>下载</a> '  
-                    };
-                    return list}}">合同</th>
+                  <th lay-data="{field:'contract',width:100,templet: function(d){
+                    return '<a class=download href=' + d.contract + '>' + d.contract.substr((d.contract.lastIndexOf('/')) + 1) + '</a>'
+                    }}">合同</th>
                   <th lay-data="{field:'completion_date',width:105, hide:true}">购买日期</th>
                   <th lay-data="{field:'expired',width:105}">续费/售后到期</th>
                   <th lay-data="{field:'contract_money',width:100}">合同金额</th>
@@ -71,6 +67,7 @@
                 <td></td>
                 <td>{{ $customer->id }}</td>
                 <td>{{ $customer->company->name }}</td>
+                <td>{{ $customer->user->name }}</td>
                 <td>{{ $customer->check }}</td>
                 <td>{{ $customer->company->contacted }}</td>
                 <td>{{ $customer->company->follow }}</td>
@@ -132,3 +129,11 @@
 </form>
 @stop
 @include('pages.customer._customer_form')
+@section('script')
+<script type="text/javascript" src="{{ asset('lib/scripts/jquery.min.js') }}"></script>
+<!-- aetherupload文件上传组件 -->
+<script src="{{ URL::asset('vendor/aetherupload/js/spark-md5.min.js') }}"></script>
+<!--需要引入spark-md5.min.js-->
+<script src="{{ URL::asset('vendor/aetherupload/js/aetherupload.js') }}"></script>
+<!--需要引入aetherupload.js-->
+@stop

@@ -263,6 +263,15 @@
         }
     }
 }
+.layui-form-item {
+    .delete-contract{
+        cursor: pointer;
+    }
+    #upload-contract-result{
+        padding-right: 20px;
+        word-wrap: break-word;
+    }
+}
 
 .user-settings-page {
 

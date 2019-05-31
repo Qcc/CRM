@@ -28,60 +28,72 @@ class CustomersController extends Controller
         return redirect()->route('follow.follow')->with('success', '客户资料保存成功');
     }
 
-    /**
-     * 上传客户合同
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function upload(Request $request)
-    {
-        $data = [
-            "code" => 1
-            ,"msg" => "上传失败"
-            ,"data" => [
-              "src"=>""
-            ]
-        ];
+    // /**
+    //  * 上传客户合同
+    //  *
+    //  * @param Request $request
+    //  * @return void
+    //  */
+    // public function upload(Request $request)
+    // {
+    //     $data = [
+    //         "code" => 1
+    //         ,"msg" => "上传失败"
+    //         ,"data" => [
+    //           "src"=>""
+    //         ]
+    //     ];
 
-        $file = $request->file;
-        if(!$file -> isValid()){ 
-            return $data; 
-        }
-        // 只允许以下后缀名的图片文件上传
-        $allowed_ext = ["pdf", "rar"];
-        // 获取文件的后缀名，因图片从剪贴板里黏贴时后缀名为空，所以此处确保后缀一直存在
-        $extension = strtolower($file->getClientOriginalExtension()) ?: 'rar';
-        // 如果上传的不是PDF RAR将终止操作
-        if ( ! in_array($extension, $allowed_ext)) {
-            return $data;
-        }
-        // 构建存储的文件夹规则，值如：uploads/images/avatars/201709/21/
-        // 文件夹切割能让查找效率更高。
-        $filePath ="public/contract/" . date("Ym/d", time()) .'/';
-        $fileName = 'contract_' . time() . '_' . str_random(10) . '.' . $extension;
-        $absFile = $filePath.$fileName;
-        // 将图片移动到我们的目标存储路径中
-        $boolSave = Storage::putFileAs( $filePath, $file,$fileName);
-        if($boolSave){
-          $url = Storage::url($absFile);
-          $data['code'] = 0;
-          $data['msg'] = '合同上传成功';
-          $data['data']['src'] = config('app.url') . $url;
-          return $data; 
-        }else{
-            return $data;
-        }
-    }
+    //     $file = $request->file;
+    //     if(!$file -> isValid()){ 
+    //         return $data; 
+    //     }
+    //     // 只允许以下后缀名的图片文件上传
+    //     $allowed_ext = ["pdf", "rar"];
+    //     // 获取文件的后缀名，因图片从剪贴板里黏贴时后缀名为空，所以此处确保后缀一直存在
+    //     $extension = strtolower($file->getClientOriginalExtension()) ?: 'rar';
+    //     // 如果上传的不是PDF RAR将终止操作
+    //     if ( ! in_array($extension, $allowed_ext)) {
+    //         return $data;
+    //     }
+    //     // 构建存储的文件夹规则，值如：uploads/images/avatars/201709/21/
+    //     // 文件夹切割能让查找效率更高。
+    //     $filePath ="public/contract/" . date("Ym/d", time()) .'/';
+    //     $fileName = 'contract_' . time() . '_' . str_random(10) . '.' . $extension;
+    //     $absFile = $filePath.$fileName;
+    //     // 将图片移动到我们的目标存储路径中
+    //     $boolSave = Storage::putFileAs( $filePath, $file,$fileName);
+    //     if($boolSave){
+    //       $url = Storage::url($absFile);
+    //       $data['code'] = 0;
+    //       $data['msg'] = '合同上传成功';
+    //       $data['data']['src'] = config('app.url') . $url;
+    //       return $data; 
+    //     }else{
+    //         return $data;
+    //     }
+    // }
 
     public function show(Request $request, Customer $customer)
     {
-        if($request->name){
-            $customers = $customer->whereHas('company',function($query) use ($request){
-                $query->where('name','like', '%'.$request->name.'%');
-            })->paginate(10);
+        $user = Auth::user();
+        // 检查当前用户是否是管理员
+        if($user->can('manager')){
+            if($request->name){
+                $customers = $customer->whereHas('company',function($query) use ($request){
+                    $query->where('name','like', '%'.$request->name.'%');
+                })->with('user')->paginate(10);
+            }else{
+                $customers = $customer->with('company')->with('user')->paginate(10);
+            }
         }else{
-            $customers = $customer->with('company')->paginate(10);
+            if($request->name){
+                $customers = $customer->where('user_id',$user->id)->whereHas('company',function($query) use ($request){
+                    $query->where('name','like', '%'.$request->name.'%');
+                })->with('user')->paginate(10);
+            }else{
+                $customers = $customer->where('user_id',$user->id)->with('company')->with('user')->paginate(10);
+            }
         }
         return view('pages.customer.show',compact('customers'));
     }
@@ -106,13 +118,19 @@ class CustomersController extends Controller
         return back()->with('success', '成功审核'.$count.'条数据!');
     }
 
-    public function update()
+    public function update(Request $request, Customer $customer)
     {
+        $customer = $customer->find($request->id);
+        $data = $request->all();
+        $data['check'] = 'check';
+        $customer->update($data);
         return back()->with('success', '订单资料更新成功!');
     }
     
-    public function destroy()
+    public function destroy(Request $request, Customer $customer)
     {
+        $customer = $customer->find($request->id);
+        $customer->delete();
         return back()->with('success', '订单已经删除!');
     }
 }

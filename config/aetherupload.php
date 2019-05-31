@@ -148,10 +148,17 @@ return [
 
     'groups' => [
 
-        'file' => [ # 分组名
-            'group_dir'                    => 'file', # 分组目录名
+        'contract' => [ # 分组名
+            'group_dir'                    => 'contract', # 分组目录名
             'resource_maxsize'             => 0, # 被允许的资源文件最大值(B)，0为不限制，32位系统最大值为2147483647
-            'resource_extensions'          => [], # 被允许的资源文件扩展名(白名单)，空为不限制
+            'resource_extensions'          => ['pdf','rar'], # 被允许的资源文件扩展名(白名单)，空为不限制
+            'event_before_upload_complete' => '', # 上传完成前触发的事件(完整临时文件)，PartialResource类的实例被注入
+            'event_upload_complete'        => '', # 上传完成后触发的事件(完整资源文件)，Resource类的实例被注入
+        ],
+        'docment' => [ # 分组名
+            'group_dir'                    => 'docment', # 分组目录名
+            'resource_maxsize'             => 0, # 被允许的资源文件最大值(B)，0为不限制，32位系统最大值为2147483647
+            'resource_extensions'          => ['pdf','rar','doc','docx','ppt','pptx','xls','xlsx','jpg','jpge','png'], # 被允许的资源文件扩展名(白名单)，空为不限制
             'event_before_upload_complete' => '', # 上传完成前触发的事件(完整临时文件)，PartialResource类的实例被注入
             'event_upload_complete'        => '', # 上传完成后触发的事件(完整资源文件)，Resource类的实例被注入
         ],

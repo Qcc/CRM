@@ -232,7 +232,6 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       });
     };
     setCountdown();
-    }
     //预计成交时间
     laydate.render({
       elem: '#expected'
@@ -275,6 +274,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
     });
     // 合同文件上传 回调
     uploadDoneCallback = function(){
+      $('#aetherupload-savedpath').val("/aetherupload/download/"+this.savedPath+"/"+this.resourceName.split(".")[0]);
       $('.upload-contract-warp>i').css("color","#ccc");
       $('.upload-contract-warp').css("cursor","not-allowed");
       $('#upload-contract-result').append(
@@ -282,7 +282,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       );
       // 删除合同
       $('.delete-contract').on('click',function(e){
-        $('.contract').val('');
+        $('#aetherupload-savedpath').val('');
         $('#upload-contract-result').empty();
         $('#aetherupload-progressbar').css('width','0px');
         $('#aetherupload-output').empty();
@@ -296,21 +296,19 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       });
     }
     $('.upload-contract-warp').on('click',function(){
-      console.log('click');
-      if($('.contract').val() == ""){
-        console.log('执行');
+      if($('#aetherupload-savedpath').val() == ""){
         $('#aetherupload-resource').click();
       }
     });
     
-
+  }
     
     // 正式客户展示
     if($('.customers-show-page').length == 1 ){
       var editBar = `<script type="text/html" id="customersEdit">
         {{#  if(d.check !== 'complate'){ }}
         <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">撤销</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
         {{#  }else{ }}
         <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">续签</a>
         {{#  } }}
@@ -364,8 +362,39 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
             type: 1,
             area: '600px',
             anim: 1,
-            title: '修改合同(提交后不能修改，请核对信息是否正确)',
+            title: '修改合同('+ obj.data.name +')',
             content: $('#customer-form'),
+          });
+          // 修改合同文件上传 回调
+          uploadDoneCallback = function(){
+            $('#aetherupload-savedpath').val("/aetherupload/download/"+this.savedPath+"/"+this.resourceName.split(".")[0]);
+            $('.upload-contract-warp>i').css("color","#ccc");
+            $('.upload-contract-warp').css("cursor","not-allowed");
+            $('#upload-contract-result').append(
+              '<p>' + this.resourceName + '(' + parseFloat(this.resourceSize / (1000 * 1000)).toFixed(2) + 'MB)<i class="layui-icon layui-icon-delete delete-contract" title="删除合同"></i></p>'
+            );
+            // 删除合同
+            $('.delete-contract').on('click',function(e){
+              $('#aetherupload-savedpath').val('');
+              $('#upload-contract-result').empty();
+              $('#aetherupload-progressbar').css('width','0px');
+              $('#aetherupload-output').empty();
+              var file = document.getElementById('aetherupload-resource');
+                  file.disabled =false;
+                  file.value ='';
+              $('.upload-contract-warp>i').css("color","#009688");
+              $('.upload-contract-warp').css("cursor","pointer");
+              e.preventDefault();
+              e.stopPropagation();
+            });
+          }
+
+          $('.upload-contract-warp').on('click',function(){
+            console.log('dianji');
+            if($('#aetherupload-savedpath').val() == ""){
+              console.log('xiugai');
+              $('#aetherupload-resource').click();
+            }
           });
           //售后到期
           laydate.render({
@@ -385,12 +414,28 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
               }
             }
           });
-          var contract= $('.contract').val();
-          if(contract.length != 0){
-            var contract = contract.split(";");
-            for (let i = 0; i < contract.length; i++) {
-              $('.upload-done>ul').append("<li class=index_"+i+"><i class='layui-icon layui-icon-ok color-gre'></i>合同</li>");              
-            }
+          var contract = $('#aetherupload-savedpath').val();
+          if(contract != ""){
+            $('#aetherupload-progressbar').css('width','100%');
+            $('.upload-contract-warp>i').css("color","#ccc");
+            $('.upload-contract-warp').css("cursor","not-allowed");
+            $('#upload-contract-result').empty().append(
+              '<p>' + contract.substr((contract.lastIndexOf("/")) + 1) + '<i class="layui-icon layui-icon-delete delete-contract" title="删除合同"></i></p>'
+            );
+            // 删除合同
+            $('.delete-contract').on('click',function(e){
+              $('#aetherupload-savedpath').val('');
+              $('#upload-contract-result').empty();
+              $('#aetherupload-progressbar').css('width','0px');
+              $('#aetherupload-output').empty();
+              var file = document.getElementById('aetherupload-resource');
+                  file.disabled =false;
+                  file.value ='';
+              $('.upload-contract-warp>i').css("color","#009688");
+              $('.upload-contract-warp').css("cursor","pointer");
+              e.preventDefault();
+              e.stopPropagation();
+            });
           }
         }
       });
