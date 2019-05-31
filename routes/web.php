@@ -67,6 +67,7 @@ Route::get('customers/show', 'CustomersController@show')->name('customers.show')
 Route::post('customers/check', 'CustomersController@check')->name('customers.check');
 Route::post('customers/update', 'CustomersController@update')->name('customers.update');
 Route::post('customers/destroy', 'CustomersController@destroy')->name('customers.destroy');
+Route::post('customers/restore', 'CustomersController@restore')->name('customers.restore');
 
 // 销售话术
 Route::get('speechs/index', 'SpeechsController@index')->name('speechs.index');

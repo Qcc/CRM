@@ -19,7 +19,7 @@ class FollowsController extends Controller
     {
         $user = Auth::user();
         $follows = $follow->with('company')->get();
-        $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
+        $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
             // 本月拨打电话
         $callCountOfMonth = 0;
         // 本月有效商机
@@ -34,7 +34,7 @@ class FollowsController extends Controller
         }
         // 本月客户
         $customersOfMonth = $customer->where('user_id',$user->id)
-        ->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
+        ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;
         $moneyOfMonth = 0;
@@ -46,7 +46,7 @@ class FollowsController extends Controller
 
         // 上个月客户
         $customersOfLastMonth = $customer->where('user_id',$user->id)
-        ->whereBetween('created_at',[Carbon::now()->subMonth()->firstOfMonth(),Carbon::now()->subMonth()->lastOfMonth()->addDays(1)])->get();
+        ->whereBetween('created_at',[Carbon::now()->startOfMonth()->subMonths(1),Carbon::now()->startOfMonth()->subMonths(1)->endOfMonth()])->get();
         // 上个月成交金额
         $moneyOfLastMonth = 0;
         foreach ($customersOfLastMonth as $c) {

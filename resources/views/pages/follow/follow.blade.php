@@ -66,7 +66,7 @@
       </div>
     </div>
     <div class="layui-row layui-col-space10">
-        <div class="layui-col-xs6">
+        <div class="layui-col-xs4">
             <div class="layui-card">
                 <div class="layui-card-header">预约联系</div>
                 <div class="layui-card-body"> 
@@ -75,9 +75,18 @@
               </div>
         </div>
 
-        <div class="layui-col-xs6">
+        <div class="layui-col-xs4">
             <div class="layui-card">
                 <div class="layui-card-header">跟进到期</div>
+                <div class="layui-card-body"> 
+                    
+                </div>
+              </div>
+        </div>
+
+        <div class="layui-col-xs4">
+            <div class="layui-card">
+                <div class="layui-card-header">老客户维系</div>
                 <div class="layui-card-body"> 
                     
                 </div>

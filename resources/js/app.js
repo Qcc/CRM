@@ -306,11 +306,13 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
     // 正式客户展示
     if($('.customers-show-page').length == 1 ){
       var editBar = `<script type="text/html" id="customersEdit">
-        {{#  if(d.check !== 'complate'){ }}
-        <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        {{#  }else{ }}
-        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">续签</a>
+        {{#  if(d.check == 'check'){ }}
+            <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        {{#  }else if(d.check == 'complate'){ }}
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">续签</a>
+        {{#  }else if(d.check == 'delete'){ }}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="restore">恢复</a>
         {{#  } }}
         </script>`
       $('#customersEdit-box').html(editBar);
@@ -390,9 +392,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
           }
 
           $('.upload-contract-warp').on('click',function(){
-            console.log('dianji');
             if($('#aetherupload-savedpath').val() == ""){
-              console.log('xiugai');
               $('#aetherupload-resource').click();
             }
           });
@@ -437,6 +437,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
               e.stopPropagation();
             });
           }
+        }else if(obj.event == 'restore'){
+          $('#restore-id').val(obj.data.id);
+          layer.confirm('真的恢复行么', function(index){
+            $('#restore-form').submit();
+            layer.close(index);
+          });
         }
       });
     }

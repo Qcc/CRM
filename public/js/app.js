@@ -411,7 +411,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
 
 
   if ($('.customers-show-page').length == 1) {
-    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check !== 'complate'){ }}\n        <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n        <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u5220\u9664</a>\n        {{#  }else{ }}\n        <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  } }}\n        </script>";
+    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check == 'check'){ }}\n            <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n            <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u5220\u9664</a>\n        {{#  }else if(d.check == 'complate'){ }}\n            <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  }else if(d.check == 'delete'){ }}\n            <a class=\"layui-btn layui-btn-warm layui-btn-xs\" lay-event=\"restore\">\u6062\u590D</a>\n        {{#  } }}\n        </script>";
     $('#customersEdit-box').html(editBar);
     table.init('customers-table', {
       //转化静态表格
@@ -492,10 +492,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         };
 
         $('.upload-contract-warp').on('click', function () {
-          console.log('dianji');
-
           if ($('#aetherupload-savedpath').val() == "") {
-            console.log('xiugai');
             $('#aetherupload-resource').click();
           }
         }); //售后到期
@@ -540,6 +537,12 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
             e.stopPropagation();
           });
         }
+      } else if (obj.event == 'restore') {
+        $('#restore-id').val(obj.data.id);
+        layer.confirm('真的恢复行么', function (index) {
+          $('#restore-form').submit();
+          layer.close(index);
+        });
       }
     });
   } // 用户管理页面

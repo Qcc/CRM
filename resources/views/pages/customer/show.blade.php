@@ -12,12 +12,14 @@
                   <th lay-data="{field:'name', width:200}">公司</th>
                   <th lay-data="{field:'user', width:80, hide:true}">销售</th>
                   <th lay-data="{field:'check', width:100,templet: function(d){ 
-                    if(d.check == 'check'){
-                      return '<span class=color-ind>审核中</span>';
+                    if(d.check == 'delete'){
+                      return '<span class=color-drak>已删除</span>';
                     }else if(d.check == 'dismissed'){
                       return '<span class=color-red>已驳回</span>';
                     }else if(d.check == 'complate'){
                       return '<span class=color-gre>已完成</span>';
+                    }else if(d.check == 'check'){
+                      return '<span class=color-ind>审核中</span>';
                     }else{
                       return '无';
                     } }}">审核</th>
@@ -111,9 +113,11 @@
       <div class="layui-input-inline">
         <input type="text" name="name" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
       </div>
-      <div class="layui-input-inline">
+      <div class="layui-input-inline" style="width: 250px;">
         <button class="layui-btn" lay-submit lay-filter="">查找</button>
+        @can('manager')
         <button class="layui-btn layui-btn-normal" type='button' lay-event="CheckStatus">审核</button>
+        @endcan
       </div>
     </div>
   </form>
@@ -126,6 +130,10 @@
 <form id="destroy-form" action="{{ route('customers.destroy') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
     <input id='destroy-id' type="hidden" name="id">
+</form>
+<form id="restore-form" action="{{ route('customers.restore') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    <input id='restore-id' type="hidden" name="id">
 </form>
 @stop
 @include('pages.customer._customer_form')

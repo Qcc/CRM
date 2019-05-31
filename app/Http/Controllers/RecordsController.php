@@ -68,7 +68,7 @@ class RecordsController extends Controller
             $follows = Redis::smembers('target_'.$user->id);
             $companys = $company->find($follows);
             if($request->next == -1){
-                return view('pages.company.follow',compact('companys'))->with('success', '反馈成功，目标客户已经全部联系完!');
+                return redirect(route('company.follow'))->with('success', '反馈成功，目标客户已经全部联系完!');
             }else{
                 return redirect(route('company.show',$request->next))->with('success', '反馈成功,继续联系更多客户!');
             }

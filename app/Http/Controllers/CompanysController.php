@@ -189,7 +189,7 @@ class CompanysController extends Controller
         // 返回集合 'target_'.$user->id 中的所有成员
         $follows = Redis::smembers('target_'.$user->id);
         $companys = $company->find($follows);
-        $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
+        $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
             // 本月拨打电话
         $callCountOfMonth = 0;
         // 本月有效商机
@@ -203,7 +203,7 @@ class CompanysController extends Controller
             }
         }
         $customersOfMonth = $customer->where('user_id',$user->id)
-        ->whereBetween('created_at',[Carbon::now()->firstOfMonth(),Carbon::now()->lastOfMonth()->addDays(1)])->get();
+        ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;
         $moneyOfMonth = 0;
@@ -214,7 +214,7 @@ class CompanysController extends Controller
         }
         // 当天
         $recordsOfDay = $record->where('user_id',$user->id)
-            ->whereBetween('created_at',[Carbon::now()->today(),Carbon::now()->tomorrow()])->get();
+            ->whereBetween('created_at',[Carbon::now()->startOfDay(),Carbon::now()->endOfDay()])->get();
         // 当天拨打电话
         $callCountOfDay = 0;
         // 当天有效商机
@@ -228,7 +228,7 @@ class CompanysController extends Controller
             }
         }
         $customersOfDay = $customer->where('user_id',$user->id)
-        ->whereBetween('created_at',[Carbon::now()->today(),Carbon::now()->tomorrow()])->get();
+        ->whereBetween('created_at',[Carbon::now()->startOfDay(),Carbon::now()->endOfDay()])->get();
         // 当天成交客户
         $cusCountOfDay = 0;
         $moneyOfDay = 0;

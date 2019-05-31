@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class CustomersController extends Controller
 {
@@ -18,6 +19,7 @@ class CustomersController extends Controller
     {
         $customer->fill($request->all());
         $customer->user_id = Auth::id();
+        $customer->relationship = Carbon::now()->addDay(30);
         $customer->save();
         // 更新客户资料状态为 订单完成
         // $company->where('id',$request->company_id)->update(['follow' => 'complate']);
@@ -80,11 +82,11 @@ class CustomersController extends Controller
         // 检查当前用户是否是管理员
         if($user->can('manager')){
             if($request->name){
-                $customers = $customer->whereHas('company',function($query) use ($request){
+                $customers = $customer->withTrashed()->whereHas('company',function($query) use ($request){
                     $query->where('name','like', '%'.$request->name.'%');
                 })->with('user')->paginate(10);
             }else{
-                $customers = $customer->with('company')->with('user')->paginate(10);
+                $customers = $customer->withTrashed()->with('company')->with('user')->paginate(10);
             }
         }else{
             if($request->name){
@@ -130,7 +132,17 @@ class CustomersController extends Controller
     public function destroy(Request $request, Customer $customer)
     {
         $customer = $customer->find($request->id);
+        $customer->check = 'delete';
+        $customer->save();
         $customer->delete();
         return back()->with('success', '订单已经删除!');
+    }
+    public function restore(Request $request, Customer $customer)
+    {
+        $customer = $customer->onlyTrashed()->find($request->id);
+        $customer->restore();
+        $customer->check = 'check';
+        $customer->save();
+        return back()->with('success', '订单已经恢复!');
     }
 }
