@@ -248,6 +248,10 @@
   margin-right: 0px;
 }
 
+.follow-show-page .layui-form-item .delete-contract {
+  cursor: pointer;
+}
+
 .user-settings-page .layui-upload-img {
   max-width: 180px;
 }

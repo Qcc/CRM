@@ -273,52 +273,38 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         }
       }
     });
+    // 合同文件上传 回调
+    uploadDoneCallback = function(){
+      $('.upload-contract-warp>i').css("color","#ccc");
+      $('.upload-contract-warp').css("cursor","not-allowed");
+      $('#upload-contract-result').append(
+        '<p>' + this.resourceName + '(' + parseFloat(this.resourceSize / (1000 * 1000)).toFixed(2) + 'MB)<i class="layui-icon layui-icon-delete delete-contract" title="删除合同"></i></p>'
+      );
+      // 删除合同
+      $('.delete-contract').on('click',function(e){
+        $('.contract').val('');
+        $('#upload-contract-result').empty();
+        $('#aetherupload-progressbar').css('width','0px');
+        $('#aetherupload-output').empty();
+        var file = document.getElementById('aetherupload-resource');
+            file.disabled =false;
+            file.value ='';
+        $('.upload-contract-warp>i').css("color","#009688");
+        $('.upload-contract-warp').css("cursor","pointer");
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+    $('.upload-contract-warp').on('click',function(){
+      console.log('click');
+      if($('.contract').val() == ""){
+        console.log('执行');
+        $('#aetherupload-resource').click();
+      }
+    });
+    
 
-    //拖拽上传合同
-    upload.render({
-      elem: '#contract'
-      ,url: '/customers/upload'
-      ,accept: 'file' //允许上传的文件类型
-      ,data: {
-        _token: $('meta[name="csrf-token"]').attr('content')
-      }
-      ,exts: 'pdf|rar'
-      ,size: 10240 //最大允许上传的文件大小
-      ,choose: function(obj){
-        //将每次选择的文件追加到文件队列
-        // var files = obj.pushFile();
-        //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
-        obj.preview(function(index, file, result){
-          console.log(index); //得到文件索引
-          console.log(file); //得到文件对象
-          $('.upload-done>ul').append("<li class=upload_"+index+" data-file="+file.name+"><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop'></i>"+ file.name +"</li>");
-          //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
-          //这里还可以做一些 append 文件列表 DOM 的操作
-          //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
-          //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
-        });
-      }
-      ,done: function(res, index, upload){
-        //假设code=0代表上传成功
-        if(res.code == 0){
-          $(".upload_"+index+">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-ok color-gre");
-          var fileName = $(".upload_"+index).attr('data-file')
-          if($(".contract").val() == ""){
-            $(".contract").val(res.data.src +"?name=" + fileName);
-          }else{
-            $(".contract").val($(".contract").val()+";"+res.data.src +"?name=" + file.name);
-          }
-        }else{
-          $(".index_"+index+">i").removeClass("layui-icon-loading layui-anim layui-anim-rotate").addClass("layui-icon-close color-red");
-        }
-        
-        //获取当前触发上传的元素，一般用于 elem 绑定 class 的情况，注意：此乃 layui 2.1.0 新增
-        var item = this.item;
-        
-        //文件保存失败
-        //do something
-      }
-    })
+    
     // 正式客户展示
     if($('.customers-show-page').length == 1 ){
       var editBar = `<script type="text/html" id="customersEdit">

@@ -90,4 +90,9 @@
 <script type="text/javascript" src="{{ asset('lib/scripts/hotkeys.js') }}"></script>
 <script type="text/javascript" src="{{ asset('lib/scripts/uploader.js') }}"></script>
 <script type="text/javascript" src="{{ asset('lib/scripts/simditor.js') }}"></script>
+<!-- aetherupload文件上传组件 -->
+<script src="{{ URL::asset('vendor/aetherupload/js/spark-md5.min.js') }}"></script>
+<!--需要引入spark-md5.min.js-->
+<script src="{{ URL::asset('vendor/aetherupload/js/aetherupload.js') }}"></script>
+<!--需要引入aetherupload.js-->
 @stop

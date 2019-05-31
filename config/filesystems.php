@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'redis' => [
+            'driver' => 'redis',
+            'disable_asserts'=>true,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
