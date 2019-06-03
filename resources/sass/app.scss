@@ -374,6 +374,31 @@
     }
 }
 
+.company-show-page {
+    .speech-box {
+        .layui-card-body {
+            padding: 10px 0px;
+
+            .layui-collapse {
+                border-width: 0px;
+                border-style: none;
+                border-radius: 0px;
+            }
+        }
+
+    }
+
+    .spches-form {
+        .layui-form-item {
+            .layui-input-block {
+                margin-left: 0px;
+            }
+
+        }
+    }
+}
+
+
 .customers-show-page {
 
     .layui-table-cell {
@@ -424,6 +449,7 @@
     }
 }
 
+.speechs-index-page,
 .system-users-page,
 .settings-show-page,
 .customers-show-page {

@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Follow;
 use App\Models\Customer;
 use App\Models\Record;
+use App\Models\Speech;
 use App\Models\Log as LLog;
 use Illuminate\Support\Facades\Log;
 use Auth;
@@ -268,9 +269,14 @@ class CompanysController extends Controller
         return view('pages.company.follow',compact('companys','achievement'));
     }
     // 跟进陌生目标客户
-    public function show(Request $request, Company $company)
+    public function show(Request $request, Company $company, Speech $speech)
     {
         $user = Auth::user();
+        $speechs = 
+        // 缓存话术
+		$speechs = Cache::rememberForever('speechs', function () use($speech){
+            return $speech->whereNotNull("answer")->orderBy('updated_at','desc')->get();
+        });
         // 判断 $request->company->id 元素是否是集合 'target_'.$user->id 的成员
         if(Redis::sismember('target_'.$user->id,$request->company->id)){
             // 将目标公司的状态修改为跟进中 follow
@@ -283,7 +289,7 @@ class CompanysController extends Controller
             // 返回集合 'target_'.$user->id 中的所有成员
             $follows = Redis::smembers('target_'.$user->id);
             $companys = $company->find($follows);
-            return view('pages.company.show',compact('companys','company'));
+            return view('pages.company.show',compact('companys','company', 'speechs'));
         }else{
             return abort(404);
         }

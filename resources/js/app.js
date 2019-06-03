@@ -215,7 +215,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
 				},
 				pasteImage: true,
 			});
-		}
+    }
   }
 
   if($('.follow-show-page').length == 1){

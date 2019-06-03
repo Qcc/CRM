@@ -345,6 +345,20 @@
   font-size: 20px;
 }
 
+.company-show-page .speech-box .layui-card-body {
+  padding: 10px 0px;
+}
+
+.company-show-page .speech-box .layui-card-body .layui-collapse {
+  border-width: 0px;
+  border-style: none;
+  border-radius: 0px;
+}
+
+.company-show-page .spches-form .layui-form-item .layui-input-block {
+  margin-left: 0px;
+}
+
 .customers-show-page .layui-table-cell .download {
   color: #03A9F4;
 }
@@ -379,6 +393,7 @@
   color: #aaa;
 }
 
+.speechs-index-page .layui-body,
 .system-users-page .layui-body,
 .settings-show-page .layui-body,
 .customers-show-page .layui-body {

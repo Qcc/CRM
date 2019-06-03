@@ -1,5 +1,5 @@
 <div class="layui-header">
-    <div class="layui-logo">沟通科技商机管理</div>
+    <div class="layui-logo">沟通科技CRM</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     @auth
     <ul class="layui-nav layui-layout-left">

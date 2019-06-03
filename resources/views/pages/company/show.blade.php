@@ -18,7 +18,7 @@
                           </div>
                           <div class="layui-form-item">
                               <div class="layui-input-block" style="text-align: right;">
-                                <input type="radio" name="feed" value="lucky" title="保持联系" checked="">
+                                <input type="radio" name="feed" value="lucky" title="有效商机" checked="">
                                 <input type="radio" name="feed" value="noneed" title="没有需要">
                                 <input type="radio" name="feed" value="wrongnumber" title="号码不正确">
                                 <button class="layui-btn" lay-submit="" lay-filter="record-btn">提交反馈</button>
@@ -49,6 +49,54 @@
                     <p>{{ $company->webAddress }}</p>
                     <p>{{ $company->businessScope }}</p>
                   </div>
+              </div>
+              <div  class="layui-card speech-box">
+                  <div class="layui-card-header">销售话术</div>
+                  <div class="layui-card-body">
+                      <div class="layui-collapse" lay-accordion="">
+                        @foreach($speechs as $speech)
+                            @if ($loop->first)
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title" title="{{ $speech->ask }}">{{ $speech->ask }}</h2>
+                                <div class="layui-colla-content layui-show">
+                                  <p>适用产品: {{ $speech->product}}
+                                  <br>
+                                  {{ $speech->answer }}</p>
+                                </div>
+                              </div>
+                            @else
+                            <div class="layui-colla-item">
+                              <h2 class="layui-colla-title" title="{{ $speech->ask }}">{{ $speech->ask }}</h2>
+                              <div class="layui-colla-content">
+                                <p>适用产品: {{ $speech->product}}
+                                <br>
+                                {{ $speech->answer }}</p>
+                              </div>
+                            </div>
+                            @endif
+                        @endforeach         
+                      </div>
+                  </div>
+              </div>
+              <div  class="layui-card">
+                  <div class="layui-card-header">客户问题提交</div>
+                  <div class="layui-card-body">
+                  <form class="layui-form spches-form" method="POST" action="{{ route('speech.store') }}">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                      <div class="layui-form-item">
+                        <div class="layui-input-block">
+                          <input type="text" name="product" lay-verify="title|required" autocomplete="off" placeholder="请输入适用产品" class="layui-input">
+                        </div>
+                      </div>
+                      <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入客户提问" name="ask" class="layui-textarea"></textarea>
+                        </div>
+                      </div>
+                      <div class="layui-form-item">
+                          <button class="layui-btn" lay-submit="" lay-filter="speech-btn">提交问题</button>
+                        </div>
+                  </form>
               </div>
           </div>
       </div>

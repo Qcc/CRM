@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SpeechRequest;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Speech;
 use Auth;
 
@@ -34,6 +35,8 @@ class SpeechsController extends Controller
     
     public function update(SpeechRequest $request)
     {
+        // 清除销售话术缓存
+        Cache::forget('speechs');
         $speech = Speech::find($request->id);
         $speech->fill($request->all());
         $speech->save();

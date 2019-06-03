@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="layui-row">
+<div class="layui-row" style="padding-top: 30px;">
     <div class="layui-col-xs10 layui-col-xs-offset1">
         <div class="layui-row">
             <div class="layui-col-xs6">
@@ -27,19 +27,19 @@
             <thead>
                 <tr>
                     <th lay-data="{field:'id', width:50}">ID</th>
-                    <th lay-data="{field:'user_id', width:150}">职员</th>
+                    <th lay-data="{field:'user_id', width:80}">职员</th>
                     <th lay-data="{field:'ask', width:150}">客户提问</th>
-                    <th lay-data="{field:'answer', width:250}">标准回答</th>
-                    <th lay-data="{field:'product', width:150}">适用产品</th>
-                    <th lay-data="{field:'updated_at', minWidth: 100}">更新时间</th>
-                    <th lay-data="{fixed: 'right',toolbar:'#speechsEdit'}">操作</th>
+                    <th lay-data="{field:'answer'}">标准回答</th>
+                    <th lay-data="{field:'product', width:120}">适用产品</th>
+                    <th lay-data="{field:'updated_at', width: 150}">更新时间</th>
+                    <th lay-data="{fixed: 'right',toolbar:'#speechsEdit', width:150}">操作</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($speechs as $index => $speech)
                 <tr>
                     <td>{{ $speech->id }}</td>
-                    <td>{{ $speech->user_id }}</td>
+                    <td>{{ $speech->user->name }}</td>
                     <td>{{ $speech->ask }}</td>
                     <td>{{ $speech->answer }}</td>
                     <td>{{ $speech->product }}</td>

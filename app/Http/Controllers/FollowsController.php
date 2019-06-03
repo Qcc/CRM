@@ -18,7 +18,7 @@ class FollowsController extends Controller
     public function follow(Follow $follow, Customer $customer, Record $record)
     {
         $user = Auth::user();
-        $follows = $follow->with('company')->get();
+        $follows = $follow->where('user_id',$user->id)->with('company')->get();
         $recordsOfMonth = $record->where('user_id',$user->id)->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
             // 本月拨打电话
         $callCountOfMonth = 0;
