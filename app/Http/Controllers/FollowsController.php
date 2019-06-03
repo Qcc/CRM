@@ -58,6 +58,7 @@ class FollowsController extends Controller
             $n = \DB::table('settings')->where('name','notice')->first();
             return $n->data;
         });
+        
         // 本月等级由上个月决定
         $thisMonth = howLevel($moneyOfLastMonth);
         // 下个月等级由本月决定

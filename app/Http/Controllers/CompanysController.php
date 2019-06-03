@@ -237,6 +237,16 @@ class CompanysController extends Controller
             $cusCountOfDay++;
             $moneyOfDay += $c->contract_money;
         }
+        // 上个月客户
+        $customersOfLastMonth = $customer->where('user_id',$user->id)
+        ->whereBetween('created_at',[Carbon::now()->startOfMonth()->subMonths(1),Carbon::now()->startOfMonth()->subMonths(1)->endOfMonth()])->get();
+        // 上个月成交金额
+        $moneyOfLastMonth = 0;
+        foreach ($customersOfLastMonth as $c) {
+            $moneyOfLastMonth += $c->contract_money;
+        }
+        // 本月等级由上个月决定
+        $thisMonth = howLevel($moneyOfLastMonth);
         // 缓存通知设置
 		$notice = Cache::rememberForever('notice', function (){
             $n = \DB::table('settings')->where('name','notice')->first();
@@ -253,6 +263,7 @@ class CompanysController extends Controller
             'cusCountOfDay' => $cusCountOfDay,
             'moneyOfDay' => $moneyOfDay,
             'notice' => $notice,
+            'level' => $thisMonth,
         ];
         return view('pages.company.follow',compact('companys','achievement'));
     }

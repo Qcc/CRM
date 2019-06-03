@@ -53,32 +53,44 @@ class PagesController extends Controller
                 'level_1' => [
                     'performance' => $request->level_1_performance,
                     'name' => $request->level_1_name,
-                    'commission' => $request->level_1_commission
+                    'commission' => $request->level_1_commission,
+                    'call' => $request->level_1_call,
+                    'effective' => $request->level_1_effective,
                 ],
                 'level_2' => [
                     'performance' => $request->level_2_performance,
                     'name' => $request->level_2_name,
                     'commission' => $request->level_2_commission,
+                    'call' => $request->level_2_call,
+                    'effective' => $request->level_2_effective,
                 ],
                 'level_3' => [
                     'performance' => $request->level_3_performance,
                     'name' => $request->level_3_name,
                     'commission' => $request->level_3_commission,
+                    'call' => $request->level_3_call,
+                    'effective' => $request->level_3_effective,
                 ],
                 'level_4' => [
                     'performance' => $request->level_4_performance,
                     'name' => $request->level_4_name,
                     'commission' => $request->level_4_commission,
+                    'call' => $request->level_4_call,
+                    'effective' => $request->level_4_effective,
                 ],
                 'level_5' => [
                     'performance' => $request->level_5_performance,
                     'name' => $request->level_5_name,
                     'commission' => $request->level_5_commission,
+                    'call' => $request->level_5_call,
+                    'effective' => $request->level_5_effective,
                 ],
                 'level_6' => [
                     'performance' => $request->level_6_performance,
                     'name' => $request->level_6_name,
                     'commission' => $request->level_6_commission,
+                    'call' => $request->level_6_call,
+                    'effective' => $request->level_6_effective,
                 ],
             ];
             \DB::table('settings')->where('name','level')->update(['data' => json_encode($level)]);

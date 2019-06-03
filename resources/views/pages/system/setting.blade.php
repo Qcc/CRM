@@ -97,6 +97,14 @@
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_1_commission" value="{{ $level->level_1->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
                                 </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_1_call" value="{{ $level->level_1->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_1_effective" value="{{ $level->level_1->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
+                                </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">业绩要求</label>
@@ -110,6 +118,14 @@
                                 <label class="layui-form-label">提成点数</label>
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_2_commission" value="{{ $level->level_2->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_2_call" value="{{ $level->level_2->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_2_effective" value="{{ $level->level_2->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -125,6 +141,14 @@
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_3_commission" value="{{ $level->level_3->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
                                 </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_3_call" value="{{ $level->level_3->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_3_effective" value="{{ $level->level_3->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
+                                </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">业绩要求</label>
@@ -138,6 +162,14 @@
                                 <label class="layui-form-label">提成点数</label>
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_4_commission" value="{{ $level->level_4->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_4_call" value="{{ $level->level_4->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_4_effective" value="{{ $level->level_4->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -153,6 +185,14 @@
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_5_commission" value="{{ $level->level_5->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
                                 </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_5_call" value="{{ $level->level_5->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_5_effective" value="{{ $level->level_5->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
+                                </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">业绩要求</label>
@@ -166,6 +206,14 @@
                                 <label class="layui-form-label">提成点数</label>
                                 <div class="layui-input-inline">
                                   <input type="text" name="level_6_commission" value="{{ $level->level_6->commission }}" lay-verify="required|number" autocomplete="off" placeholder="请输入级别提成点数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">拨打电话</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_6_call" value="{{ $level->level_6->call }}" lay-verify="required|number" autocomplete="off" placeholder="请输入拨打电话次数" class="layui-input">
+                                </div>
+                                <label class="layui-form-label">有效商机</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="level_6_effective" value="{{ $level->level_6->effective }}" lay-verify="required|number" autocomplete="off" placeholder="请输入有效商机数量" class="layui-input">
                                 </div>
                             </div>
                              

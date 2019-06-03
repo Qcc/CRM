@@ -18,32 +18,44 @@ class SeedSettingsData extends Migration
             'level_1' => [
                 'performance' => 0,
                 'name' => '路人',
-                'commission' => 6
+                'commission' => 6,
+                'call' => 140,
+                'effective' => 6, 
             ],
             'level_2' => [
                 'performance' => 10000,
                 'name' => '师兄',
                 'commission' => 7,
+                'call' => 130,
+                'effective' => 5,
             ],
             'level_3' => [
                 'performance' => 30000,
                 'name' => '少侠',
                 'commission' => 8,
+                'call' => 120,
+                'effective' => 4,
             ],
             'level_4' => [
                 'performance' => 50000,
                 'name' => '大侠',
                 'commission' => 9,
+                'call' => 110,
+                'effective' => 3,
             ],
             'level_5' => [
                 'performance' => 800000,
                 'name' => '掌门',
                 'commission' => 10,
+                'call' => 100,
+                'effective' => 2,
             ],
             'level_6' => [
                 'performance' => 150000,
                 'name' => '宗师',
                 'commission' => 12,
+                'call' => 90,
+                'effective' => 1,
             ],
         ];
         // 商机管理初始数据

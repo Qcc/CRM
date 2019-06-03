@@ -358,6 +358,14 @@
   margin-left: 0px;
 }
 
+.settings-show-page .performance .layui-form-label {
+  width: 60px;
+}
+
+.settings-show-page .performance .layui-form-item .layui-input-inline {
+  width: 110px;
+}
+
 .settings-show-page .notice .layui-input-block {
   margin-left: 0px;
 }

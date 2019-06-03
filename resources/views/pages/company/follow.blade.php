@@ -52,25 +52,15 @@
       <div class="layui-card-body"> 
         <span>拨打电话</span>
         <div class="layui-progress" lay-showpercent="true">
-          <div class="layui-progress-bar" lay-percent="{{ $achievement['callCountOfDay'] }} / 120"></div>
+          <div class="layui-progress-bar" lay-percent="{{ $achievement['callCountOfDay'] }} / {{ $achievement['level']->call }}"></div>
         </div>
         <br>
         <span>有效商机</span>
         <div class="layui-progress" lay-showPercent="yes">
-          <div class="layui-progress-bar layui-bg-red" lay-percent="{{ $achievement['businessCountOfDay'] }} / 10"></div>
+          <div class="layui-progress-bar layui-bg-red" lay-percent="{{ $achievement['businessCountOfDay'] }} / {{ $achievement['level']->effective }}"></div>
         </div>
          
-        <br>
-        <span>成交客户</span>
-        <div class="layui-progress" lay-showPercent="yes">
-          <div class="layui-progress-bar layui-bg-blue" lay-percent="{{ $achievement['cusCountOfDay'] }} / 1"></div>
-        </div>
-        <br>
-
-        <span>成交金额</span>
-        <div class="layui-progress" lay-showPercent="yes">
-          <div class="layui-progress-bar  layui-bg-orange" lay-percent="{{ $achievement['moneyOfDay'] }} / 3000"></div>
-        </div>
+        
       </div>
     </div>
   </div>

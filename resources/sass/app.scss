@@ -241,6 +241,7 @@
             ul {
                 li {
                     color: #999;
+
                     a {
                         color: #999;
                         width: 170px;
@@ -249,9 +250,10 @@
                         white-space: nowrap;
                         text-overflow: ellipsis;
                     }
-                    span{
+
+                    span {
                         display: inline-block;
-                        overflow:hidden;
+                        overflow: hidden;
                     }
                 }
             }
@@ -393,6 +395,17 @@
             text-align: center;
             margin-left: 0px;
         }
+
+        .layui-form-label {
+            width: 60px;
+        }
+
+        .layui-form-item {
+            .layui-input-inline {
+                width: 110px;
+            }
+        }
+
     }
 
     .notice {
