@@ -75,7 +75,16 @@ class FollowsController extends Controller
             'nextMonthCommission' => $lastMonth->commission,
             'notice' => $notice,
         ];
-        return view('pages.follow.follow',compact('follows', 'achievement'));
+        // 预约联系 提前1天提醒
+        $schedules = $follow->with('company')->where('schedule_at','<',Carbon::now()->addday(3))->orderBy('schedule_at','asc')->get();
+        // 跟进到期 提前10天提醒
+        $countdowns = $follow->with('company')->where('countdown_at','<',Carbon::now()->addDay(10))->orderBy('countdown_at','asc')->get();
+        // 老客户维系 提前5天提醒
+        $relationships = $customer->with('company')->where('relationship_at','<',Carbon::now()->addDay(5))->orderBy('relationship_at','asc')->get();
+        // 售后续费到期 提前30天提醒
+        $expireds = $customer->with('company')->where('expired_at','<',Carbon::now()->addDay(30))->orderBy('expired_at','asc')->get();
+
+        return view('pages.follow.follow',compact('follows', 'achievement', 'schedules', 'countdowns', 'relationships', 'expireds'));
     }
 
     // 跟进客户
@@ -115,9 +124,18 @@ class FollowsController extends Controller
     public function delay(Follow $follow)
     {
         if($follow->delayCount > 0){
-            $follow->update(['countdown'=>Carbon::parse($follow->countdown)->addDays(10),'delayCount'=>$follow->delayCount--]);
+            $follow->update(['countdown_at'=>Carbon::parse($follow->countdown_at)->addDays(10),'delayCount'=>$follow->delayCount--]);
             return back()->with('success', '延期成功!');
         }
         return back()->with('danger', '延期次数已经用完!');
+    }
+    public function agent(Request $request, Follow $follow)
+    {
+
+        $follow = Follow::withTrashed()->find($request->id);
+        if($follow->deleted_at != null){
+            $follow->restore();
+        }
+        return redirect()->route('follow.show',$follow->id)->with('success', '创建续费订单成功，请继续跟进客户');
     }
 }

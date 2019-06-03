@@ -19,15 +19,15 @@
                               <div class="layui-input-block" style="margin-left: 0;">
                                 <div class="layui-col-xs6">
                                   <div class="layui-inline" style="margin-right: 100px;">
-                                    @if(now()->diffInDays($follow->countdown) < 10)
-                                    <span title="商机保留已不足10天，请尽快完成订单或延期保留。">商机保留 <span class="layui-word-aux" style="color:red!important;" id="countdown" now="{{ now() }}" endTime="{{ $follow->countdown }}"></span>
+                                    @if(now()->diffInDays($follow->countdown_at) < 10)
+                                    <span title="商机保留已不足10天，请尽快完成订单或延期保留。">商机保留 <span class="layui-word-aux" style="color:red!important;" id="countdown_at" now="{{ now() }}" endTime="{{ $follow->countdown_at }}"></span>
                                   </span>  
                                      @if($follow->delayCount > 0)
                                        <button title="点击延期10天保留，还剩{{ $follow->delayCount }}次延期机会，加油！" onclick="event.preventDefault();
                                        document.getElementById('follow-delay-form').submit();" class="layui-btn layui-btn-warm layui-btn-xs"><i class="layui-icon layui-icon-log"></i></button>
                                      @endif
                                     @else
-                                    <p>商机保留 <span class="layui-word-aux" id="countdown" now="{{ now() }}" endTime="{{ $follow->countdown }}"></span></p>  
+                                    <p>商机保留 <span class="layui-word-aux" id="countdown_at" now="{{ now() }}" endTime="{{ $follow->countdown_at }}"></span></p>  
                                     @endif
                                   </div>
                                 </div>

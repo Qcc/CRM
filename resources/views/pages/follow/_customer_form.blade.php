@@ -1,6 +1,7 @@
 <form class="layui-form customer-form" id="customer-form" lay-filter="customer-form" method="POST" action="{{ route('customers.store') }}" style="display:none;margin: 10px 40px 10px 20px;">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-  <input type="hidden" class="company_id" name="company_id" value="{{ $follow->company->id }}">
+  <input type="hidden" name="company_id" value="{{ $follow->company->id }}">
+  <input type="hidden" name="follow_id" value="{{ $follow->id }}">
   <div class="layui-row layui-col-space10">
       <div class="layui-col-xs7">
           <div class="layui-form-item">
@@ -26,10 +27,10 @@
         
           <div class="layui-form-item">
             <div class="layui-input-inline short-input">
-                <input type="text" name="completion_date" autocomplete="off" lay-verify="date" class="layui-input" id="completion_date" value="{{ old('completion_date',$follow->expired) }}" placeholder="成交时间">
+                <input type="text" name="completion_at" autocomplete="off" lay-verify="date" class="layui-input" id="completion_at" value="{{ old('completion_at',$follow->expired_at) }}" placeholder="成交时间">
             </div>
             <div class="layui-input-inline short-input no-right">
-                <input type="text" name="expired" autocomplete="off" lay-verify="date" class="layui-input" id="expired" value="{{ old('expired') }}" placeholder="售后到期">
+                <input type="text" name="expired_at" autocomplete="off" lay-verify="date" class="layui-input" id="expired_at" value="{{ old('expired_at') }}" placeholder="售后到期">
             </div>
           </div>
       </div>
@@ -58,7 +59,7 @@
    
   <div class="layui-form-item">
     <div class="layui-input-block">
-        <textarea placeholder="项目备注信息" name="comment"  class="layui-textarea">{{ old('comment',$follow->difficulties) }}</textarea>
+        <textarea placeholder="项目备注信息,客户帐号密码 服务密码等" name="comment"  class="layui-textarea">{{ old('comment',$follow->difficulties) }}</textarea>
     </div>
   </div>
   <div class="layui-form-item">

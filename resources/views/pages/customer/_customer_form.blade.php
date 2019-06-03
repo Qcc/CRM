@@ -26,10 +26,10 @@
         
           <div class="layui-form-item">
             <div class="layui-input-inline short-input">
-                <input type="text" name="completion_date" autocomplete="off" lay-verify="date" class="layui-input" id="completion_date" value="{{ old('completion_date') }}" placeholder="成交时间">
+                <input type="text" name="completion_at" autocomplete="off" lay-verify="date" class="layui-input" id="completion_at" value="{{ old('completion_at') }}" placeholder="成交时间">
             </div>
             <div class="layui-input-inline short-input no-right">
-                <input type="text" name="expired" autocomplete="off" lay-verify="date" class="layui-input" id="expired" value="{{ old('expired') }}" placeholder="售后到期">
+                <input type="text" name="expired_at" autocomplete="off" lay-verify="date" class="layui-input" id="expired_at" value="{{ old('expired_at') }}" placeholder="售后到期">
             </div>
           </div>
       </div>

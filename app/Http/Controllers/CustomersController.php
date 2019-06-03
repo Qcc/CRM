@@ -19,11 +19,11 @@ class CustomersController extends Controller
     {
         $customer->fill($request->all());
         $customer->user_id = Auth::id();
-        $customer->relationship = Carbon::now()->addDay(30);
+        $customer->relationship_at = Carbon::now()->addDay(30);
         $customer->save();
         // 更新客户资料状态为 订单完成
         // $company->where('id',$request->company_id)->update(['follow' => 'complate']);
-        // 删除跟进中的客户
+        // 软删除跟进中的客户
         $follow->whereHas('company',function($query) use ($request){
             $query->where('id', $request->company_id);
         })->delete();

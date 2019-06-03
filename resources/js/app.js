@@ -221,25 +221,25 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
   if($('.follow-show-page').length == 1){
     //商机跟进倒计时
     var thisTimer, setCountdown = function(y, M, d, H, m, s){
-      var endTime = new Date($('#countdown').attr('endTime')) //结束日期
-      ,serverTime = new Date($('#countdown').attr('now')); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+      var endTime = new Date($('#countdown_at').attr('endTime')) //结束日期
+      ,serverTime = new Date($('#countdown_at').attr('now')); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
 
       clearTimeout(thisTimer);
       util.countdown(endTime, serverTime, function(date, serverTime, timer){
         var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-        $('#countdown').html(str);
+        $('#countdown_at').html(str);
         thisTimer = timer;
       });
     };
     setCountdown();
     //预计成交时间
     laydate.render({
-      elem: '#expected'
+      elem: '#expected_at'
     });
     
     //下次联系提醒
     laydate.render({
-      elem: '#schedule'
+      elem: '#schedule_at'
       ,type: 'datetime'
     });
 
@@ -254,12 +254,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
       });
       //售后到期
       laydate.render({
-        elem: '#expired',
+        elem: '#expired_at',
         trigger: 'click'
       });
       //售后到期
       laydate.render({
-        elem: '#completion_date',
+        elem: '#completion_at',
         trigger: 'click'
       });
       return false;
@@ -398,12 +398,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
           });
           //售后到期
           laydate.render({
-            elem: '#expired',
+            elem: '#expired_at',
             trigger: 'click'
           });
           //售后到期
           laydate.render({
-            elem: '#completion_date',
+            elem: '#completion_at',
             trigger: 'click'
           });
           // 自定义表单验证
@@ -441,6 +441,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
           $('#restore-id').val(obj.data.id);
           layer.confirm('真的恢复行么', function(index){
             $('#restore-form').submit();
+            layer.close(index);
+          });
+        }else if(obj.event == 'agent'){
+          $('#agent-id').val(obj.data.id);
+          layer.confirm('确认续签么', function(index){
+            $('#agent-form').submit();
             layer.close(index);
           });
         }

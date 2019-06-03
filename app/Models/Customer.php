@@ -11,15 +11,25 @@ class Customer extends Model
     protected $fillable = [
         'user_id', 
         'company_id', 
+        'follow_id', 
         'contact', 
         'phone', 
         'product', 
         'contract', 
-        'completion_date', 
-        'expired', 
+        'completion_at', 
+        'expired_at', 
+        'relationship_at',
         'contract_money', 
         'comment', 
         'check', 
+    ];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'completion_at',
+        'expired_at',
+        'relationship_at',
     ];
 
     /**

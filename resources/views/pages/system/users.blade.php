@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="layui-row">
+<div class="layui-row" style="padding-top: 30px;">
     <div class="layui-col-xs10 layui-col-xs-offset1">
         <div class="layui-row">
             <div class="layui-col-xs6">

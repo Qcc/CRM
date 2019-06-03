@@ -52,7 +52,7 @@ class RecordsController extends Controller
             $record->save();
             if($request->feed == 'lucky'){
                 // 将有效商机转化为 持续跟进的客户 商机默认保留 60天 过期将重新放入公海
-                $follow->countdown = Carbon::parse('+60 days');
+                $follow->countdown_at = Carbon::parse('+60 days');
                 $follow->user_id = $user->id;
                 $follow->company_id = $request->company_id;
                 $follow->save();

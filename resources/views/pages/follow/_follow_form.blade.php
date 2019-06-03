@@ -21,10 +21,10 @@
         </div>
         <div class="layui-form-item">
           <div class="layui-input-inline short-input">
-              <input type="text" name="expected" autocomplete="off" class="layui-input" id="expected" value="{{ old('expected', $follow->expected) }}" placeholder="预计成交时间">
+              <input type="text" name="expected_at" autocomplete="off" class="layui-input" id="expected_at" value="{{ old('expected_at', $follow->expected_at) }}" placeholder="预计成交时间">
           </div>
           <div class="layui-input-inline short-input no-right">
-              <input type="text" name="schedule" autocomplete="off" class="layui-input" id="schedule" value="{{ old('schedule',$follow->schedule) }}" placeholder="下次联系提醒">
+              <input type="text" name="schedule_at" autocomplete="off" class="layui-input" id="schedule_at" value="{{ old('schedule_at',$follow->schedule_at) }}" placeholder="下次联系提醒">
           </div>
         </div>
          

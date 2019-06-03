@@ -228,6 +228,38 @@
   color: #888;
 }
 
+.company-follow-page .layui-card .layui-card-body ul li,
+.follow-follow-page .layui-card .layui-card-body ul li {
+  color: #999;
+}
+
+.company-follow-page .layui-card .layui-card-body ul li a,
+.follow-follow-page .layui-card .layui-card-body ul li a {
+  color: #999;
+  width: 170px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.company-follow-page .layui-card .layui-card-body ul li span,
+.follow-follow-page .layui-card .layui-card-body ul li span {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.company-follow-page .layui-card .layui-card-header,
+.follow-follow-page .layui-card .layui-card-header {
+  font-size: 16px;
+}
+
+.company-follow-page .layui-card .layui-card-header span,
+.follow-follow-page .layui-card .layui-card-header span {
+  font-size: 11px;
+  color: #999;
+}
+
 .follow-show-page .simditor .simditor-body {
   min-height: 100px !important;
 }
@@ -339,6 +371,7 @@
   color: #aaa;
 }
 
+.system-users-page .layui-body,
 .settings-show-page .layui-body,
 .customers-show-page .layui-body {
   padding-top: 0px;

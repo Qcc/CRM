@@ -43,8 +43,8 @@
                   <th lay-data="{field:'contract',width:100,templet: function(d){
                     return '<a class=download href=' + d.contract + '>' + d.contract.substr((d.contract.lastIndexOf('/')) + 1) + '</a>'
                     }}">合同</th>
-                  <th lay-data="{field:'completion_date',width:105, hide:true}">购买日期</th>
-                  <th lay-data="{field:'expired',width:105}">续费/售后到期</th>
+                  <th lay-data="{field:'completion_at',width:105, hide:true}">购买日期</th>
+                  <th lay-data="{field:'expired_at',width:105}">续费/售后到期</th>
                   <th lay-data="{field:'contract_money',width:100}">合同金额</th>
                   <th lay-data="{field:'comment'}">项目备注</th>
                   <th lay-data="{field:'boss', hide:true, width:80}">公司法人</th>
@@ -78,8 +78,8 @@
                 <td>{{ $customer->phone  }}</td>
                 <td>{{ $customer->product  }}</td>
                 <td>{{ $customer->contract  }}</td>
-                <td>{{ $customer->completion_date  }}</td>
-                <td>{{ $customer->expired  }}</td>
+                <td>{{ $customer->completion_at  }}</td>
+                <td>{{ $customer->expired_at  }}</td>
                 <td>{{ $customer->contract_money  }}</td>
                 <td>{{ $customer->comment  }}</td>
                 <td>{{ $customer->company->boss }}</td>
@@ -134,6 +134,10 @@
 <form id="restore-form" action="{{ route('customers.restore') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
     <input id='restore-id' type="hidden" name="id">
+</form>
+<form id="agent-form" action="{{ route('follow.agent') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    <input id='agent-id' type="hidden" name="id">
 </form>
 @stop
 @include('pages.customer._customer_form')

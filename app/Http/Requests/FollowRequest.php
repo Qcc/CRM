@@ -28,8 +28,8 @@ class FollowRequest extends FormRequest
             'contact' => 'required|max:30',
             'phone' => 'required|digits:11',
             'product' => 'required|max:80',
-            'expected' => 'required|date',
-            'schedule' => 'required|date',
+            'expected_at' => 'required|date',
+            'schedule_at' => 'required|date',
             'contract_money' => 'required',
             'difficulties' => 'max:200',
         ];
@@ -44,8 +44,8 @@ class FollowRequest extends FormRequest
             'phone.digits' => '手机号码不正确',
             'product.required' =>'购买产品不能为空',
             'product.max' => '产品名称不能超过80个字符',
-            'expected.required' => '预计成交日期不能为空',
-            'expected.date' => '预计成交日期格式不正确',
+            'expected_at.required' => '预计成交日期不能为空',
+            'expected_at.date' => '预计成交日期格式不正确',
             'contract_money.required' => '预计成交金额不能为空',
             'comment.max' => '公关难点能超过200字',
         ];

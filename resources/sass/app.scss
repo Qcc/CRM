@@ -235,6 +235,37 @@
         background-color: #CFCFCF;
         color: #888;
     }
+
+    .layui-card {
+        .layui-card-body {
+            ul {
+                li {
+                    color: #999;
+                    a {
+                        color: #999;
+                        width: 170px;
+                        display: inline-block;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    span{
+                        display: inline-block;
+                        overflow:hidden;
+                    }
+                }
+            }
+        }
+
+        .layui-card-header {
+            font-size: 16px;
+
+            span {
+                font-size: 11px;
+                color: #999;
+            }
+        }
+    }
 }
 
 .follow-show-page {
@@ -258,16 +289,20 @@
         .no-right {
             margin-right: 0px;
         }
-        .delete-contract{
+
+        .delete-contract {
             cursor: pointer;
         }
     }
+
 }
+
 .layui-form-item {
-    .delete-contract{
+    .delete-contract {
         cursor: pointer;
     }
-    #upload-contract-result{
+
+    #upload-contract-result {
         padding-right: 20px;
         word-wrap: break-word;
     }
@@ -376,6 +411,7 @@
     }
 }
 
+.system-users-page,
 .settings-show-page,
 .customers-show-page {
     .layui-body {
