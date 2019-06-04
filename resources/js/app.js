@@ -498,6 +498,14 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         // toolbar: '#toolbarTarget',
       });
     }
+    // 通用设置页面
+    if($('.settings-show-page').length == 1 ){
+      laydate.render({
+        elem: '#reportScope'
+        ,type: 'datetime'
+        ,range: '~'
+      });
+    }
 
     //销售话术管理
     if($('.speechs-index-page').length == 1){

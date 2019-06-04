@@ -44,6 +44,28 @@
                     </form>
                 </div>
             </div>
+
+
+
+
+                <div class="layui-card customer" >
+                    <div class="layui-card-header">老客户维系</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" method="POST" action="{{ route('settings.store') }}" >
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline days">
+                                  <input type="text" name="days" value="" lay-verify="required|number" autocomplete="off" placeholder="联系频率（天）" class="layui-input">
+                                </div>
+                              <div class="layui-input-inline btn">
+                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="more-info">保存</button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
         </div>
         <div class="layui-col-xs8">
             <div class="layui-card notice">
@@ -53,12 +75,6 @@
                             <i class="layui-icon layui-icon-speaker"></i>  
                         {!! $notice !!}
                     </blockquote>
-                    <fieldset class="layui-elem-field">
-                      <legend>可用变量 <span class="tips">发布后分别替换为当前登录人的信息</span></legend>
-                      <div class="layui-field-box">
-                        %姓名% %本月业绩% %本月拨打% 
-                      </div>
-                    </fieldset>
                     <form class="layui-form" method="POST" action="{{ route('settings.store') }}" >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="type" value="notice" >
@@ -71,6 +87,28 @@
                           <div class="layui-input-block btn">
                             <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="more-info">发布新公告</button>
                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="layui-card report">
+                <div class="layui-card-header">报表订阅</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline scope">
+                            <input type="text" name="scope" id="reportScope" lay-verify="date" autocomplete="off" placeholder="请选择日期范围" class="layui-input">
+                          </div>
+                          <div class="layui-input-inline employee">
+                            <input type="text" name="employee" lay-verify="date" autocomplete="off" placeholder="请输入员工ID，默认全部发送" class="layui-input">
+                          </div>
+                          <div class="layui-input-inline repeat">
+                              <input type="checkbox" name="repeat" lay-text="1|0" lay-skin="primary" title="按日期自动发送" >
+                          </div>
+                        </div>
+                        <div class="layui-form-item btn">
+                            <button class="layui-btn layui-btn-normal" lay-submit="" >保存</button>
+                            <button class="layui-btn layui-btn-normal">立即发送</button>
                         </div>
                     </form>
                 </div>

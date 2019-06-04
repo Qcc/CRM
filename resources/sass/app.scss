@@ -179,6 +179,7 @@
             display: inline-block;
             border-radius: 60px;
             overflow: hidden;
+
             img {
                 width: 100%;
             }
@@ -222,40 +223,47 @@
                 line-height: 90px;
             }
         }
-        .arrow-box{
-            width:30px;
-            height:96px;
-            margin:20px auto;
-            position:relative;
+
+        .arrow-box {
+            width: 30px;
+            height: 96px;
+            margin: 20px auto;
+            position: relative;
             display: inline-block;
         }
+
         /*右箭头*/
-        .right{
-            width:20px;
-            height:20px;
-            position:absolute;
-            left:0;
-            top:20%;
+        .right {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 0;
+            top: 20%;
         }
-        .right-arrow1,.right-arrow2{
-            width:0;
-            height:0;
-            display:block;
-            position:absolute;
-            left:0;
-            top:0;
-            border-top:10px transparent dashed;
-            border-right:10px transparent dashed;
-            border-bottom:10px transparent dashed;
-            border-left:10px white solid;
-            overflow:hidden;
+
+        .right-arrow1,
+        .right-arrow2 {
+            width: 0;
+            height: 0;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-top: 10px transparent dashed;
+            border-right: 10px transparent dashed;
+            border-bottom: 10px transparent dashed;
+            border-left: 10px white solid;
+            overflow: hidden;
         }
-        .right-arrow1{
-            left:1px;/*重要*/
-            border-left:10px #009688 solid;
+
+        .right-arrow1 {
+            left: 1px;
+            /*重要*/
+            border-left: 10px #009688 solid;
         }
-        .right-arrow2{
-            border-left:5px white solid;
+
+        .right-arrow2 {
+            border-left: 5px white solid;
         }
     }
 }
@@ -514,6 +522,9 @@
         .btn {
             text-align: right;
         }
+        .layui-form-item {
+            margin-bottom: 11px;
+        }
     }
 
     .performance {
@@ -546,6 +557,37 @@
         .tips {
             font-size: 12px;
             color: #aaa;
+        }
+    }
+
+    .report {
+
+        .layui-form-item {
+            .scope {
+                width: 300px;
+            }
+
+            .employee {
+                width: 210px;
+            }
+
+            .repeat {
+                width: 150px;
+            }
+        }
+
+        .btn {
+            text-align: right;
+        }
+    }
+    .customer{
+        .days{
+            width:238px;
+        }
+        .btn{
+            text-align: right;
+            width:80px;
+            margin-right: 0px;
         }
     }
 }
