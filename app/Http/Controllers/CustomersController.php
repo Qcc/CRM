@@ -14,6 +14,11 @@ use Carbon\Carbon;
 
 class CustomersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**客户成交转为审批正式客户 */
     public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
     {

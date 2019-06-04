@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Cache;
 
 class FollowsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function follow(Follow $follow, Customer $customer, Record $record)
     {
         $user = Auth::user();
@@ -91,21 +96,26 @@ class FollowsController extends Controller
     // 跟进客户
     public function show(Follow $follow)
     {
-        $follows = $follow->with('company')->get();
+        if($follow->user_id == Auth::id()){
+            $follows = $follow->where('user_id',Auth::id())->with('company')->get();
+            return view('pages.follow.show',compact('follows','follow'));
+        }else{
+            return abort(404);
+        }
         
-        return view('pages.follow.show',compact('follows','follow'));
         
     }
     public function store(Request $request, Follow $follow)
     {
-        // dd($request->all());
-        // $data = Arr::except($request->all(), ['_token']);
-        // $follow->fill(array_diff($data,array(null)));
-        // $follow->save();
-        $follow->fill($request->all());
-        $follow->user_id = Auth::id();
-        $follow->save();
-        return back()->with('success', '客户信息保存完成!');
+        if($follow->user_id == Auth::id()){
+            $follow->fill($request->all());
+            $follow->user_id = Auth::id();
+            $follow->save();
+            return back()->with('success', '客户信息保存完成!');
+        }else{
+            return back()->with('danger', '该客户不属于你，请联系主管!');
+
+        }
     }
 
     public function storeRecord(Request $request, Record $record)

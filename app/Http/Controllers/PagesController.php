@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Cache;
 
 class PagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['root']]);
+    }
     public function root()
     {
         return view('pages.root');

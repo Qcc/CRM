@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Cache;
 
 class CompanysController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * 搜索公海目标客户
      *

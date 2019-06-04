@@ -264,6 +264,10 @@
   min-height: 100px !important;
 }
 
+.follow-show-page .simditor .simditor-toolbar > ul > li > .toolbar-item {
+  height: auto;
+}
+
 .follow-show-page .layui-input-block {
   margin-left: 0;
 }

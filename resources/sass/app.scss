@@ -271,8 +271,15 @@
 }
 
 .follow-show-page {
-    .simditor .simditor-body {
-        min-height: 100px !important;
+    .simditor {
+
+        .simditor-body {
+            min-height: 100px !important;
+        }
+
+        .simditor-toolbar>ul>li>.toolbar-item {
+            height: auto;
+        }
     }
 
     .layui-input-block {

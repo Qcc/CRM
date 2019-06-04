@@ -9,9 +9,9 @@ use Auth;
 
 class UsersController extends Controller
 {
-    public function setStore()
+    public function __construct()
     {
-        dd();
+        $this->middleware('auth');
     }
 
     public function settings()

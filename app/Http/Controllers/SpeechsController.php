@@ -10,6 +10,11 @@ use Auth;
 
 class SpeechsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request, Speech $speech)
     {
         if($request->ask){

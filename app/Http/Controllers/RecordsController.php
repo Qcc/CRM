@@ -12,6 +12,11 @@ use Carbon\Carbon;
 
 class RecordsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
 	 * 陌生客户提交首次反馈 保存提交的反馈
 	 *
