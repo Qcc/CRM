@@ -145,6 +145,9 @@
   border-color: #ffeeba;
 }
 
+.password-request-page > .layui-body,
+.register-page > .layui-body,
+.login-page > .layui-body,
 .settings-show-page > .layui-body,
 .speechs-index-page > .layui-body,
 .user-settings-page > .layui-body,
@@ -156,6 +159,102 @@
   left: 0px;
   margin: 0px auto;
   padding: 30px 0;
+}
+
+.root-page .auth {
+  text-align: center;
+}
+
+.root-page .auth .avatar {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  border-radius: 60px;
+  overflow: hidden;
+}
+
+.root-page .auth .avatar img {
+  width: 100%;
+}
+
+.root-page .auth .info {
+  margin: 10px;
+}
+
+.root-page .auth .info p {
+  color: #888;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.root-page .step {
+  margin: 0 auto;
+  text-align: center;
+  /*右箭头*/
+}
+
+.root-page .step .step-item {
+  margin: 10px 50px;
+  display: inline-block;
+  width: 96px;
+  height: 96px;
+}
+
+.root-page .step .step-item .step-header {
+  display: inline;
+  color: #888;
+  font-size: 13px;
+}
+
+.root-page .step .step-item .step-body {
+  color: #888;
+  border: 3px solid #009688;
+  border-radius: 60px;
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  line-height: 90px;
+}
+
+.root-page .step .arrow-box {
+  width: 30px;
+  height: 96px;
+  margin: 20px auto;
+  position: relative;
+  display: inline-block;
+}
+
+.root-page .step .right {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: 20%;
+}
+
+.root-page .step .right-arrow1,
+.root-page .step .right-arrow2 {
+  width: 0;
+  height: 0;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top: 10px transparent dashed;
+  border-right: 10px transparent dashed;
+  border-bottom: 10px transparent dashed;
+  border-left: 10px white solid;
+  overflow: hidden;
+}
+
+.root-page .step .right-arrow1 {
+  left: 1px;
+  /*重要*/
+  border-left: 10px #009688 solid;
+}
+
+.root-page .step .right-arrow2 {
+  border-left: 5px white solid;
 }
 
 /* 分页 */

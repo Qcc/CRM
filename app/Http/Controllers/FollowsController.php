@@ -96,6 +96,8 @@ class FollowsController extends Controller
     // 跟进客户
     public function show(Follow $follow)
     {
+        $this->authorize('update', $follow);
+
         if($follow->user_id == Auth::id()){
             $follows = $follow->where('user_id',Auth::id())->with('company')->get();
             return view('pages.follow.show',compact('follows','follow'));
@@ -107,6 +109,7 @@ class FollowsController extends Controller
     }
     public function store(Request $request, Follow $follow)
     {
+        
         if($follow->user_id == Auth::id()){
             $follow->fill($request->all());
             $follow->user_id = Auth::id();
@@ -134,6 +137,8 @@ class FollowsController extends Controller
 
     public function delay(Follow $follow)
     {
+        $this->authorize('update', $follow);
+
         if($follow->delayCount > 0){
             $follow->update(['countdown_at'=>Carbon::parse($follow->countdown_at)->addDays(10),'delayCount'=>$follow->delayCount--]);
             return back()->with('success', '延期成功!');
@@ -142,7 +147,7 @@ class FollowsController extends Controller
     }
     public function agent(Request $request, Follow $follow)
     {
-
+        $this->authorize('update', $follow);
         $follow = Follow::withTrashed()->find($request->id);
         if($follow->deleted_at != null){
             $follow->restore();

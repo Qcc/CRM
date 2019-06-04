@@ -33,12 +33,7 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
-// 基础资料设置
-Route::get('user/settings', 'UsersController@settings')->name('user.settings');
-Route::get('system/users', 'UsersController@users')->name('system.users');
-Route::post('system/user/update', 'UsersController@update')->name('user.update');
-Route::post('system/user/store', 'UsersController@store')->name('user.store');
-Route::post('system/user/store', 'UsersController@store')->name('user.store');
+// 修改密码
 Route::post('system/user/password/{users}', 'UsersController@password')->name('user.password');
 
 
@@ -61,7 +56,6 @@ Route::post('follow/storeRecord', 'FollowsController@storeRecord')->name('follow
 Route::post('follow/agent', 'FollowsController@agent')->name('follow.agent');
 // 正式客户 合同上传
 Route::post('customers/store', 'CustomersController@store')->name('customers.store');
-// Route::post('customers/upload', 'CustomersController@upload')->name('customers.upload');
 
 // 正式客户资料
 Route::get('customers/show', 'CustomersController@show')->name('customers.show');
@@ -70,11 +64,19 @@ Route::post('customers/update', 'CustomersController@update')->name('customers.u
 Route::post('customers/destroy', 'CustomersController@destroy')->name('customers.destroy');
 Route::post('customers/restore', 'CustomersController@restore')->name('customers.restore');
 
-// 销售话术
-Route::get('speechs/index', 'SpeechsController@index')->name('speechs.index');
-Route::post('speech/store', 'SpeechsController@store')->name('speech.store');
-Route::post('speech/update', 'SpeechsController@update')->name('speech.update');
-Route::post('speech/destroy', 'SpeechsController@destroy')->name('speech.destroy');
-// 通用设置
-Route::get('system/show', 'PagesController@show')->name('settings.show');
-Route::post('system/store', 'PagesController@store')->name('settings.store');
+
+Route::group(['middleware' => ['permission:manager']], function () {
+    // 基础资料设置
+    Route::get('user/settings', 'UsersController@settings')->name('user.settings');
+    Route::get('system/users', 'UsersController@users')->name('system.users');
+    Route::post('system/user/update', 'UsersController@update')->name('user.update');
+    Route::post('system/user/store', 'UsersController@store')->name('user.store');
+    // 销售话术
+    Route::get('speechs/index', 'SpeechsController@index')->name('speechs.index');
+    Route::post('speech/store', 'SpeechsController@store')->name('speech.store');
+    Route::post('speech/update', 'SpeechsController@update')->name('speech.update');
+    Route::post('speech/destroy', 'SpeechsController@destroy')->name('speech.destroy');
+    // 通用设置
+    Route::get('system/show', 'PagesController@show')->name('settings.show');
+    Route::post('system/store', 'PagesController@store')->name('settings.store');
+});

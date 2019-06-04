@@ -107,6 +107,8 @@ class CustomersController extends Controller
     
     public function check(Request $request, Customer $customer)
     {
+        $this->authorize('manager', $customer);
+
         $count = 0;
         $ele = explode(',',$request->ids);
         foreach ($ele as $id) {
@@ -126,8 +128,9 @@ class CustomersController extends Controller
     }
 
     public function update(Request $request, Customer $customer)
-    {
+    {        
         $customer = $customer->find($request->id);
+        $this->authorize('update', $customer);
         $data = $request->all();
         $data['check'] = 'check';
         $customer->update($data);
@@ -136,7 +139,9 @@ class CustomersController extends Controller
     
     public function destroy(Request $request, Customer $customer)
     {
+        
         $customer = $customer->find($request->id);
+        $this->authorize('destroy', $customer);
         $customer->check = 'delete';
         $customer->save();
         $customer->delete();
@@ -145,6 +150,7 @@ class CustomersController extends Controller
     public function restore(Request $request, Customer $customer)
     {
         $customer = $customer->onlyTrashed()->find($request->id);
+        $this->authorize('manager', $customer);
         $customer->restore();
         $customer->check = 'check';
         $customer->save();
