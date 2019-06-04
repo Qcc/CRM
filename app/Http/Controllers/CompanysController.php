@@ -10,7 +10,6 @@ use App\Models\Follow;
 use App\Models\Customer;
 use App\Models\Record;
 use App\Models\Speech;
-use App\Models\Log as LLog;
 use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
@@ -140,7 +139,7 @@ class CompanysController extends Controller
                 'msg' => '上传成功'
             ];
             $user = Auth::user();
-            LLog::write($user->name."(".$user->email.")"." 导入了".$count."条公司信息");
+            Log::info($user->name."(".$user->email.")"." 导入了".$count."条公司信息");
         }
         return $data;
     }
@@ -173,7 +172,7 @@ class CompanysController extends Controller
                 $count++;
             }
         }
-        LLog::write($user->name."(".$user->email.")"." 成功选取了".count($list)." 家公司，准备跟进");
+        Log::info($user->name."(".$user->email.")"." 成功选取了".count($list)." 家公司，准备跟进");
         $data = [
 			'code' => 0,
 			'msg' => '成功选取了'.$count.'家客户'.$max,

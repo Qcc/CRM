@@ -24,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Carbon\Carbon::setLocale('zh');
+		\App\Models\Follow::observe(\App\Observers\FollowObserver::class);
+		\App\Models\Customer::observe(\App\Observers\CustomerObserver::class);
+		\App\Models\Record::observe(\App\Observers\RecordObserver::class);
     }
 }

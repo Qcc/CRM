@@ -18,7 +18,7 @@ class RecordsController extends Controller
 	 * @param Request $request
 	 * @return void
 	 */
-	public function Store(Request $request, Company $company, Record $record, Follow $follow)
+	public function Store(Request $request, Record $record, Company $company, Follow $follow)
 	{
 
         // 将目标公司的状态修改为跟进中 follow
