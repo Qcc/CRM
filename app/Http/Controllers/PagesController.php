@@ -33,6 +33,16 @@ class PagesController extends Controller
             $b = \DB::table('settings')->where('name','business')->first();
             return json_decode($b->data);
         });
+        // 缓存老客户维系设置
+		$customer = Cache::rememberForever('customer', function (){
+            $b = \DB::table('settings')->where('name','customer')->first();
+            return json_decode($b->data);
+        });
+        // 缓存报表设置
+		$business = Cache::rememberForever('business', function (){
+            $b = \DB::table('settings')->where('name','business')->first();
+            return json_decode($b->data);
+        });
         return view('pages.system.setting',compact('level','notice','business'));
     }
     
@@ -100,6 +110,27 @@ class PagesController extends Controller
             \DB::table('settings')->where('name','level')->update(['data' => json_encode($level)]);
             // 清除业绩等级缓存
             Cache::forget('level');
+        }else if($request->type == 'report'){
+            if($request->scope != ''){
+                $date = explode('~',$request->scope);
+            }
+            $report = [
+                'start' => $request->Carbon::now()->startOfMonth(),
+                'end' => $request->Carbon::now()->endOfMonth(),
+                'recently' => $request->Carbon::now()->startOfMonth(),
+                'employee' => $request->employee, 
+                'repeat' => $request->repeat?1:0,
+            ];
+            \DB::table('settings')->where('name','report')->update(['data' => json_encode($report)]);
+            // 清除商机管理等级缓存
+            Cache::forget('report');
+        }else if($request->type == 'customer'){
+            $customer = [
+                'days' => $request->days,
+            ];
+            \DB::table('settings')->where('name','customer')->update(['data' => json_encode($customer)]);
+            // 清除商机管理等级缓存
+            Cache::forget('customer');
         }
         return back()->with('success', '设置保存完成!');;
     }

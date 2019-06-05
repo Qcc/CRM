@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class SeedSettingsData extends Migration
 {
@@ -65,6 +66,18 @@ class SeedSettingsData extends Migration
             'pics' => 2,
             'picOfdays' => 10, 
         ];
+        // 老客户维系初始数据
+        $customer = [
+            'days' => 30,
+        ];
+        // 报表初始数据
+        $report = [
+            'start' => Carbon::now()->startOfMonth(),
+            'end' => Carbon::now()->endOfMonth(),
+            'recently' => Carbon::now()->startOfMonth(),
+            'employee' => '', 
+            'repeat' => 0,
+        ];
         $settings = [
             [
                 'name' => 'level',
@@ -77,6 +90,14 @@ class SeedSettingsData extends Migration
             [
                 'name' => 'business',
                 'data' => json_encode($business),
+            ],
+            [
+                'name' => 'customer',
+                'data' => json_encode($customer),
+            ],
+            [
+                'name' => 'report',
+                'data' => json_encode($report),
             ],
         ];
         DB::table('settings')->insert($settings);

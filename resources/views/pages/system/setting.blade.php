@@ -53,6 +53,7 @@
                     <div class="layui-card-body">
                         <form class="layui-form" method="POST" action="{{ route('settings.store') }}" >
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="type" value="customer">
                             <div class="layui-form-item">
                                 <div class="layui-input-inline days">
                                   <input type="text" name="days" value="" lay-verify="required|number" autocomplete="off" placeholder="联系频率（天）" class="layui-input">
@@ -94,16 +95,20 @@
             <div class="layui-card report">
                 <div class="layui-card-header">报表订阅</div>
                 <div class="layui-card-body">
-                    <form class="layui-form" action="">
+                    <form class="layui-form"  method="POST" action="{{ route('settings.store') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="type" value="report">
                         <div class="layui-form-item">
                           <div class="layui-input-inline scope">
                             <input type="text" name="scope" id="reportScope" lay-verify="date" autocomplete="off" placeholder="请选择日期范围" class="layui-input">
                           </div>
-                          <div class="layui-input-inline employee">
-                            <input type="text" name="employee" lay-verify="date" autocomplete="off" placeholder="请输入员工ID，默认全部发送" class="layui-input">
+                          <div class="layui-input-inline employee"  title="ID用“,”号隔开，默认发送全部">
+                            <input type="text" name="employee" lay-verify="date" autocomplete="off" placeholder="请输入员工ID" class="layui-input">
                           </div>
-                          <div class="layui-input-inline repeat">
-                              <input type="checkbox" name="repeat" lay-text="1|0" lay-skin="primary" title="按日期自动发送" >
+                          <div class="layui-input-inline repeat" title="自动发送">
+                              <input type="checkbox" name="like1[writ]" lay-text="1|0" lay-skin="primary" title="每天">
+                              <input type="checkbox" name="like1[read]" lay-text="1|0" lay-skin="primary" title="每周">
+                              <input type="checkbox" name="like1[game]" lay-text="1|0" lay-skin="primary" title="每月">
                           </div>
                         </div>
                         <div class="layui-form-item btn">
