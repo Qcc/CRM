@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
 class CustomersController extends Controller
@@ -22,9 +23,14 @@ class CustomersController extends Controller
     /**客户成交转为审批正式客户 */
     public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
     {
+        // 缓存老客户维系设置
+		$cus = Cache::rememberForever('customer', function (){
+            $c = \DB::table('settings')->where('name','customer')->first();
+            return json_decode($c->data);
+        });
         $customer->fill($request->all());
         $customer->user_id = Auth::id();
-        $customer->relationship_at = Carbon::now()->addDay(30);
+        $customer->relationship_at = Carbon::now()->addDay($cus->days);
         $customer->save();
         // 更新客户资料状态为 订单完成
         // $company->where('id',$request->company_id)->update(['follow' => 'complate']);

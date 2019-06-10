@@ -80,4 +80,6 @@ Route::group(['middleware' => ['permission:manager']], function () {
     Route::get('system/show', 'PagesController@show')->name('settings.show');
     Route::post('system/store', 'PagesController@store')->name('settings.store');
     Route::post('system/report/send', 'PagesController@sendReport')->name('report.send');
+    
 });
+Route::get('system/report/report', 'PagesController@report')->name('report');

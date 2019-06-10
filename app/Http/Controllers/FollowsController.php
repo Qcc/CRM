@@ -82,13 +82,13 @@ class FollowsController extends Controller
             'notice' => $notice,
         ];
         // 预约联系 提前1天提醒
-        $schedules = $follow->with('company')->where('schedule_at','<',Carbon::now()->addday(3))->orderBy('schedule_at','asc')->get();
+        $schedules = $follow->with('company')->where('user_id',$user->id)->where('schedule_at','<',Carbon::now()->addday(3))->orderBy('schedule_at','asc')->get();
         // 跟进到期 提前10天提醒
-        $countdowns = $follow->with('company')->where('countdown_at','<',Carbon::now()->addDay(10))->orderBy('countdown_at','asc')->get();
+        $countdowns = $follow->with('company')->where('user_id',$user->id)->where('countdown_at','<',Carbon::now()->addDay(10))->orderBy('countdown_at','asc')->get();
         // 老客户维系 提前5天提醒
-        $relationships = $customer->with('company')->where('relationship_at','<',Carbon::now()->addDay(5))->orderBy('relationship_at','asc')->get();
+        $relationships = $customer->with('company')->where('user_id',$user->id)->where('check','complate')->where('relationship_at','<',Carbon::now()->addDay(5))->orderBy('relationship_at','asc')->get();
         // 售后续费到期 提前30天提醒
-        $expireds = $customer->with('company')->where('expired_at','<',Carbon::now()->addDay(30))->orderBy('expired_at','asc')->get();
+        $expireds = $customer->with('company')->where('user_id',$user->id)->where('check','complate')->where('expired_at','<',Carbon::now()->addDay(30))->orderBy('expired_at','asc')->get();
 
         return view('pages.follow.follow',compact('follows', 'achievement', 'schedules', 'countdowns', 'relationships', 'expireds'));
     }

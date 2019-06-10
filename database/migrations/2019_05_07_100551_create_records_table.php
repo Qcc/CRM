@@ -20,7 +20,7 @@ class CreateRecordsTable extends Migration
             $table->text('content');
             $table->boolean('familiar')->default(false)->comment('是否首次联系');
             // 跟进状态 'follow',有效商机客户普通跟进 'lucky',首次跟进有效 'wrongnumber',电话号码不正确 'noneed'电话号码正确没有需要
-            $table->enum('feed', ['follow', 'lucky', 'wrongnumber', 'noneed','email'])->default('follow')->comment('跟进状态');
+            $table->enum('feed', ['follow', 'lucky', 'wrongnumber', 'noneed'])->default('follow')->comment('跟进状态');
             $table->timestamps();
         });
     }

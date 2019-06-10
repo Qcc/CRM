@@ -69,3 +69,34 @@ function howLevel($money)
         return $level->level_1;
     }
 }
+
+/**
+ * 获取商机对应的反馈名称
+ *
+ * @param [type] $feed
+ * @return void
+ */
+function callResult($feed)
+{
+    switch ($feed) {
+        case 'follow':
+            return '跟进中';
+            break;
+        
+        case 'lucky':
+            return '有效商机';
+            break;
+        
+        case 'wrongnumber':
+            return '号码错误';            
+            break;
+        
+        case 'noneed':
+            return '没有需要';                        
+            break;
+        
+        default:
+            return '无反馈';            
+            break;
+    }
+}
