@@ -505,6 +505,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
         ,type: 'datetime'
         ,range: '~'
       });
+      $(".sendReport-btn").on("click",function(){
+        $("#sendScope").val($("#reportScope").val());
+        $("#sendEmployee").val($("#reportEmployee").val());
+        $("#sendReport").submit();
+        return false;
+      });
     }
 
     //销售话术管理

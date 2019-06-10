@@ -570,14 +570,26 @@
             .employee {
                 width: 150px;
             }
+            .inbox{
+                width: 216px;
+            }
 
             .repeat {
-                width: 221px;
+                width: 340px;
+                .layui-form-label{
+                    width: 84px;
+                    padding-left: 0px;
+                    text-align: left;
+                }
+            }
+            .layui-input-inline{
+                margin-bottom: 8px;
             }
         }
 
         .btn {
             text-align: right;
+            width: 336px;
         }
     }
     .customer{

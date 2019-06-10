@@ -72,11 +72,13 @@ class SeedSettingsData extends Migration
         ];
         // 报表初始数据
         $report = [
-            'start' => Carbon::now()->startOfMonth(),
-            'end' => Carbon::now()->endOfMonth(),
-            'recently' => Carbon::now()->startOfMonth(),
             'employee' => '', 
-            'repeat' => 0,
+            'inbox' => '', 
+            "repeat" => [
+              "day" => "1",
+              "week" => "1",
+              "month" => "1",
+            ]
         ];
         $settings = [
             [

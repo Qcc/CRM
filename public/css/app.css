@@ -508,12 +508,27 @@
   width: 150px;
 }
 
+.settings-show-page .report .layui-form-item .inbox {
+  width: 216px;
+}
+
 .settings-show-page .report .layui-form-item .repeat {
-  width: 221px;
+  width: 340px;
+}
+
+.settings-show-page .report .layui-form-item .repeat .layui-form-label {
+  width: 84px;
+  padding-left: 0px;
+  text-align: left;
+}
+
+.settings-show-page .report .layui-form-item .layui-input-inline {
+  margin-bottom: 8px;
 }
 
 .settings-show-page .report .btn {
   text-align: right;
+  width: 336px;
 }
 
 .settings-show-page .customer .days {

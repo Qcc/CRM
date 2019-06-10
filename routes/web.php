@@ -79,4 +79,5 @@ Route::group(['middleware' => ['permission:manager']], function () {
     // 通用设置
     Route::get('system/show', 'PagesController@show')->name('settings.show');
     Route::post('system/store', 'PagesController@store')->name('settings.store');
+    Route::post('system/report/send', 'PagesController@sendReport')->name('report.send');
 });

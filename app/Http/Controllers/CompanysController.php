@@ -206,7 +206,7 @@ class CompanysController extends Controller
                 $businessCountOfMonth++;
             }
         }
-        $customersOfMonth = $customer->where('user_id',$user->id)
+        $customersOfMonth = $customer->where('user_id',$user->id)->where('check','complate')
         ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;

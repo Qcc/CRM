@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 class PagesController extends Controller
 {
@@ -35,15 +36,15 @@ class PagesController extends Controller
         });
         // 缓存老客户维系设置
 		$customer = Cache::rememberForever('customer', function (){
-            $b = \DB::table('settings')->where('name','customer')->first();
-            return json_decode($b->data);
+            $c = \DB::table('settings')->where('name','customer')->first();
+            return json_decode($c->data);
         });
         // 缓存报表设置
-		$business = Cache::rememberForever('business', function (){
-            $b = \DB::table('settings')->where('name','business')->first();
-            return json_decode($b->data);
+		$report = Cache::rememberForever('report', function (){
+            $r = \DB::table('settings')->where('name','report')->first();
+            return json_decode($r->data);
         });
-        return view('pages.system.setting',compact('level','notice','business'));
+        return view('pages.system.setting',compact('level','notice','business', 'customer', 'report'));
     }
     
     public function store(Request $request)
@@ -111,18 +112,17 @@ class PagesController extends Controller
             // 清除业绩等级缓存
             Cache::forget('level');
         }else if($request->type == 'report'){
-            if($request->scope != ''){
-                $date = explode('~',$request->scope);
-            }
             $report = [
-                'start' => $request->Carbon::now()->startOfMonth(),
-                'end' => $request->Carbon::now()->endOfMonth(),
-                'recently' => $request->Carbon::now()->startOfMonth(),
                 'employee' => $request->employee, 
-                'repeat' => $request->repeat?1:0,
+                'inbox' => $request->inbox, 
+                'repeat' => [
+                    'day' => isset($request->repeat['day'])?1:0,
+                    'week' => isset($request->repeat['week'])?1:0,
+                    'month' => isset($request->repeat['month'])?1:0,
+                ] 
             ];
             \DB::table('settings')->where('name','report')->update(['data' => json_encode($report)]);
-            // 清除商机管理等级缓存
+            // 清除报表发送缓存
             Cache::forget('report');
         }else if($request->type == 'customer'){
             $customer = [
@@ -133,6 +133,18 @@ class PagesController extends Controller
             Cache::forget('customer');
         }
         return back()->with('success', '设置保存完成!');;
+    }
+    public function sendReport(Request $request)
+    {   
+        // 立即发送报表
+        if($request->scope != ''){
+            $date = explode('~',$request->scope);
+            $start = Carbon::parse($date[0]);
+            $end = Carbon::parse($date[1])->endOfDay();
+            dd([$start,$end]);
+        }else{
+            return back()->with('danger', '请选择统计日期时间范围!');
+        }
     }
 
 }

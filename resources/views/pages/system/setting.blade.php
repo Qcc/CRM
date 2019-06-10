@@ -56,7 +56,7 @@
                             <input type="hidden" name="type" value="customer">
                             <div class="layui-form-item">
                                 <div class="layui-input-inline days">
-                                  <input type="text" name="days" value="" lay-verify="required|number" autocomplete="off" placeholder="联系频率（天）" class="layui-input">
+                                  <input type="text" name="days" value="{{ old('days', $customer->days) }}" lay-verify="required|number" autocomplete="off" placeholder="联系频率（天）" class="layui-input">
                                 </div>
                               <div class="layui-input-inline btn">
                                 <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="more-info">保存</button>
@@ -100,20 +100,30 @@
                         <input type="hidden" name="type" value="report">
                         <div class="layui-form-item">
                           <div class="layui-input-inline scope">
-                            <input type="text" name="scope" id="reportScope" lay-verify="date" autocomplete="off" placeholder="请选择日期范围" class="layui-input">
+                            <input type="text" name="scope" id="reportScope"  autocomplete="off" placeholder="请选择日期范围" class="layui-input">
                           </div>
                           <div class="layui-input-inline employee"  title="ID用“,”号隔开，默认发送全部">
-                            <input type="text" name="employee" lay-verify="date" autocomplete="off" placeholder="请输入员工ID" class="layui-input">
+                            <input type="text" id="reportEmployee" name="employee" autocomplete="off" value="{{ old('employee', $report->employee) }}" placeholder="请输入员工ID" class="layui-input">
                           </div>
-                          <div class="layui-input-inline repeat" title="自动发送">
-                              <input type="checkbox" name="like1[writ]" lay-text="1|0" lay-skin="primary" title="每天">
-                              <input type="checkbox" name="like1[read]" lay-text="1|0" lay-skin="primary" title="每周">
-                              <input type="checkbox" name="like1[game]" lay-text="1|0" lay-skin="primary" title="每月">
+                          <div class="layui-input-inline inbox"  title="多个邮箱用“,”号隔开">
+                            <input type="text" id="reportInbox" name="inbox" autocomplete="off" value="{{ old('inbox', $report->inbox) }}" placeholder="请输入报表接收邮箱" class="layui-input">
                           </div>
-                        </div>
-                        <div class="layui-form-item btn">
-                            <button class="layui-btn layui-btn-normal" lay-submit="" >保存</button>
-                            <button class="layui-btn layui-btn-normal">立即发送</button>
+                          <div class="layui-input-inline repeat" >
+                              <label class="layui-form-label">自动发送业绩</label>
+                            <span title="每天8点自动发送前一天业绩统计">
+                              <input type="checkbox" name="repeat[day]" lay-text="1|0" lay-skin="primary" title="每天" {{ $report->repeat->day == 1 ? "checked":"" }}>
+                            </span>  
+                            <span title="每周一早上8点自动发送前一周业绩统计">
+                              <input type="checkbox" name="repeat[week]" lay-text="1|0" lay-skin="primary" title="每周" {{ $report->repeat->week == 1 ? "checked":"" }}>
+                            </span>
+                            <span title="每月1日8点自动发送前一月业绩统计">
+                              <input type="checkbox" name="repeat[month]" lay-text="1|0" lay-skin="primary" title="每月" {{ $report->repeat->month == 1 ? "checked":"" }}>
+                            </span>
+                          </div>
+                          <div class="layui-input-inline btn">
+                              <button class="layui-btn layui-btn-normal" lay-submit="" >保存</button>
+                              <button class="layui-btn layui-btn-normal sendReport-btn">立即发送</button>
+                          </div>
                         </div>
                     </form>
                 </div>
@@ -272,5 +282,9 @@
         </div>
     </div>
 </div>
-    
+<form id="sendReport" action="{{ route('report.send') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+    <input id='sendScope' type="hidden" name="scope">
+    <input id='sendEmployee' type="hidden" name="employee">
+</form>
 @stop
