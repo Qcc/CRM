@@ -26,6 +26,12 @@ class Kernel extends ConsoleKernel
     {
         // 每天午夜解除当天 选定 但未跟进的目标客户 锁定状态
         $schedule->command('Empty:Target')->daily();
+        // 每天8点发送前一天的报表
+        $schedule->command('SendReport:day')->dailyAt('8:00');
+        // 每周一早上8点发送前一周的报表
+        $schedule->command('SendReport:week')->weeklyOn(1, '8:00');
+        // 每月1号8点发送前一月的报表
+        $schedule->command('SendReport:month')->monthlyOn(1, '8:00');
     }
 
     /**

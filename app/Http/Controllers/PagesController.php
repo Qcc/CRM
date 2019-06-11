@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use App\Jobs\SendReport;
 
 use App\Models\Company;
 use App\Models\Follow;
@@ -142,93 +143,24 @@ class PagesController extends Controller
     }
     public function sendReport(Request $request)
     {   
+        // 缓存报表设置
+		$report = Cache::rememberForever('report', function (){
+            $r = \DB::table('settings')->where('name','report')->first();
+            return json_decode($r->data);
+        });
+        $inbox = $report->inbox;
+        $users = $report->employee;
         // 立即发送报表
         if($request->scope != ''){
             $date = explode('~',$request->scope);
             $start = Carbon::parse($date[0]);
             $end = Carbon::parse($date[1])->endOfDay();
-            dd([$start,$end]);
+            //推送到队列执行，发送报表到邮件
+            dispatch(new SendReport($inbox, $users, $start, $end));
+            return back()->with('success', '邮件已经发送至 '.$inbox.' 请留意查收!');
         }else{
             return back()->with('danger', '请选择统计日期时间范围!');
         }
     }
 
-    // 发送报表
-    public function report(Request $request)
-    {   
-        $inbox = "kevin@kouton.com";
-        $ids = "1,2,3";
-        $scope = "2019-06-01 00:00:00 ~ 2019-06-31 00:00:00";
-        $date = explode('~',$scope);
-        $start = Carbon::parse($date[0]);
-        $end = Carbon::parse($date[1])->endOfDay();
-        $users = explode(',',$ids);
-        // 统计数据
-        $statistics = [];
-        // 明细数据
-        $details = [];
-        foreach ($users as $index => $user) {
-            $user = User::find($user);
-            // 客户
-            $customers = Customer::where('user_id',$user->id)->with(['company:id,name'])->where('check','complate')
-            ->whereBetween('created_at',[$start,$end])->get();
-            // 成交客户
-            $cusCount = 0;
-            $money = 0;
-            // 成交金额
-            foreach ($customers as $c) {
-                $cusCount++;
-                $money += $c->contract_money;
-            }
-
-            // 跟进中的客户
-            $follows = Follow::where('user_id',$user->id)->with(['company:id,name'])->get();
-
-            // 拨打电话统计
-            $records = Record::where('user_id',$user->id)->with(['company:id,name'])->whereBetween('created_at',[$start,$end])->get();
-            // 拨打电话
-            $callCount = 0;
-            // 有效商机
-            $businessCount = 0;
-            foreach ($records as $r) {
-                if($r->familiar == true){
-                    $callCount++;
-                }
-                if($r->feed == 'lucky'){
-                    $businessCount++;
-                }
-            }
-            // 详细信息
-            $employee = (object)[];
-            $employee->user = $user;
-            $employee->customers = $customers;
-            $employee->follows = $follows;
-            $employee->records = $records;
-            array_push($details,$employee);
-
-            // 统计数据
-            $line = (object)[];
-            $line->id = $index + 1;
-            $line->name = $user->name;
-            $line->callCount = $callCount;
-            $line->businessCount = $businessCount;
-            $line->busEfficiency = $callCount == 0 ? 0: round($businessCount / $callCount,3)*100;
-            $line->cusCount = $cusCount;
-            $line->cusEfficiency = $callCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
-            $line->money = $money;
-            array_push($statistics, $line);
-        }
-        $total = (object)[];
-        $total->name = "合计";
-        $total->total = 0;
-        foreach ($statistics as $ele) {
-            $total->total += $ele->money;
-        }       
-        array_push($statistics, $total);
-        // 根据业绩排序
-        // usort($statistics, function($a, $b){
-        //     return $a->money > $b->money;
-        // });
-        return view('emails.report',compact('scope', 'statistics','details'));
-    }
 }

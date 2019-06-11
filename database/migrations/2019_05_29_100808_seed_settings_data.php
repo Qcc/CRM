@@ -73,7 +73,7 @@ class SeedSettingsData extends Migration
         // 报表初始数据
         $report = [
             'employee' => '', 
-            'inbox' => '', 
+            'inbox' => 'kevin@kouton.com', 
             "repeat" => [
               "day" => "1",
               "week" => "1",

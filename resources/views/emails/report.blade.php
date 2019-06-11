@@ -83,7 +83,7 @@ a{
     <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">序号</th>
+            <th scope="col">排名</th>
             <th scope="col">姓名</th>
             <th scope="col">拨打电话</th>
             <th scope="col">有效商机</th>
@@ -94,17 +94,17 @@ a{
           </tr>
         </thead>
         <tbody>
-        @foreach($statistics as $line)
+        @foreach($statistics as $index => $line)
         @if (!$loop->last)
         <tr>
-          <th scope="row">{{ $line->id }}</th>
+          <th scope="row">{{ $index + 1 }}</th>
           <td> {{ $line->name }}</td>
           <td> <a href="#{{$line->name}}-callCount">{{ $line->callCount }}</a></td>
           <td> <a href="#{{$line->name}}-businessCount">{{ $line->businessCount }}</a></td>
           <td> {{ $line->busEfficiency }}%</td>
           <td> <a href="#{{$line->name}}-cusCount">{{ $line->cusCount }}</a></td>
           <td> {{ $line->cusEfficiency }}%</td>
-          <td> ￥{{ $line->money }}</td>
+          <td> ￥{{ $line->revenue }}</td>
         </tr>
         @else
         <tr class="table-info">
@@ -184,7 +184,7 @@ a{
               <td> {{ $customer->product }}</td>
               <td> {{ $customer->contract_money }}</td>
               <td> {!! $customer->comment !!}</td>
-              <td> <a href="{{ $customer->contract }}">下载</a></td>
+              <td> <a href="{{ asset($customer->contract) }}">下载</a></td>
               <td> {{ $customer->expired_at }}</td>
             </tr>
             @endforeach

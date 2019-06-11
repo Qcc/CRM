@@ -7,7 +7,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use App\Models\Company;
 use App\Models\Follow;
 use App\Models\Customer;
@@ -20,20 +22,23 @@ class SendReport implements ShouldQueue
 
     protected $emials;
     protected $users;
-    protected $scope;
+    protected $startTime;
+    protected $endTime;
 
     /**
      * 初始化发送参数
      *
      * @param [type] $emials 接收报表邮箱地址，多个邮箱‘,’号隔开
      * @param [type] $users 需要统计的用户ID，多个ID‘,’号隔开
-     * @param [type] $scope 统计时间段
+     * @param [type] $startTime 统计起始时间
+     * @param [type] $endTime 统计结束时间
      */
-    public function __construct($emials,$users,$scope)
+    public function __construct($emials,$users,$startTime, $endTime)
     {
         $this->emials = $emials;
         $this->users = $users;
-        $this->scope = $scope;
+        $this->startTime = $startTime;
+        $this->endTime = $endTime;
     }
 
     /**
@@ -43,9 +48,6 @@ class SendReport implements ShouldQueue
      */
     public function handle()
     {
-        $date = explode('~',$this->scope);
-        $start = Carbon::parse($date[0]);
-        $end = Carbon::parse($date[1])->endOfDay();
         $users = explode(',',$this->users);
         // 统计数据
         $statistics = [];
@@ -53,66 +55,81 @@ class SendReport implements ShouldQueue
         $details = [];
         foreach ($users as $index => $user) {
             $user = User::find($user);
-            // 客户
-            $customers = Customer::where('user_id',$user->id)->with(['company:id,name'])->where('check','complate')
-            ->whereBetween('created_at',[$start,$end])->get();
-            // 成交客户
-            $cusCount = 0;
-            $money = 0;
-            // 成交金额
-            foreach ($customers as $c) {
-                $cusCount++;
-                $money += $c->contract_money;
-            }
-
-            // 跟进中的客户
-            $follows = Follow::where('user_id',$user->id)->with(['company:id,name'])->get();
-
-            // 拨打电话统计
-            $records = Record::where('user_id',$user->id)->with(['company:id,name'])->whereBetween('created_at',[$start,$end])->get();
-            // 拨打电话
-            $callCount = 0;
-            // 有效商机
-            $businessCount = 0;
-            foreach ($records as $r) {
-                if($r->familiar == true){
-                    $callCount++;
+            if($user){
+                // 客户
+                $customers = Customer::where('user_id',$user->id)->with(['company:id,name'])->where('check','complate')
+                ->whereBetween('created_at',[$this->startTime,$this->endTime])->get();
+                // 成交客户
+                $cusCount = 0;
+                // 收入
+                $revenue = 0;
+                // 成交金额
+                foreach ($customers as $c) {
+                    $cusCount++;
+                    $revenue += $c->contract_money;
                 }
-                if($r->feed == 'lucky'){
-                    $businessCount++;
+                
+                // 跟进中的客户
+                $follows = Follow::where('user_id',$user->id)->with(['company:id,name'])->get();
+                
+                // 拨打电话统计
+                $records = Record::where('user_id',$user->id)->with(['company:id,name'])->whereBetween('created_at',[$this->startTime,$this->endTime])->get();
+                // 拨打电话
+                $callCount = 0;
+                // 有效商机
+                $businessCount = 0;
+                foreach ($records as $r) {
+                    if($r->familiar == true){
+                        $callCount++;
+                    }
+                    if($r->feed == 'lucky'){
+                        $businessCount++;
+                    }
                 }
+                // 详细信息
+                $employee = (object)[];
+                $employee->user = $user;
+                $employee->customers = $customers;
+                $employee->follows = $follows;
+                $employee->records = $records;
+                array_push($details,$employee);
+            
+                // 统计数据
+                // $line = (object)[];
+                $line = json_decode('{}');
+                $line->name = $user->name;
+                $line->callCount = $callCount;
+                $line->businessCount = $businessCount;
+                $line->busEfficiency = $callCount == 0 ? 0: round($businessCount / $callCount,3)*100;
+                $line->cusCount = $cusCount;
+                $line->cusEfficiency = $callCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
+                $line->revenue = $revenue;
+                array_push($statistics, $line);
             }
-            // 详细信息
-            $employee = (object)[];
-            $employee->user = $user;
-            $employee->customers = $customers;
-            $employee->follows = $follows;
-            $employee->records = $records;
-            array_push($details,$employee);
-
-            // 统计数据
-            $line = (object)[];
-            $line->id = $index + 1;
-            $line->name = $user->name;
-            $line->callCount = $callCount;
-            $line->businessCount = $businessCount;
-            $line->busEfficiency = $callCount == 0 ? 0: round($businessCount / $callCount,3)*100;
-            $line->cusCount = $cusCount;
-            $line->cusEfficiency = $callCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
-            $line->money = $money;
-            array_push($statistics, $line);
         }
-        $total = (object)[];
-        $total->name = "合计";
-        $total->total = 0;
-        foreach ($statistics as $ele) {
-            $total->total += $ele->money;
-        }       
-        array_push($statistics, $total);
         // 根据业绩排序
-        // usort($statistics, function($a, $b){
-        //     return $a->money > $b->money;
-        // });
-        return view('emails.report',compact('scope', 'statistics','details'));
+        usort($statistics, function($a, $b){
+            return $a->revenue < $b->revenue;
+        });
+        // 添加行末合计
+        $total = json_decode('{}');
+        $total->name = "合计";
+        $total->total = 0;   
+        foreach ($statistics as $ele) {
+            $total->total += $ele->revenue;
+        }    
+        array_push($statistics, $total);
+        $inboxs = explode(';',$this->emials);
+        foreach ($inboxs as $inbox) {            
+            //发邮件
+            Mail::send('emails.report',[
+                'scope'=>$this->startTime."~".$this->endTime, 
+                'statistics'=>$statistics,
+                'details'=>$details
+            ],function($message) use($inbox)
+            {
+                $message ->to($inbox)->subject("沟通科技CRM商机统计报表".$this->startTime."~".$this->endTime);
+            });
+        }
     }
 }

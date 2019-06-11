@@ -82,4 +82,3 @@ Route::group(['middleware' => ['permission:manager']], function () {
     Route::post('system/report/send', 'PagesController@sendReport')->name('report.send');
     
 });
-Route::get('system/report/report', 'PagesController@report')->name('report');

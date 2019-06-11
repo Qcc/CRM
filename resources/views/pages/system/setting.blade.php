@@ -105,7 +105,7 @@
                           <div class="layui-input-inline employee"  title="ID用“,”号隔开，默认发送全部">
                             <input type="text" id="reportEmployee" name="employee" autocomplete="off" value="{{ old('employee', $report->employee) }}" placeholder="请输入员工ID" class="layui-input">
                           </div>
-                          <div class="layui-input-inline inbox"  title="多个邮箱用“,”号隔开">
+                          <div class="layui-input-inline inbox"  title="多个邮箱用“;”号隔开">
                             <input type="text" id="reportInbox" name="inbox" autocomplete="off" value="{{ old('inbox', $report->inbox) }}" placeholder="请输入报表接收邮箱" class="layui-input">
                           </div>
                           <div class="layui-input-inline repeat" >
