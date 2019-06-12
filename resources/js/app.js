@@ -444,7 +444,8 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
             layer.close(index);
           });
         }else if(obj.event == 'agent'){
-          $('#agent-id').val(obj.data.follow_id);
+          $('#follow_id').val(obj.data.follow_id);
+          $('#customer_id').val(obj.data.id);
           layer.confirm('确认续签么', function(index){
             $('#agent-form').submit();
             layer.close(index);

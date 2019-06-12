@@ -139,7 +139,8 @@
 </form>
 <form id="agent-form" action="{{ route('follow.agent') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
-    <input id='agent-id' type="hidden" name="id">
+    <input id='follow_id' type="hidden" name="follow_id">
+    <input id='customer_id' type="hidden" name="customer_id">
 </form>
 @stop
 @include('pages.customer._customer_form')

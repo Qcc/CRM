@@ -155,12 +155,18 @@ class FollowsController extends Controller
         }
         return back()->with('danger', '延期次数已经用完!');
     }
+
+    // 老客户订单续签
     public function agent(Request $request, Follow $follow)
     {
-        $follow = Follow::withTrashed()->find($request->id);
+        $follow = Follow::withTrashed()->find($request->follow_id);
         $this->authorize('update', $follow);
         if($follow->deleted_at != null){
             $follow->restore();
+        }
+        if(!$follow->customer_id){
+            $follow->customer_id = $request->customer_id;
+            $follow->save();
         }
         return redirect()->route('follow.show',$follow->id)->with('success', '创建续费订单成功，请继续跟进客户');
     }
