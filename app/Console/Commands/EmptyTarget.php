@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Log;
 
 class EmptyTarget extends Command
 {
@@ -40,13 +41,16 @@ class EmptyTarget extends Command
      */
     public function handle(User $user,Company $company)
     {
+        Log::info("开始清空当前未未联系的目标客户名单");
         $users = $user->get();
         foreach ($users as  $u) {
+            Log::info('清空 '.$u->name.' 未联系的目标客户名单');
             $el = Redis::smembers("target_".$u->id);
             // 清空选定跟进目标
             Redis::srem("target_".$u->id,$el);
             // 将已选定未跟进的目标解除锁定状态 重新更新为 target 可跟进状态
             $company->whereIn('id',$el)->update(['follow'=>'target']);
         }
+        Log::info("清空当前未未联系的目标客户名单完成");
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
@@ -61,5 +62,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function isAuthorOf($model)
     {
         return $this->id == $model->user_id;
+    }
+    public function recordUserActived($request)
+    {
+        Log::info($this->name."(".$this->email.")"." 访问了页面 "."[".$request->method()."]".$request->fullUrl()."?".json_encode($request->all()));
     }
 }
