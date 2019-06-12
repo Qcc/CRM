@@ -6,12 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\Jobs\SendReport;
+use Illuminate\Support\Facades\Log;
 
-use App\Models\Company;
-use App\Models\Follow;
-use App\Models\Customer;
-use App\Models\Record;
-use App\Models\User;
 
 class PagesController extends Controller
 {

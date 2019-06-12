@@ -8,7 +8,9 @@ use App\Models\Record;
 use App\Models\Follow;
 use Auth;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class RecordsController extends Controller
 {
@@ -56,9 +58,16 @@ class RecordsController extends Controller
             $record->familiar = true;
             $record->save();
             if($request->feed == 'lucky'){
+                // 缓存商机管理设置
+		        $business = Cache::rememberForever('business', function (){
+                    $b = \DB::table('settings')->where('name','business')->first();
+                    return json_decode($b->data);
+                });
                 // 将有效商机转化为 持续跟进的客户 商机默认保留 60天 过期将重新放入公海
-                $follow->countdown_at = Carbon::parse('+60 days');
+                $follow->countdown_at = Carbon::parse('+'.$business->days.' days');
                 $follow->user_id = $user->id;
+                // 延期次数
+                $follow->delayCount = $business->pics;
                 $follow->company_id = $request->company_id;
                 $follow->save();
                 // 将目标公司的状态修改为跟进中 follow 增加跟进记录

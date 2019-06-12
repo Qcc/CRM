@@ -24,7 +24,7 @@ class CreateFollowsTable extends Migration
             $table->date('expected_at')->nullable()->comment('预计成交时间');
             $table->dateTime('schedule_at')->nullable()->comment('下次联系提醒');
             $table->dateTime('countdown_at')->comment('跟进截至日期');
-            $table->integer('delayCount')->default(2)->comment('延期次数');
+            $table->integer('delayCount')->comment('延期次数');
             $table->float('contract_money')->nullable()->comment('预计成交金额');
             // 软删除
             $table->softDeletes();

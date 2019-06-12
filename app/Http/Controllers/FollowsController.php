@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Auth;
 use App\Http\Requests\FollowRequest;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class FollowsController extends Controller
 {
@@ -98,9 +99,14 @@ class FollowsController extends Controller
     {
         $this->authorize('update', $follow);
 
+        // 缓存商机管理设置
+		$business = Cache::rememberForever('business', function (){
+            $b = \DB::table('settings')->where('name','business')->first();
+            return json_decode($b->data);
+        });
         if($follow->user_id == Auth::id()){
             $follows = $follow->where('user_id',Auth::id())->with('company')->get();
-            return view('pages.follow.show',compact('follows','follow'));
+            return view('pages.follow.show',compact('follows','follow','business'));
         }else{
             return abort(404);
         }
@@ -138,10 +144,14 @@ class FollowsController extends Controller
     public function delay(Follow $follow)
     {
         $this->authorize('update', $follow);
-
-        if($follow->delayCount > 0){
-            $follow->update(['countdown_at'=>Carbon::parse($follow->countdown_at)->addDays(10),'delayCount'=>$follow->delayCount--]);
-            return back()->with('success', '延期成功!');
+        // 缓存商机管理设置
+		$business = Cache::rememberForever('business', function (){
+            $b = \DB::table('settings')->where('name','business')->first();
+            return json_decode($b->data);
+        });
+        if($follow->delayCount > 0 && $business->delay){
+            $follow->update(['countdown_at'=>Carbon::parse($follow->countdown_at)->addDays($business->picOfdays),'delayCount'=>$follow->delayCount--]);
+            return back()->with('success', '延期成功,请尽快促成成交!');
         }
         return back()->with('danger', '延期次数已经用完!');
     }
