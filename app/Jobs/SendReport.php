@@ -24,6 +24,7 @@ class SendReport implements ShouldQueue
     protected $users;
     protected $startTime;
     protected $endTime;
+    protected $title;
 
     /**
      * 初始化发送参数
@@ -32,13 +33,15 @@ class SendReport implements ShouldQueue
      * @param [type] $users 需要统计的用户ID，多个ID‘,’号隔开
      * @param [type] $startTime 统计起始时间
      * @param [type] $endTime 统计结束时间
+     * @param [type] $title 报表标题
      */
-    public function __construct($emials,$users,$startTime, $endTime)
+    public function __construct($emials,$users,$startTime, $endTime, $title = '沟通科技CRM商机统计报表')
     {
         $this->emials = $emials;
         $this->users = $users;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->title = $title;
     }
 
     /**
@@ -120,7 +123,8 @@ class SendReport implements ShouldQueue
         }    
         array_push($statistics, $total);
         $inboxs = explode(';',$this->emials);
-        foreach ($inboxs as $inbox) {            
+        foreach ($inboxs as $inbox) {        
+            Log::info('发送报表邮件到'.$inbox);    
             //发邮件
             Mail::send('emails.report',[
                 'scope'=>$this->startTime."~".$this->endTime, 
@@ -128,7 +132,7 @@ class SendReport implements ShouldQueue
                 'details'=>$details
             ],function($message) use($inbox)
             {
-                $message ->to($inbox)->subject("沟通科技CRM商机统计报表".$this->startTime."~".$this->endTime);
+                $message ->to($inbox)->subject($this->title.$this->startTime."~".$this->endTime);
             });
         }
     }

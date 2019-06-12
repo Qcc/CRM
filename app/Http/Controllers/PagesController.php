@@ -153,10 +153,10 @@ class PagesController extends Controller
         // 立即发送报表
         if($request->scope != ''){
             $date = explode('~',$request->scope);
-            $start = Carbon::parse($date[0]);
-            $end = Carbon::parse($date[1])->endOfDay();
+            $startTime = Carbon::parse($date[0]);
+            $endTime = Carbon::parse($date[1])->endOfDay();
             //推送到队列执行，发送报表到邮件
-            dispatch(new SendReport($inbox, $users, $start, $end));
+            dispatch(new SendReport($inbox, $users, $startTime, $endTime));
             return back()->with('success', '邮件已经发送至 '.$inbox.' 请留意查收!');
         }else{
             return back()->with('danger', '请选择统计日期时间范围!');

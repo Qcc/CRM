@@ -148,6 +148,7 @@ a{
                 <th scope="col">预计成交金额</th>
                 <th scope="col">公关难点</th>
                 <th scope="col">预计成交时间</th>
+                <th scope="col">跟进截至</th>
               </tr>
             </thead>
             <tbody>
@@ -159,6 +160,7 @@ a{
               <td> {{ $follow->contract_money }}</td>
               <td> {!! $follow->difficulties !!}</td>
               <td> {{ $follow->expected_at }}</td>
+              <td> {{ $follow->countdown_at }}</td>
             </tr>
             @endforeach
             </tbody>
