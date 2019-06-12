@@ -162,7 +162,8 @@ return [
         Overtrue\LaravelLang\TranslationServiceProvider::class, 
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        // 日志记录
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         /*
          * Package Service Providers...
          */
