@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use App\Handlers\ImageUploadHandler;
 use Auth;
 
 class UsersController extends Controller
@@ -123,5 +124,20 @@ class UsersController extends Controller
             return back()->with('danger', '密码不正确，更新密码失败！');
         }
         return back()->with('success', '密码更新成功！');
+    }
+
+    public function uploadAvatar(Request $request, ImageUploadHandler $uploader, User $user)
+    {
+        $data = $request->all();
+        $user = Auth::user();
+        if ($request->avatar) {
+            $result = $uploader->save($request->avatar, 'avatars', $user->id);
+            if ($result) {
+                $data['avatar'] = $result['path'];
+            }
+        }
+
+        $user->update($data);
+        return back()->with('success', '头像更新成功！');
     }
 }

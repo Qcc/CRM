@@ -1,148 +1,89 @@
 @extends('layouts.app')
-@section('title', '公海目标')
+@section('title', $customer->company->name)
 
 @section('content')
-<div class="layui-row">
+<div class="layui-row" style="padding: 15px;background-color: #F2F2F2;">
     <div class="layui-col-xs10 layui-col-xs-offset1">
-        <table lay-filter="customers-table" id="customers-table" lay-filter="customers-table">
-            <thead>
-              <tr>
-                  <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                  <th lay-data="{field:'id', width:80, hide:true}">ID</th>
-                  <th lay-data="{field:'name', width:200}">公司</th>
-                  <th lay-data="{field:'user', width:80, hide:true}">销售</th>
-                  <th lay-data="{field:'check', width:100,templet: function(d){ 
-                    if(d.check == 'delete'){
-                      return '<span class=color-drak>已删除</span>';
-                    }else if(d.check == 'dismissed'){
-                      return '<span class=color-red>已驳回</span>';
-                    }else if(d.check == 'complate'){
-                      return '<span class=color-gre>已完成</span>';
-                    }else if(d.check == 'check'){
-                      return '<span class=color-ind>审核中</span>';
-                    }else{
-                      return '无';
-                    } }}">审核</th>
-                  <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'<span class=color-red>有</span>':'无'} }">跟进记录</th>
-                  <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
-                    if(d.follow == 'target'){
-                      return '<span class=color-gre>可跟进</span>';
-                    }else if(d.follow == 'locking'){
-                      return '<span class=color-red>锁定中</span>';
-                    }else if(d.follow == 'follow'){
-                      return '<span class=color-ind>跟进中</span>';
-                    }else if(d.follow == 'complate'){
-                      return '<span class=color-blue>已成交</span>';
-                    }else{
-                      return '无';
-                    } }}">状态</th>
-                  <th lay-data="{field:'company_id',width:80, hide:true}">公司ID</th>                  
-                  <th lay-data="{field:'contact',width:80, hide:true}">联系人</th>
-                  <th lay-data="{field:'phone',width:120, hide:true}">电话</th>
-                  <th lay-data="{field:'product',width:100}">已购产品</th>
-                  <th lay-data="{field:'contract',width:100,templet: function(d){
-                    return '<a class=download href=' + d.contract + '>' + d.contract.substr((d.contract.lastIndexOf('/')) + 1) + '</a>'
-                    }}">合同</th>
-                  <th lay-data="{field:'completion_at',width:105, hide:true}">购买日期</th>
-                  <th lay-data="{field:'expired_at',width:105}">续费/售后到期</th>
-                  <th lay-data="{field:'contract_money',width:100}">合同金额</th>
-                  <th lay-data="{field:'comment'}">项目备注</th>
-                  <th lay-data="{field:'boss', hide:true, width:80}">公司法人</th>
-                  <th lay-data="{field:'money', hide:true, width:86,templet: function(d){return d.money+'万'} }">注册资金</th>
-                  <th lay-data="{field:'moneyType', hide:true, width:86,hide:true}">资本类型</th>
-                  <th lay-data="{field:'registration', hide:true, width:105}">成立日期</th>
-                  <th lay-data="{field:'status', width:86, hide:true}">经营状态</th>
-                  <th lay-data="{field:'province', width:86, hide:true}">所属省份</th>
-                  <th lay-data="{field:'city', width:86, hide:true}">所属城市</th>
-                  <th lay-data="{field:'area', width:86, hide:true}">所属区县</th>
-                  <th lay-data="{field:'type', width:115, hide:true}">公司类型</th>
-                  <th lay-data="{field:'socialCode', width:140, hide:true}">社会信用代码</th>
-                  <th lay-data="{field:'address', width:200, hide:true}">地址</th>
-                  <th lay-data="{field:'webAddress', width:130, hide:true}">网址</th>
-                  <th lay-data="{field:'businessScope', hide:true,}">经营范围</th>
-                  <th lay-data="{fixed: 'right', width:120,toolbar:'#customersEdit'}">操作</th>
-              </tr> 
-            </thead>
-            <tbody>
-              @foreach($customers as $index => $customer)
-              <tr>
-                <td></td>
-                <td>{{ $customer->id }}</td>
-                <td>{{ $customer->company->name }}</td>
-                <td>{{ $customer->user->name }}</td>
-                <td>{{ $customer->check }}</td>
-                <td>{{ $customer->company->contacted }}</td>
-                <td>{{ $customer->company->follow }}</td>
-                <td>{{ $customer->company->id }}</td>
-                <td>{{ $customer->contact  }}</td>
-                <td>{{ $customer->phone  }}</td>
-                <td>{{ $customer->product  }}</td>
-                <td>{{ $customer->contract  }}</td>
-                <td>{{ $customer->completion_at  }}</td>
-                <td>{{ $customer->expired_at  }}</td>
-                <td>{{ $customer->contract_money  }}</td>
-                <td>{{ $customer->comment  }}</td>
-                <td>{{ $customer->company->boss }}</td>
-                <td>{{ $customer->company->money }}</td>
-                <td>{{ $customer->company->moneyType }}</td>
-                <td>{{ $customer->company->registration }}</td>
-                <td>{{ $customer->company->status }}</td>
-                <td>{{ $customer->company->province }}</td>
-                <td>{{ $customer->company->city }}</td>
-                <td>{{ $customer->company->area }}</td>
-                <td>{{ $customer->company->type }}</td>
-                <td>{{ $customer->company->socialCode }}</td>
-                <td>{{ $customer->company->address }}</td>
-                <td>{{ $customer->company->webAddress }}</td>
-                <td>{{ $customer->company->businessScope }}</td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        <div class="pagination-box">
-        {!! $customers->appends(Request::except('page'))->render() !!}
-        </div>
-    </div>
-</div>
-<div id="customersEdit-box">
+      <div class="layui-row layui-col-space5">
+          <div class="layui-col-xs4">
+              <div class="layui-card">
+                <div class="layui-card-header">订单信息</div>
+                <div class="layui-card-body">
+                    <h2>成交产品 <strong>{{ $customer->product }}</strong></h2>
+                    <p>订单状态 {{ $customer->check }}</p>
+                  <p>联系人 {{ $customer->contact }}</p>
+                  <p >{{ format_phone($customer->phone,'-') }}</p>
+                  <p >收款金额 ￥{{ $customer->contract_money }}</p>
+                  <p>售后到期 {{ $customer->expired_at->toDateString() }}</p>
+                  <p>成交日期 {{ $customer->completion_at->toDateString() }}</p>
+                  <p>{!! $customer->comment !!}</p>
+                </div>  
+              </div> 
 
-</div>
-<script type="text/html" id="toolbarTarget">
-  <form class="layui-form">
-    <div class="layui-form-item">
-      <div class="layui-input-inline">
-        <input type="text" name="name" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
-      </div>
-      <div class="layui-input-inline" style="width: 250px;">
-        <button class="layui-btn" lay-submit lay-filter="">查找</button>
-        @can('manager')
-        <button class="layui-btn layui-btn-normal" type='button' lay-event="CheckStatus">审核</button>
-        @endcan
+            <div class="layui-card">
+              <div class="layui-card-header">客户资料</div>
+              <div class="layui-card-body">
+                  <h2>{{ $customer->company->name }}</h2>
+                  <p>联系人 <strong>{{ $customer->company->boss }}</strong></p>
+                  <p class="phone">{{ format_phone($customer->company->phone,'-') }}</p>
+                  <p >{{ $customer->company->morePhone }}</p>
+                  <p>{{ $customer->company->email }}</p>
+                  <p>注册资金 {{ $customer->company->money }}万{{ $customer->company->moneyType }}</p>
+                  <p>成立日期 {{ $customer->company->registration }}</p>
+                  <p>{{ $customer->company->address }}</p>
+                  <p>{{ $customer->company->webAddress }}</p>
+                  <p>{{ $customer->company->businessScope }}</p>
+              </div>  
+            </div>  
+             
+          </div>
+          <div class="layui-col-xs8">
+              <div class="layui-card">
+                  <div class="layui-card-header">客户维系</div>
+                  <div class="layui-card-body">
+                      <form class="layui-form" method="POST" action="{{ route('customer.keep') }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="company_id" value="{{ $customer->company->id }}">
+                          <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                          <div class="layui-form-item">
+                                <textarea name="content" class="form-control" id="record-editor" rows="1" cols="10" placeholder="请填入联系客户反馈。">{{ old('content' ) }}</textarea>
+                          </div>
+                          <div class="layui-form-item">
+                              <div class="layui-input-block" style="margin-left: 0;">
+                                <div class="layui-col-xs6">
+                                  <div class="layui-inline" style="margin-right: 100px;">
+                                    <p>下次联系客户时间 <span class="layui-word-aux">{{ $customer->relationship_at->toDateString() }}</span></p>  
+                                  </div>
+                                </div>
+                                <div class="layui-col-xs6" style="text-align: right;">
+                                  <button class="layui-btn" lay-submit="" lay-filter="follow-btn">提交联系反馈</button>
+                                </div>
+                              </div>
+                            </div>
+                      </form>
+                  </div>  
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header">以往跟进记录</div>
+                    <div class="layui-card-body">
+                        @include('pages.company._records',['records'=>$customer->company->records()->orderBy('created_at','desc')->get()])
+              </div>
+          </div>
       </div>
     </div>
-  </form>
-</script>
-<form id="check-form" action="{{ route('customers.check') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-    <input id='check-ids' type="hidden" name="ids">
-    <input id='check-type' type="hidden" name="type">
-</form>
-<form id="destroy-form" action="{{ route('customers.destroy') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-    <input id='destroy-id' type="hidden" name="id">
-</form>
-<form id="restore-form" action="{{ route('customers.restore') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-    <input id='restore-id' type="hidden" name="id">
-</form>
-<form id="agent-form" action="{{ route('follow.agent') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-    <input id='agent-id' type="hidden" name="id">
-</form>
+</div>
 @stop
-@include('pages.customer._customer_form')
+@section('styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('lib/styles/simditor.css') }}">
+@stop
+
 @section('script')
 <script type="text/javascript" src="{{ asset('lib/scripts/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('lib/scripts/module.js') }}"></script>
+<script type="text/javascript" src="{{ asset('lib/scripts/hotkeys.js') }}"></script>
+<script type="text/javascript" src="{{ asset('lib/scripts/uploader.js') }}"></script>
+<script type="text/javascript" src="{{ asset('lib/scripts/simditor.js') }}"></script>
 <!-- aetherupload文件上传组件 -->
 <script src="{{ URL::asset('vendor/aetherupload/js/spark-md5.min.js') }}"></script>
 <!--需要引入spark-md5.min.js-->

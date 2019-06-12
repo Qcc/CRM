@@ -198,13 +198,13 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
   }
 
   // 反馈页面
-  if($('.company-show-page').length == 1 || $('.follow-show-page').length == 1){
+  if($('.company-show-page').length == 1 || $('.follow-show-page').length == 1 || $('.customer-show-page').length == 1){
     if ($('#record-editor').length == 1) {
 			var editor = new Simditor({
 				textarea: $('#record-editor'),
 				toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'ol', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'],
 				upload: {
-					url: "/topics/upload_image",
+					url: "/uploadImage",
 					//工具条都包含哪些内容
 					params: {
 						_token: $('meta[name="csrf-token"]').attr('content')
@@ -304,7 +304,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
   }
     
     // 正式客户展示
-    if($('.customers-show-page').length == 1 ){
+    if($('.customers-index-page').length == 1 ){
       var editBar = `<script type="text/html" id="customersEdit">
         {{#  if(d.check == 'check'){ }}
             <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
@@ -444,7 +444,7 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
             layer.close(index);
           });
         }else if(obj.event == 'agent'){
-          $('#agent-id').val(obj.data.id);
+          $('#agent-id').val(obj.data.follow_id);
           layer.confirm('确认续签么', function(index){
             $('#agent-form').submit();
             layer.close(index);

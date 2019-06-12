@@ -157,8 +157,8 @@ class FollowsController extends Controller
     }
     public function agent(Request $request, Follow $follow)
     {
-        $this->authorize('update', $follow);
         $follow = Follow::withTrashed()->find($request->id);
+        $this->authorize('update', $follow);
         if($follow->deleted_at != null){
             $follow->restore();
         }

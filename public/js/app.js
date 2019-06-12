@@ -304,13 +304,13 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   } // 反馈页面
 
 
-  if ($('.company-show-page').length == 1 || $('.follow-show-page').length == 1) {
+  if ($('.company-show-page').length == 1 || $('.follow-show-page').length == 1 || $('.customer-show-page').length == 1) {
     if ($('#record-editor').length == 1) {
       var editor = new Simditor({
         textarea: $('#record-editor'),
         toolbar: ['title', 'bold', 'italic', 'fontScale', 'color', 'ol', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr'],
         upload: {
-          url: "/topics/upload_image",
+          url: "/uploadImage",
           //工具条都包含哪些内容
           params: {
             _token: $('meta[name="csrf-token"]').attr('content')
@@ -410,7 +410,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
   } // 正式客户展示
 
 
-  if ($('.customers-show-page').length == 1) {
+  if ($('.customers-index-page').length == 1) {
     var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check == 'check'){ }}\n            <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n            <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u5220\u9664</a>\n        {{#  }else if(d.check == 'complate'){ }}\n            <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  }else if(d.check == 'delete'){ }}\n            <a class=\"layui-btn layui-btn-warm layui-btn-xs\" lay-event=\"restore\">\u6062\u590D</a>\n        {{#  } }}\n        </script>";
     $('#customersEdit-box').html(editBar);
     table.init('customers-table', {
@@ -544,7 +544,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
           layer.close(index);
         });
       } else if (obj.event == 'agent') {
-        $('#agent-id').val(obj.data.id);
+        $('#agent-id').val(obj.data.follow_id);
         layer.confirm('确认续签么', function (index) {
           $('#agent-form').submit();
           layer.close(index);

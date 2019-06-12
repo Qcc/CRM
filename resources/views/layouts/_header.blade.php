@@ -7,9 +7,9 @@
       <li class="layui-nav-item {{ active_class(if_route('company.follow') || if_route('company.show'),'layui-this') }}"><a href="{{ route('company.follow') }}">今日目标</a></li>
       <li class="layui-nav-item {{ active_class(if_route('follow.follow') || if_route('follow.show'),'layui-this') }}"><a href="{{ route('follow.follow') }}">客户跟进</a></li>
       @if(Auth::user()->can('manager'))
-      <li class="layui-nav-item {{ active_class(if_route('customers.show'),'layui-this') }}"><a href="{{ route('customers.show') }}">所有客户</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('customers.show'),'layui-this') }}"><a href="{{ route('customers.index') }}">所有客户</a></li>
       @else
-      <li class="layui-nav-item {{ active_class(if_route('customers.show'),'layui-this') }}"><a href="{{ route('customers.show') }}">我的客户</a></li>
+      <li class="layui-nav-item {{ active_class(if_route('customer.index'),'layui-this') }}"><a href="{{ route('customer.index') }}">我的客户</a></li>
       @endif
       @can('manager')
       <li class="layui-nav-item {{ active_class(if_route('company.upload'),'layui-this') }}">

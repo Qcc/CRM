@@ -27,6 +27,9 @@
 .pr {
     text-align: right;
 }
+.pc {
+    text-align: center;
+}
 
 .upload-done {
     li {
@@ -153,6 +156,7 @@
     border-color: #ffeeba;
 }
 
+.customer-show-page>.layui-body,
 .password-request-page>.layui-body,
 .register-page>.layui-body,
 .login-page>.layui-body,
@@ -161,7 +165,7 @@
 .user-settings-page>.layui-body,
 .system-users-page>.layui-body,
 .root-page>.layui-body,
-.customers-show-page>.layui-body,
+.customers-index-page>.layui-body,
 .company-secrch-page>.layui-body,
 .company-upload-page>.layui-body {
     left: 0px;
@@ -508,7 +512,7 @@
 }
 
 
-.customers-show-page {
+.customers-index-page {
 
     .layui-table-cell {
         .download {
@@ -522,6 +526,7 @@
         .btn {
             text-align: right;
         }
+
         .layui-form-item {
             margin-bottom: 11px;
         }
@@ -570,19 +575,22 @@
             .employee {
                 width: 150px;
             }
-            .inbox{
+
+            .inbox {
                 width: 216px;
             }
 
             .repeat {
                 width: 340px;
-                .layui-form-label{
+
+                .layui-form-label {
                     width: 84px;
                     padding-left: 0px;
                     text-align: left;
                 }
             }
-            .layui-input-inline{
+
+            .layui-input-inline {
                 margin-bottom: 8px;
             }
         }
@@ -592,23 +600,47 @@
             width: 336px;
         }
     }
-    .customer{
-        .days{
-            width:238px;
+
+    .customer {
+        .days {
+            width: 238px;
         }
-        .btn{
+
+        .btn {
             text-align: right;
-            width:80px;
+            width: 80px;
             margin-right: 0px;
         }
     }
 }
 
+.user-settings-page,
 .speechs-index-page,
 .system-users-page,
 .settings-show-page,
-.customers-show-page {
+.customer-show-page,
+.customers-index-page {
     .layui-body {
         padding-top: 0px;
+    }
+}
+
+.simditor-body, .layui-timeline-content{
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.customer-show-page {
+    .simditor {
+
+        .simditor-body {
+            min-height: 100px !important;
+        }
+
+        .simditor-toolbar>ul>li>.toolbar-item {
+            height: auto;
+        }
     }
 }

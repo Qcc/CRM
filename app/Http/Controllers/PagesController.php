@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use App\Jobs\SendReport;
 use Illuminate\Support\Facades\Log;
-
+use App\Handlers\ImageUploadHandler;
 
 class PagesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['root','report']]);
+        $this->middleware('auth', ['except' => ['root']]);
     }
     public function root()
     {
@@ -159,4 +159,32 @@ class PagesController extends Controller
         }
     }
 
+    /**
+	 * 上传图片
+	 *
+	 * @param Request $request
+	 * @param ImageUploadHandler $uploader
+	 * @return void
+	 */
+	public function uploadImage(Request $request, ImageUploadHandler $uploader)
+	{
+		//初始化数据,默认是失败的
+		$data = [
+			'success' => false,
+			'msg' => '上传失败',
+			'file_path' => ''
+		];
+		// 判断是否有文件上传，并赋值给$file
+		if($file = $request->upload_file){
+			// 保存图片到本地
+			$result = $uploader->save($request->upload_file,'records',\Auth::id(),1024);
+			//图片保存成功的话
+			if($result){
+				$data['file_path'] = $result['path'];
+				$data['msg'] = '上传成功';
+				$data['success'] = true;
+			}
+		}
+		return $data;
+	}
 }

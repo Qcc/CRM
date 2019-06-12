@@ -7,13 +7,23 @@
         <div class="layui-card">
           <div class="layui-card-header">个人资料</div>
           <div class="layui-card-body">
-              <div class="layui-upload">
-                <div class="layui-upload-list">
-                  <img class="layui-upload-img" src="{{ Auth::user()->avatar }}" id="avatar">
-                  <p id="demoText"></p>
-                </div>
-                <button type="button" class="layui-btn" id="test1">上传头像</button>
+            <form class="layui-form" method="post" action="{{ route('user.uploadAvatar') }}" accept-charset="UTF-8" 
+            enctype="multipart/form-data">
+                <div class="layui-form-item">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              @if(Auth::user()->avatar)
+              <br>
+              <img src="{{ Auth::user()->avatar }}" width="180" />
+              @endif
+              <input type="file" name="avatar">
               </div>
+              
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                  </div>
+                </div>
+            </form>
               <div class="userinfo">
                 <p>姓名：<span>{{ Auth::user()->name }}</span></p>
                 <p>邮箱：<span>{{ Auth::user()->email }}</span></p>

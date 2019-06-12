@@ -41,5 +41,9 @@ class Follow extends Model
     {
         return $this->belongsTo(Company::class);
     }
-    
+    // 一个订单会转化为客户
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
 }

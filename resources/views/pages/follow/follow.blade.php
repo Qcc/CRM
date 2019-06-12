@@ -94,9 +94,9 @@
                     @foreach($countdowns as $follow)
                     <li><a href="{{ route('follow.show',$follow->id) }}" title= "该商机还可保留至{{ $follow->countdown_at }}，请尽快完成或申请延期">{{ $follow->company->name }}</a>
                       @if($follow->countdown_at->gt(now()))
-                        <span title="{{ $follow->countdown_at }} 过期"><i class="layui-icon layui-icon-log"></i> {{ $follow->countdown_at->diffForHumans(null, true) }}</span> 
+                        <span title="{{ $follow->countdown_at }} 终止跟进"><i class="layui-icon layui-icon-log"></i> {{ $follow->countdown_at->diffForHumans(null, true) }}</span> 
                       @else
-                        <span class="color-red" title="{{ $follow->countdown_at }} 过期"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
+                        <span class="color-red" title="{{ $follow->countdown_at }} 终止跟进"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
                       @endif
                     </li>
                     @endforeach
@@ -110,12 +110,12 @@
                 <div class="layui-card-header" title="已成交的老客户需要定时联系维护客户关系">老客户维系 <span> 提前5天提醒</span></div>
                 <div class="layui-card-body"> 
                   <ul>
-                    @foreach($relationships as $follow)
-                    <li><a href="" title= "你已经很久没有联系该客户了，请尽快联系客户，维持良好的客户关系">{{ $follow->company->name }}</a>
-                      @if($follow->relationship_at->gt(now()))
-                         <span title="{{ $follow->relationship_at }} 过期"><i class="layui-icon layui-icon-log"></i> {{ $follow->relationship_at->diffForHumans(null, true) }}</span> 
+                    @foreach($relationships as $customer)
+                    <li><a href="{{ route('customer.show',$customer->id) }}" title= "你已经很久没有联系该客户了，请尽快联系客户，维持良好的客户关系">{{ $customer->company->name }}</a>
+                      @if($customer->relationship_at->gt(now()))
+                         <span title="{{ $customer->relationship_at }} 前联系"><i class="layui-icon layui-icon-log"></i> {{ $customer->relationship_at->diffForHumans(null, true) }}</span> 
                       @else
-                        <span class="color-red" title="{{ $follow->relationship_at }} 过期"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
+                        <span class="color-red" title="{{ $customer->relationship_at }} 过期，请尽快联系客户"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
                       @endif
                     </li>
                     @endforeach
@@ -129,12 +129,12 @@
                 <div class="layui-card-header" title="售后/续费到期的客户，会在这里提醒到期">售后续费到期 <span> 提前30天提醒</span></div>
                 <div class="layui-card-body"> 
                   <ul>
-                    @foreach($expireds as $follow)
-                    <li><a href="" title= "该客户的售后/续费将于{{$follow->expired_at}}到期，请提前联系客户商议续费事宜">{{ $follow->company->name }}</a>
-                      @if($follow->expired_at->gt(now()))
-                      <span title="{{ $follow->expired_at }} 过期"><i class="layui-icon layui-icon-log"></i> {{ $follow->expired_at->diffForHumans(null, true) }}</span> 
+                    @foreach($expireds as $customer)
+                    <li><a href="{{ route('customer.show',$customer->id) }}" title= "该客户的售后/续费将于{{$customer->expired_at}}到期，请提前联系客户商议续费事宜">{{ $customer->company->name }}</a>
+                      @if($customer->expired_at->gt(now()))
+                      <span title="{{ $customer->expired_at }} 售后到期"><i class="layui-icon layui-icon-log"></i> {{ $customer->expired_at->diffForHumans(null, true) }}</span> 
                       @else
-                        <span class="color-red" title="{{ $follow->expired_at }} 过期"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
+                        <span class="color-red" title="{{ $customer->expired_at }} 售后过期，请联系客户续费"><i class="layui-icon layui-icon-face-cry"></i> 已过期</span> 
                       @endif
                     </li>
                     @endforeach

@@ -45,4 +45,10 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // 客户是由某个订单转化而来
+    public function follow()
+    {
+        return $this->belongsTo(Follow::class);
+    }
 }

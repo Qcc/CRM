@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Customer;
 use App\Models\Company;
 use App\Models\Follow;
+use App\Models\Record;
 use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
@@ -87,7 +88,7 @@ class CustomersController extends Controller
     //     }
     // }
 
-    public function show(Request $request, Customer $customer)
+    public function index(Request $request, Customer $customer)
     {
         $user = Auth::user();
         // 检查当前用户是否是管理员
@@ -108,7 +109,7 @@ class CustomersController extends Controller
                 $customers = $customer->where('user_id',$user->id)->with('company')->with('user')->paginate(10);
             }
         }
-        return view('pages.customer.show',compact('customers'));
+        return view('pages.customer.index',compact('customers'));
     }
     
     public function check(Request $request, Customer $customer)
@@ -153,6 +154,7 @@ class CustomersController extends Controller
         $customer->delete();
         return back()->with('success', '订单已经删除!');
     }
+
     public function restore(Request $request, Customer $customer)
     {
         $customer = $customer->onlyTrashed()->find($request->id);
@@ -161,5 +163,33 @@ class CustomersController extends Controller
         $customer->check = 'check';
         $customer->save();
         return back()->with('success', '订单已经恢复!');
+    }
+    
+    public function show(Request $request, Customer $customer)
+    {
+        return view('pages.customer.show',compact('customer'));
+    }
+    // 维系老客户保持联系
+    public function keep(Request $request)
+    {
+        if(strlen($request->content) < 38){
+            return back()->withInput()->with('danger', '反馈结果不能少于10个字。');
+        }
+        // 缓存老客户维系设置
+		$cus = Cache::rememberForever('customer', function (){
+            $c = \DB::table('settings')->where('name','customer')->first();
+            return json_decode($c->data);
+        });
+        $customer = Customer::find($request->customer_id);
+        $customer->update(['relationship_at'=>Carbon::now()->addDay($cus->days)]);
+        
+        $record = new Record;
+        $user = Auth::user();
+        $author = "<p class='pr'>跟进人:".$user->name."</p>";
+        $record->content = $request->content.$author;
+        $record->user_id = Auth::id();
+        $record->company_id = $request->company_id;
+        $record->save();
+        return back()->with('success', '联系结果已经反馈!');
     }
 }

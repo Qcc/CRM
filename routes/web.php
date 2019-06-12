@@ -35,10 +35,12 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 
 // 修改密码
 Route::post('system/user/password/{users}', 'UsersController@password')->name('user.password');
+Route::post('system/user/uploadAvatar', 'UsersController@uploadAvatar')->name('user.uploadAvatar');
 
 
 //目标客户
 Route::get('company/secrch', 'CompanysController@secrch')->name('company.secrch');
+// 上传合同
 Route::get('company/upload', 'CompanysController@upload')->name('company.upload');
 Route::post('company/store', 'CompanysController@store')->name('company.store');
 Route::post('company/locking', 'CompanysController@locking')->name('company.locking');
@@ -58,12 +60,16 @@ Route::post('follow/agent', 'FollowsController@agent')->name('follow.agent');
 Route::post('customers/store', 'CustomersController@store')->name('customers.store');
 
 // 正式客户资料
-Route::get('customers/show', 'CustomersController@show')->name('customers.show');
+Route::get('customers/index', 'CustomersController@index')->name('customers.index');
+Route::get('customer/show/{customer}', 'CustomersController@show')->name('customer.show');
+Route::post('customer/keep', 'CustomersController@keep')->name('customer.keep');
 Route::post('customers/check', 'CustomersController@check')->name('customers.check');
 Route::post('customers/update', 'CustomersController@update')->name('customers.update');
 Route::post('customers/destroy', 'CustomersController@destroy')->name('customers.destroy');
 Route::post('customers/restore', 'CustomersController@restore')->name('customers.restore');
 
+// 上传普通图片
+Route::post('uploadImage', 'PagesController@uploadImage')->name('uploadImage');
 
 Route::group(['middleware' => ['permission:manager']], function () {
     // 基础资料设置
