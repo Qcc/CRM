@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Cache;
+use App\Jobs\ImportCompanies;
 
 class CompanysController extends Controller
 {
@@ -30,6 +31,7 @@ class CompanysController extends Controller
      */
     public function secrch(Request $request,Company $company)
     {
+        $companies = $company->count();
         if($request->all() == []){
             $companys=[];    
         }else{
@@ -83,7 +85,7 @@ class CompanysController extends Controller
         
             // 关键字查询
             $cookie = Cookie::make('querys_for_js', json_encode($request->all()), 1, $path = '/', $domain = null, $secure = false, $httpOnly = false);
-        return response()->view('pages.company.secrch',compact('companys'))->cookie($cookie);
+        return response()->view('pages.company.secrch',compact('companys','companies'))->cookie($cookie);
     }
     /**
      * 显示批量上传客户资料
@@ -114,6 +116,7 @@ class CompanysController extends Controller
             $reader->setShouldFormatDates(true);
             $reader->open($file);
             $count = 0;
+            $allHash = [];
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $index => $row) {
                     if($row[0] == '' && $row[9]==''){
@@ -121,42 +124,45 @@ class CompanysController extends Controller
                     }
                     if($index != 1){
                         $money = explode('万',$row[2]);
-                        try {
-                            $company = Company::updateOrCreate(
-                                ['name' => $row[0], 'socialCode' => $row[9]],
-                                ['boss' =>$row[1],
-                                 'money' =>is_numeric($money[0])?$money[0]:0,
-                                 'moneyType' =>$money[1]??'人民币',
-                                 'registration' =>$row[3],
-                                 'status' =>$row[4],
-                                 'province' =>$row[5],
-                                 'city' =>$row[6],
-                                 'area' =>$row[7],
-                                 'type' =>$row[8],
-                                 'phone' =>$row[10],
-                                 'morePhone' =>$row[11],
-                                 'address' =>$row[12],
-                                 'webAddress' =>$row[13],
-                                 'email' =>$row[14],
-                                 'businessScope' =>$row[15],]
-                            );
-                            $count++;
-                        } catch(\Illuminate\Database\QueryException $ex) {
-                            Log::error($ex);
+                        $hash = 'company_' . $row[9] . '_' . str_random(20);
+                        $c = [
+                                'name' => $row[0],
+                                'boss' =>$row[1],
+                                'money' =>is_numeric($money[0])?$money[0]:0,
+                                'moneyType' =>$money[1]??'人民币',
+                                'registration' =>$row[3],
+                                'status' =>$row[4],
+                                'province' =>$row[5],
+                                'city' =>$row[6],
+                                'area' =>$row[7],
+                                'type' =>$row[8],
+                                'socialCode' => $row[9],
+                                'phone' =>$row[10],
+                                'morePhone' =>$row[11],
+                                'address' =>$row[12],
+                                'webAddress' =>$row[13],
+                                'email' =>$row[14],
+                                'businessScope' =>$row[15]
+                        ];
+                        // 公司信息存入redis hash中
+                        if(Redis::hmset($hash,$c)){
+                            array_push($allHash,$hash);
                         }
                     }
                 }
             }
+            //推送到队列执行，导入到数据库中
+            dispatch(new ImportCompanies($allHash));
             $data = [
                 'code' => 0,
                 'msg' => '上传成功'
             ];
             $user = Auth::user();
-            Log::info($user->name."(".$user->email.")"." 导入了".$count."条公司信息");
+            Log::info($user->name."(".$user->email.")"." 上传了文件 ".$request->file->getClientOriginalName());
         }
         return $data;
     }
-
+    
     // 选取公司并当天锁定，其他职员不允许选取。
     public function locking(Request $request,Company $company)
     {

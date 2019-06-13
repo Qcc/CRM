@@ -155,6 +155,7 @@
   <script type="text/html" id="toolbarTarget">
     <div class="layui-btn-container">
       <button class="layui-btn layui-btn-sm" id="getcompany">我来跟进</button>
+      <span style="font-size: 14px;color: #888;">截至{{ now()->toDateString() }}当前数据库共有 {{ $companies }} 条企业信息</span>
     </div>
   </script>
 @stop
