@@ -30,11 +30,14 @@ class CompanysController extends Controller
      */
     public function secrch(Request $request,Company $company)
     {
-        // 关键字查询
+        if($request->all() == []){
+            $companys=[];    
+        }else{
+            // 关键字查询
         $companys = Company::when($request->key, function ($query) use ($request) {
             return $query->where('name','like', '%'.$request->key.'%')
                          ->orwhere('businessScope','like', '%'.$request->key.'%');
-            })
+            })->where('follow','target')
             // 所属行业
             ->when($request->businessScope, function ($query) use ($request) {
                 $businessScope = explode("-",$request->businessScope);
@@ -55,7 +58,11 @@ class CompanysController extends Controller
                 $money = explode("-",$request->money);
                 return $query->whereBetween('money',[$money[0], $money[1]]);
             })
-            // 跟进记录
+            // 默认无跟进记录
+            ->when($request->contacted == null, function ($query) use ($request) {
+                return $query->where('contacted',$request->contacted == null ? false:true);
+            })
+            // 可选跟进记录
             ->when($request->contacted, function ($query) use ($request) {
                 return $query->where('contacted',$request->contacted == "on" ? true:false);
             })
@@ -72,6 +79,8 @@ class CompanysController extends Controller
             })->select(['id','name','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
             'address','webAddress','businessScope','follow','contacted',
             ])->paginate(100);
+        }
+        
             // 关键字查询
             $cookie = Cookie::make('querys_for_js', json_encode($request->all()), 1, $path = '/', $domain = null, $secure = false, $httpOnly = false);
         return response()->view('pages.company.secrch',compact('companys'))->cookie($cookie);

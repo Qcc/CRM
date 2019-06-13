@@ -146,7 +146,9 @@
                   </tbody>
                 </table>
           <div class="pagination-box">
+            @if($companys)
               {!! $companys->appends(Request::except('page'))->render() !!}
+            @endif
           </div>
     </div>
   </div>

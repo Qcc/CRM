@@ -76,7 +76,7 @@
           <div class="layui-form-item">
             <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">{{ __('Login') }}</button>
           </div>
-          <div><span><a href="{{ route('register') }}">还没有帐号，点击注册。</a></span></div>
+          <!-- <div><span><a href="{{ route('register') }}">还没有帐号，点击注册。</a></span></div> -->
         </form>
         @endguest
       </div>

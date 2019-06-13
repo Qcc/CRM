@@ -20,7 +20,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 // 用户注册相关路由
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+// Route::post('register', 'Auth\RegisterController@register');
 
 // 密码重置相关路由
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
