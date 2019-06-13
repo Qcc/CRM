@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Handlers\ImageUploadHandler;
 use Auth;
+use Hash;
 
 class UsersController extends Controller
 {
@@ -115,8 +116,7 @@ class UsersController extends Controller
             'oldPassword' => 'bail|required|max:30',
             'password' => 'bail|required|confirmed|min:6|max:30',
         ]);
-        if($user->password == Hash::make($request->password)){
-
+        if(Hash::check($request->oldPassword, $user->password)){
             $request->user()->fill([
                 'password' => Hash::make($request->password)
                 ])->save();

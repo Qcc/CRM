@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
+use Laravel\Horizon\Horizon;
+use Auth;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -28,6 +29,18 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Horizon::auth(function ($request) {
+            if(Auth::user()){
+                // 是否有权限访问队列仪表
+                return Auth::user()->can('manager');
+            }else{
+                return false;
+            }
+        });
+
+        // Horizon::auth(function ($request) {
+        //     // 访问队列仪表盘需要权限 return true / false;
+        //    return Auth::user()->can('manager');
+        // });
     }
 }

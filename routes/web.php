@@ -34,7 +34,7 @@ Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('ver
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 // 修改密码
-Route::post('system/user/password/{users}', 'UsersController@password')->name('user.password');
+Route::post('system/user/password/{user}', 'UsersController@password')->name('user.password');
 Route::post('system/user/uploadAvatar', 'UsersController@uploadAvatar')->name('user.uploadAvatar');
 
 
