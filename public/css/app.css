@@ -179,7 +179,8 @@
 }
 
 .root-page .auth .avatar img {
-  width: 100%;
+  width: 100px;
+  height: 100px;
 }
 
 .root-page .auth .info {

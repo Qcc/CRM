@@ -45,7 +45,7 @@
 
           <div class="step-item">
             <div class="step-body">完成</div>
-            <div class="step-header">“<a href="{{ route('customers.show') }}">我的客户</a>”完成订单，继续寻找更多商机</div>
+            <div class="step-header">“<a href="{{ route('customers.index') }}">我的客户</a>”完成订单，继续寻找更多商机</div>
           </div>
         @endauth
         @guest
