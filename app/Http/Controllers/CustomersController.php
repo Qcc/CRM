@@ -33,14 +33,32 @@ class CustomersController extends Controller
         if($request->customer_id){
             $customer = $customer->withTrashed()->find($request->customer_id);
             $content = "<h3>过期订单转结</h3>"
-            ."<p>联系人 ".$customer->contact."</p>"
-            ."<p>电话 ".$customer->phone."</p>"
-            ."<p>成交产品 ".$customer->product."</p>"
-            ."<p>订单金额 ".$customer->contract_money."</p>"
-            ."<p>成交日期 ".$customer->completion_at."</p>"
-            ."<p>售后到期 ".$customer->expired_at."</p>"
-            ."<p>合同 <a class='color-blue' href=".$customer->contract.">".substr(strrchr($customer->contract,'/'),1)."</a></p>"
-            ."<p>备注 ".$customer->comment."</p>";
+            ."<table>
+                <thead>
+                    <tr>
+                        <th>联系人</th>
+                        <th>电话</th>
+                        <th>成交产品</th>
+                        <th>订单金额</th>
+                        <th>成交日期</th>
+                        <th>售后到期</th>
+                        <th>合同</th>
+                        <th>订单备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>".$customer->contact."</td>
+                        <td>".$customer->phone."</td>
+                        <td>".$customer->product."</td>
+                        <td>￥".$customer->contract_money."</td>
+                        <td>".$customer->completion_at->toDateString()."</td>
+                        <td>".$customer->expired_at->toDateString()."</td>
+                        <td><a class='color-blue' href=".$customer->contract.">".substr(strrchr($customer->contract,'/'),1)."</a></td>
+                        <td>".$customer->comment."</td>
+                    </tr>
+                </tbody>
+            </table>";
             // 将之前订单保存到跟进记录中，
             $author = "<p class='pr'>跟进人:".$user->name."</p>";
             $record->content = $content.$author;
