@@ -22,24 +22,49 @@ class CustomersController extends Controller
     }
     
     /**客户成交转为审批正式客户 */
-    public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow)
+    public function store(CustomerRequest $request, Customer $customer, Company $company, Follow $follow, Record $record)
     {
+        $user = Auth::user();
         // 缓存老客户维系设置
 		$cus = Cache::rememberForever('customer', function (){
             $c = \DB::table('settings')->where('name','customer')->first();
             return json_decode($c->data);
         });
-        $customer->fill($request->all());
-        $customer->user_id = Auth::id();
-        $customer->relationship_at = Carbon::now()->addDay($cus->days);
-        $customer->save();
+        if($request->customer_id){
+            $customer = $customer->withTrashed()->find($request->customer_id);
+            $content = "<h3>过期订单转结</h3>"
+            ."<p>联系人 ".$customer->contact."</p>"
+            ."<p>电话 ".$customer->phone."</p>"
+            ."<p>成交产品 ".$customer->product."</p>"
+            ."<p>订单金额 ".$customer->contract_money."</p>"
+            ."<p>成交日期 ".$customer->completion_at."</p>"
+            ."<p>售后到期 ".$customer->expired_at."</p>"
+            ."<p>合同 <a class='color-blue' href=".$customer->contract.">".substr(strrchr($customer->contract,'/'),1)."</a></p>"
+            ."<p>备注 ".$customer->comment."</p>";
+            // 将之前订单保存到跟进记录中，
+            $author = "<p class='pr'>跟进人:".$user->name."</p>";
+            $record->content = $content.$author;
+            $record->user_id = $user->id;
+            $record->company_id = $request->company_id;
+            $record->save();
+
+            // 覆盖新的订单信息
+            $customer->fill($request->all());
+            $customer->user_id = $user->id;
+            $customer->check = 'check';
+            $customer->relationship_at = Carbon::now()->addDay($cus->days);
+            $customer->save();
+        }else{
+            $customer->fill($request->all());
+            $customer->user_id = Auth::id();
+            $customer->relationship_at = Carbon::now()->addDay($cus->days);
+            $customer->save();
+        }
         // 更新客户资料状态为 订单完成
         // $company->where('id',$request->company_id)->update(['follow' => 'complate']);
         // 软删除跟进中的客户
-        $follow->whereHas('company',function($query) use ($request){
-            $query->where('id', $request->company_id);
-        })->delete();
-        return redirect()->route('follow.follow')->with('success', '客户资料保存成功');
+        $follow->find($request->follow_id)->delete();
+        return redirect()->route('customer.show',$customer->id)->with('success', '订单已经生成，审核中...');
     }
 
     public function index(Request $request, Customer $customer)

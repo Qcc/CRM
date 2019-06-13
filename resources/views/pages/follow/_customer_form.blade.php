@@ -2,6 +2,7 @@
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" name="company_id" value="{{ $follow->company->id }}">
   <input type="hidden" name="follow_id" value="{{ $follow->id }}">
+  <input type="hidden" name="customer_id" value="{{ $follow->customer_id }}">
   <div class="layui-row layui-col-space10">
       <div class="layui-col-xs7">
           <div class="layui-form-item">

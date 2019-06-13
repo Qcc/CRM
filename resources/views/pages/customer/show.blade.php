@@ -9,13 +9,22 @@
               <div class="layui-card">
                 <div class="layui-card-header">订单信息</div>
                 <div class="layui-card-body">
-                    <h2>成交产品 <strong>{{ $customer->product }}</strong></h2>
-                    <p>订单状态 {{ $customer->check }}</p>
+                  <h2>成交产品 <strong>{{ $customer->product }}</strong></h2>
+                  @if($customer->check == 'check')
+                  <p>订单状态 <span class="color-ind">审核中</span></p>
+                  @elseif($customer->check == 'dismissed')
+                  <p>订单状态 <span class="color-red">已驳回</span></p>
+                  @elseif($customer->check == 'complate')
+                  <p>订单状态 <span class="color-gre">已完成</span></p>
+                  @elseif($customer->check == 'delete')
+                  <p>订单状态 <span class="color-drak">已删除</span></p>
+                  @endif
                   <p>联系人 {{ $customer->contact }}</p>
                   <p >{{ format_phone($customer->phone,'-') }}</p>
                   <p >收款金额 ￥{{ $customer->contract_money }}</p>
-                  <p>售后到期 {{ $customer->expired_at->toDateString() }}</p>
                   <p>成交日期 {{ $customer->completion_at->toDateString() }}</p>
+                  <p>售后到期 {{ $customer->expired_at->toDateString() }}</p>
+                  <p>合同 <a class="color-blue" href="{{ $customer->contract }}">{{ substr(strrchr($customer->contract,'/'),1) }}</a></p>
                   <p>{!! $customer->comment !!}</p>
                 </div>  
               </div> 

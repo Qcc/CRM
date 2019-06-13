@@ -645,3 +645,99 @@
         }
     }
 }
+
+/* 富文本样式 */
+
+.rich-text-body {
+    line-height: 34px;
+    margin-bottom: 30px;
+    font-size: 15px;
+    padding: 15px 0;
+}
+
+.rich-text-body b,
+.rich-text-body strong {
+    font-weight: bold;
+}
+
+.rich-text-body a {
+    color: #555;
+}
+
+.rich-text-body ol,
+.rich-text-body ul {
+    margin: 10px 0;
+}
+
+.rich-text-body ol>li,
+.simditor .simditor-body ol>li {
+    list-style: decimal;
+}
+
+.rich-text-body ul>li,
+.simditor .simditor-body ul>li {
+    list-style: disc;
+}
+
+.rich-text-body blockquote {
+    border-left: 6px solid #ddd;
+    padding: 5px 0 5px 10px;
+    margin: 15px 0 15px 15px;
+}
+
+.rich-text-body img {
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 10px 0;
+}
+
+.rich-text-body h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.rich-text-body h2 {
+    font-size: 22px;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.rich-text-body h3 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.rich-text-body h4 {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.rich-text-body h5 {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.rich-text-body table,
+.rich-text-body tbody {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 15px 0;
+}
+
+.rich-text-body th,
+.rich-text-body td {
+    min-width: 40px;
+    height: 30px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+    padding: 2px 4px;
+    text-align: left;
+    box-sizing: border-box;
+}

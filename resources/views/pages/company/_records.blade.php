@@ -7,9 +7,9 @@
         <i class="layui-icon layui-timeline-axis"></i>
         <div class="layui-timeline-content layui-text">
           <h3 class="layui-timeline-title">{{ $record->created_at }}</h3>
-          <p>
+          <div class="rich-text-body">
             {!! $record->content !!}
-          </p>
+          </div>
         </div>
       </li>
     @endforeach
