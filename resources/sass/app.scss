@@ -614,7 +614,16 @@
         }
     }
 }
-
+.logo{
+    width: 180px;
+    margin: 50px auto 20px;
+    overflow: hidden;
+    img{
+        width: 180px;
+        height: auto;
+    }
+}
+.login-page,
 .root-page,
 .user-settings-page,
 .speechs-index-page,

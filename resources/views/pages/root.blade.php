@@ -4,8 +4,7 @@
 @section('content')
 <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
-          <h2>CRM</h2>
-          <p>深圳市沟通科技有限公司</p>
+          <div class="logo"><img src="/images/logo-gre.png" alt="深圳市沟通科技有限公司logo"></div>
         </div>
         @auth
         <div class="auth">

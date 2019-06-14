@@ -547,6 +547,18 @@
   margin-right: 0px;
 }
 
+.logo {
+  width: 180px;
+  margin: 50px auto 20px;
+  overflow: hidden;
+}
+
+.logo img {
+  width: 180px;
+  height: auto;
+}
+
+.login-page .layui-body,
 .root-page .layui-body,
 .user-settings-page .layui-body,
 .speechs-index-page .layui-body,
