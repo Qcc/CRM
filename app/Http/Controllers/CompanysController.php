@@ -36,23 +36,27 @@ class CompanysController extends Controller
             $companys=[];    
         }else{
             // 关键字查询
-        $companys = Company::when($request->key, function ($query) use ($request) {
-            return $query->where('name','like', '%'.$request->key.'%')
-                         ->orwhere('businessScope','like', '%'.$request->key.'%');
-            })->where('follow','target')
+        $companys = Company::where('follow','target')
+            ->when($request->key, function ($query) use ($request) {
+                $query->where(function($query) use ($request){ 
+                    $query->where('name','like', '%'.$request->key.'%')
+                          ->orWhere('businessScope','like', '%'.$request->key.'%');
+                    });
+                })
+            // ->orwhere('businessScope','like', '%'.$request->key.'%');
             // 所属行业
             ->when($request->businessScope, function ($query) use ($request) {
                 $businessScope = explode("-",$request->businessScope);
                 return $query->when($businessScope[0], function ($query) use ($businessScope) {
-                        return $query->orwhere('businessScope','like', '%'.$businessScope[0].'%');
+                        return $query->where('businessScope','like', '%'.$businessScope[0].'%');
                     })->when(isset($businessScope[1]), function ($query) use ($businessScope) {
-                        return $query->orwhere('businessScope','like', '%'.$businessScope[1].'%');
+                        return $query->where('businessScope','like', '%'.$businessScope[1].'%');
                     })->when(isset($businessScope[2]), function ($query) use ($businessScope) {
-                        return $query->orwhere('businessScope','like', '%'.$businessScope[2].'%');
+                        return $query->where('businessScope','like', '%'.$businessScope[2].'%');
                     })->when(isset($businessScope[3]), function ($query) use ($businessScope) {
-                        return $query->orwhere('businessScope','like', '%'.$businessScope[3].'%');
+                        return $query->where('businessScope','like', '%'.$businessScope[3].'%');
                     })->when(isset($businessScope[4]), function ($query) use ($businessScope) {
-                        return $query->orwhere('businessScope','like', '%'.$businessScope[4].'%');
+                        return $query->where('businessScope','like', '%'.$businessScope[4].'%');
                     });
             })
             // 注册资金查询
@@ -62,11 +66,11 @@ class CompanysController extends Controller
             })
             // 默认无跟进记录
             ->when($request->contacted == null, function ($query) use ($request) {
-                return $query->where('contacted',$request->contacted == null ? false:true);
+                return $query->where('contacted',$request->contacted == null ? 0:1);
             })
             // 可选跟进记录
             ->when($request->contacted, function ($query) use ($request) {
-                return $query->where('contacted',$request->contacted == "on" ? true:false);
+                return $query->where('contacted',$request->contacted == "on" ? 1:0);
             })
             // 所属城市
             ->when($request->city, function ($query) use ($request) {
@@ -78,9 +82,10 @@ class CompanysController extends Controller
                 $year1 = Carbon::parse("-".($registration[0]*365)." days")->toDateString();
                 $year2 = Carbon::parse("-".($registration[1]*365)." days")->toDateString();
                 return $query->whereBetween('registration',[$year2, $year1]);
-            })->select(['id','name','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
-            'address','webAddress','businessScope','follow','contacted',
-            ])->paginate(100);
+            })->paginate(100);
+            // })->select(['id','name','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
+            // 'address','webAddress','businessScope','follow','contacted',
+            // ])->paginate(100);
         }
         
             // 关键字查询
