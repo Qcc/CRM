@@ -306,12 +306,12 @@ layui.use(['element','form','table','upload', 'util', 'laydate', 'layer',], func
     // 正式客户展示
     if($('.customers-index-page').length == 1 ){
       var editBar = `<script type="text/html" id="customersEdit">
-        {{#  if(d.check == 'check'){ }}
+        {{#  if(d.check == 0){ }}
             <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        {{#  }else if(d.check == 'complate'){ }}
+        {{#  }else if(d.check == 3){ }}
             <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="agent">续签</a>
-        {{#  }else if(d.check == 'delete'){ }}
+        {{#  }else if(d.check == 4){ }}
             <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="restore">恢复</a>
         {{#  } }}
         </script>`

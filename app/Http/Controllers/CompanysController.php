@@ -36,7 +36,7 @@ class CompanysController extends Controller
             $companys=[];    
         }else{
             // 关键字查询
-        $companys = Company::where('follow','target')
+        $companys = Company::where('follow',0)
             ->when($request->key, function ($query) use ($request) {
                 $query->where(function($query) use ($request){ 
                     $query->where('name','like', '%'.$request->key.'%')
@@ -65,12 +65,15 @@ class CompanysController extends Controller
                 return $query->whereBetween('money',[$money[0], $money[1]]);
             })
             // 默认无跟进记录
-            ->when($request->contacted == null, function ($query) use ($request) {
-                return $query->where('contacted',$request->contacted == null ? 0:1);
-            })
+            // ->when($request->contacted == null, function ($query) use ($request) {
+            //     return $query->where('contacted',$request->contacted == null ? 0:1);
+            // })
             // 可选跟进记录
+            
             ->when($request->contacted, function ($query) use ($request) {
-                return $query->where('contacted',$request->contacted == "on" ? 1:0);
+                $query->where(function($query) use ($request){ 
+                    $query->where('contacted',$request->contacted == "on" ? 1:0);
+                    });
             })
             // 所属城市
             ->when($request->city, function ($query) use ($request) {
@@ -189,7 +192,7 @@ class CompanysController extends Controller
                 $max = ',同时跟进的目标客户不能超过100家。';
                 break;
             }
-            $result = $company->where('id',$id)->where('follow','target')->update(['follow' => 'locking']);
+            $result = $company->where('id',$id)->where('follow',0)->update(['follow' => 1]);
             if($result){
                 // 将目标公司id 放入目标客户 集合中
                 Redis::sadd('target_'.$user->id,$id);
@@ -222,11 +225,11 @@ class CompanysController extends Controller
             if($r->familiar == true){
                 $callCountOfMonth++;
             }
-            if($r->feed == 'lucky'){
+            if($r->feed == 1){
                 $businessCountOfMonth++;
             }
         }
-        $customersOfMonth = $customer->where('user_id',$user->id)->where('check','complate')
+        $customersOfMonth = $customer->where('user_id',$user->id)->where('check',3)
         ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;
@@ -247,7 +250,7 @@ class CompanysController extends Controller
             if($r->familiar == true){
                 $callCountOfDay++;
             }
-            if($r->feed == 'lucky'){
+            if($r->feed == 1){
                 $businessCountOfDay++;
             }
         }
@@ -302,12 +305,6 @@ class CompanysController extends Controller
         });
         // 判断 $request->company->id 元素是否是集合 'target_'.$user->id 的成员
         if(Redis::sismember('target_'.$user->id,$request->company->id)){
-            // 将目标公司的状态修改为跟进中 follow
-            // $company->where('id',$request->company->id)->update(['follow' => 'follow']);
-            // 修改状态后将公司从目标客户中删除，转为跟进客户
-            // Redis::srem('target_'.$user->id,$request->company->id);
-            // 将目标公司id 放入跟进客户 集合中
-            // Redis::sadd('follow_'.$user->id,$id);
 
             // 返回集合 'target_'.$user->id 中的所有成员
             $follows = Redis::smembers('target_'.$user->id);

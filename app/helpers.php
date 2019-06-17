@@ -79,19 +79,19 @@ function howLevel($money)
 function callResult($feed)
 {
     switch ($feed) {
-        case 'follow':
+        case 0:
             return '跟进中';
             break;
         
-        case 'lucky':
+        case 1:
             return '有效商机';
             break;
         
-        case 'wrongnumber':
+        case 2:
             return '号码错误';            
             break;
         
-        case 'noneed':
+        case 3:
             return '没有需要';                        
             break;
         

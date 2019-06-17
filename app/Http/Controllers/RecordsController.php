@@ -38,16 +38,16 @@ class RecordsController extends Controller
         $user = Auth::user();
         // 判断 $request->company->id 元素是否是集合 'target_'.$user->id 的成员
         if(Redis::sismember('target_'.$user->id,$request->company_id)){
-            if($request->feed == 'lucky' && strlen($request->content) < 38){
+            if($request->feed == 1 && strlen($request->content) < 38){
                 return back()->withInput()->with('danger', '反馈结果不能少于10个字。');
             }
             $feed='';
             switch($request->feed){
-                case 'lucky': $feed = '<p>电话号码正确，可以继续跟进。</p>';
+                case 1: $feed = '<p>电话号码正确，可以继续跟进。</p>';
                 break;
-                case 'noneed': $feed = '<p>电话号码正确，暂时没有需要。</p>';
+                case 2: $feed = '<p>电话号码正确，暂时没有需要。</p>';
                 break;
-                case 'wrongnumber': $feed = '<p>电话号码不正确，无法联系。</p>';
+                case 3: $feed = '<p>电话号码不正确，无法联系。</p>';
                 break;
             }
             $author = "<p class='pr'>跟进人:".$user->name."</p>";
@@ -57,7 +57,7 @@ class RecordsController extends Controller
             $record->feed = $request->feed;
             $record->familiar = true;
             $record->save();
-            if($request->feed == 'lucky'){
+            if($request->feed == 1){
                 // 缓存商机管理设置
 		        $business = Cache::rememberForever('business', function (){
                     $b = \DB::table('settings')->where('name','business')->first();
@@ -70,11 +70,11 @@ class RecordsController extends Controller
                 $follow->delayCount = $business->pics;
                 $follow->company_id = $request->company_id;
                 $follow->save();
-                // 将目标公司的状态修改为跟进中 follow 增加跟进记录
-                $company->where('id',$request->company_id)->update(['follow' => 'follow','contacted'=>true]);
+                // 将目标公司的状态修改为跟进中 跟进中 增加跟进记录
+                $company->where('id',$request->company_id)->update(['follow' => 2,'contacted'=>true]);
             }else{
-                // 将目标公司的状态修改为可跟进 target 增加跟进记录
-                $company->where('id',$request->company_id)->update(['follow' => 'target','contacted'=>true]);
+                // 将目标公司的状态修改为可跟进 目标客户 增加跟进记录
+                $company->where('id',$request->company_id)->update(['follow' => 0,'contacted'=>true]);
             }
             // 修改状态后将公司从目标客户中删除
             Redis::srem('target_'.$user->id,$request->company_id);

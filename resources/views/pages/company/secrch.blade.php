@@ -94,13 +94,13 @@
                         <th lay-data="{field:'name', width:200}">公司</th>
                         <th lay-data="{field:'contacted', width:86, hide:true,templet: function(d){ return d.contacted==1?'<span class=color-red>有</span>':'无'} }">跟进记录</th>
                         <th lay-data="{field:'follow', width:86, hide:true,templet: function(d){ 
-                          if(d.follow == 'target'){
+                          if(d.follow == 0){
                             return '<span class=color-gre>可跟进</span>';
-                          }else if(d.follow == 'locking'){
+                          }else if(d.follow == 1){
                             return '<span class=color-red>锁定中</span>';
-                          }else if(d.follow == 'follow'){
+                          }else if(d.follow == 2){
                             return '<span class=color-ind>跟进中</span>';
-                          }else if(d.follow == 'complate'){
+                          }else if(d.follow == 3){
                             return '<span class=color-blue>已成交</span>';
                           }else{
                             return '无';

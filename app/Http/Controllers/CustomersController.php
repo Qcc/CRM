@@ -79,7 +79,6 @@ class CustomersController extends Controller
             $customer->save();
         }
         // 更新客户资料状态为 订单完成
-        // $company->where('id',$request->company_id)->update(['follow' => 'complate']);
         // 软删除跟进中的客户
         $follow->find($request->follow_id)->delete();
         return redirect()->route('customer.show',$customer->id)->with('success', '订单已经生成，审核中...');
@@ -117,12 +116,12 @@ class CustomersController extends Controller
         $ele = explode(',',$request->ids);
         foreach ($ele as $id) {
             if($request->type == 'approve'){
-                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>'complate']);
+                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>3]);
                 if($res){
                     $count++;
                 }
             }else if($request->type == 'dismissed'){
-                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>'dismissed']);
+                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>2]);
                 if($res){
                     $count++;
                 }
@@ -136,7 +135,7 @@ class CustomersController extends Controller
         $customer = $customer->find($request->id);
         $this->authorize('update', $customer);
         $data = $request->all();
-        $data['check'] = 'check';
+        $data['check'] = 0;
         $customer->update($data);
         return back()->with('success', '订单资料更新成功!');
     }
@@ -146,7 +145,7 @@ class CustomersController extends Controller
         
         $customer = $customer->find($request->id);
         $this->authorize('destroy', $customer);
-        $customer->check = 'delete';
+        $customer->check = 4;
         $customer->save();
         $customer->delete();
         return back()->with('success', '订单已经删除!');
@@ -157,7 +156,7 @@ class CustomersController extends Controller
         $customer = $customer->onlyTrashed()->find($request->id);
         $this->authorize('manager', $customer);
         $customer->restore();
-        $customer->check = 'check';
+        $customer->check = 0;
         $customer->save();
         return back()->with('success', '订单已经恢复!');
     }

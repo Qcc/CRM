@@ -60,7 +60,7 @@ class SendReport implements ShouldQueue
             $user = User::find($user);
             if($user){
                 // 客户
-                $customers = Customer::where('user_id',$user->id)->with(['company:id,name'])->where('check','complate')
+                $customers = Customer::where('user_id',$user->id)->with(['company:id,name'])->where('check',3)
                 ->whereBetween('created_at',[$this->startTime,$this->endTime])->get();
                 // 成交客户
                 $cusCount = 0;
@@ -85,7 +85,7 @@ class SendReport implements ShouldQueue
                     if($r->familiar == true){
                         $callCount++;
                     }
-                    if($r->feed == 'lucky'){
+                    if($r->feed == 1){
                         $businessCount++;
                     }
                 }
