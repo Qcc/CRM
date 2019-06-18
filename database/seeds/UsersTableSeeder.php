@@ -57,5 +57,23 @@ class UsersTableSeeder extends Seeder
         $user->save();
         // 初始化用户角色，将 1 号用户指派为『管理员』
         $user->givePermissionTo('manager');
+        // 单独处理第一个用户的数据
+        $user = User::find(2);
+        $user->name = '张长健';
+        $user->email = 'changjian@kouton.com';
+        $user->avatar = asset('images/avatar/'.$avatars[array_rand($avatars)]);
+        $user->save();
+        // 单独处理第一个用户的数据
+        $user = User::find(3);
+        $user->name = '陈珍';
+        $user->email = 'seazen@kouton.com';
+        $user->avatar = asset('images/avatar/'.$avatars[array_rand($avatars)]);
+        $user->save();
+        // 单独处理第一个用户的数据
+        $user = User::find(4);
+        $user->name = '陈喜';
+        $user->email = '陈喜@kouton.com';
+        $user->avatar = asset('images/avatar/'.$avatars[array_rand($avatars)]);
+        $user->save();
     }
 }
