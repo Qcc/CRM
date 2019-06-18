@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder
         // 单独处理第一个用户的数据
         $user = User::find(4);
         $user->name = '陈喜';
-        $user->email = '陈喜@kouton.com';
+        $user->email = 'chenxi@kouton.com';
         $user->avatar = asset('images/avatar/'.$avatars[array_rand($avatars)]);
         $user->save();
     }
