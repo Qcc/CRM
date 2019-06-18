@@ -16,14 +16,16 @@ class ImportCompanies implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $allHash;
+    protected $fileName;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($allHash)
+    public function __construct($allHash,$fileName)
     {
         $this->allHash = $allHash;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -36,6 +38,7 @@ class ImportCompanies implements ShouldQueue
         $count = 0;
         foreach ($this->allHash as $hash) {
            $company =  Redis::hgetall($hash);
+           if($company){
             try {
                 $company = Company::updateOrCreate(
                     ['name' =>  $company['name'], 'socialCode' => $company['socialCode']],
@@ -53,15 +56,20 @@ class ImportCompanies implements ShouldQueue
                      'address'  => $company['address'],
                      'webAddress'  => $company['webAddress'],
                      'email'  => $company['email'],
-                     'businessScope'  => $company['businessScope'],]
+                     'businessScope'  => $company['businessScope']]
                 );
                 $count++;
             } catch(\Illuminate\Database\QueryException $ex) {
                 Log::info('导入公司信息失败 ',$company);
+                Log::info('文件名 '.$this->fileName);
                 Log::error($ex);
             }
+           }else{
+            Log::info("未查询到公司信息，导入改行失败". $this->fileName);
+            Log::info("hash信息 ".$hash);
+           }
             Redis::del($hash);
         }
-        Log::info("成功导入了".$count."条公司信息");
+        Log::info("成功导入了 [". $this->fileName ."] 共计 ".$count." 条公司信息");
     }
 }

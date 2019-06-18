@@ -152,9 +152,9 @@ class CompanysController extends Controller
                                 'phone' =>$row[10],
                                 'morePhone' =>$row[11],
                                 'address' =>$row[12],
-                                'webAddress' =>$row[13],
+                                'webAddress' => str_limit($row[13],'250','...'),
                                 'email' =>$row[14],
-                                'businessScope' =>$row[15]
+                                'businessScope' =>str_limit($row[15],'250','...'),
                         ];
                         // 公司信息存入redis hash中
                         if(Redis::hmset($hash,$c)){
@@ -163,8 +163,9 @@ class CompanysController extends Controller
                     }
                 }
             }
+
             //推送到队列执行，导入到数据库中
-            dispatch(new ImportCompanies($allHash));
+            dispatch(new ImportCompanies($allHash,$request->file->getClientOriginalName()));
             $data = [
                 'code' => 0,
                 'msg' => '上传成功'
