@@ -18,9 +18,9 @@
                           </div>
                           <div class="layui-form-item">
                               <div class="layui-input-block" style="text-align: right;">
-                                <input type="radio" name="feed" value=0 title="有效商机" checked="">
-                                <input type="radio" name="feed" value=1 title="没有需要">
-                                <input type="radio" name="feed" value=2 title="号码不正确">
+                                <input type="radio" name="feed" value=1 title="有效商机" checked="">
+                                <input type="radio" name="feed" value=2 title="没有需要">
+                                <input type="radio" name="feed" value=3 title="号码不正确">
                                 <button class="layui-btn" lay-submit="" lay-filter="record-btn">提交反馈</button>
                               </div>
                             </div>

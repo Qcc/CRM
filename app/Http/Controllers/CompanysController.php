@@ -46,34 +46,36 @@ class CompanysController extends Controller
             // ->orwhere('businessScope','like', '%'.$request->key.'%');
             // 所属行业
             ->when($request->businessScope, function ($query) use ($request) {
-                $businessScope = explode("-",$request->businessScope);
-                return $query->when($businessScope[0], function ($query) use ($businessScope) {
-                        return $query->where('businessScope','like', '%'.$businessScope[0].'%');
+                $businessScope = explode(",",$request->businessScope);
+                $query->where(function($query) use ($request,$businessScope){ 
+                    $query->when($businessScope[0], function ($query) use ($businessScope) {
+                        return $query->orWhere('businessScope','like', '%'.$businessScope[0].'%');
                     })->when(isset($businessScope[1]), function ($query) use ($businessScope) {
-                        return $query->where('businessScope','like', '%'.$businessScope[1].'%');
+                        return $query->orWhere('businessScope','like', '%'.$businessScope[1].'%');
                     })->when(isset($businessScope[2]), function ($query) use ($businessScope) {
-                        return $query->where('businessScope','like', '%'.$businessScope[2].'%');
+                        return $query->orWhere('businessScope','like', '%'.$businessScope[2].'%');
                     })->when(isset($businessScope[3]), function ($query) use ($businessScope) {
-                        return $query->where('businessScope','like', '%'.$businessScope[3].'%');
+                        return $query->orWhere('businessScope','like', '%'.$businessScope[3].'%');
                     })->when(isset($businessScope[4]), function ($query) use ($businessScope) {
-                        return $query->where('businessScope','like', '%'.$businessScope[4].'%');
+                        return $query->orWhere('businessScope','like', '%'.$businessScope[4].'%');
                     });
+                });
             })
             // 注册资金查询
             ->when($request->money, function ($query) use ($request) {
                 $money = explode("-",$request->money);
-                return $query->whereBetween('money',[$money[0], $money[1]]);
+                $query->where(function($query) use ($request,$money){ 
+                    $query->whereBetween('money',[$money[0], $money[1]]);
+                });
             })
             // 默认无跟进记录
-            // ->when($request->contacted == null, function ($query) use ($request) {
-            //     return $query->where('contacted',$request->contacted == null ? 0:1);
-            // })
+            ->when($request->contacted == null, function ($query) use ($request) {
+                return $query->where('contacted',$request->contacted == null ? 0:1);
+            })
             // 可选跟进记录
             
             ->when($request->contacted, function ($query) use ($request) {
-                $query->where(function($query) use ($request){ 
                     $query->where('contacted',$request->contacted == "on" ? 1:0);
-                    });
             })
             // 所属城市
             ->when($request->city, function ($query) use ($request) {
@@ -82,9 +84,11 @@ class CompanysController extends Controller
             // 成立日期查询
             ->when($request->registration, function ($query) use ($request) {
                 $registration = explode("-",$request->registration);
-                $year1 = Carbon::parse("-".($registration[0]*365)." days")->toDateString();
-                $year2 = Carbon::parse("-".($registration[1]*365)." days")->toDateString();
-                return $query->whereBetween('registration',[$year2, $year1]);
+                $query->where(function($query) use ($request,$registration){ 
+                    $year1 = Carbon::parse("-".($registration[0]*365)." days")->toDateString();
+                    $year2 = Carbon::parse("-".($registration[1]*365)." days")->toDateString();
+                    $query->whereBetween('registration',[$year2, $year1]);
+                });
             })->paginate(100);
             // })->select(['id','name','boss','money','moneyType','registration','status','province','city','area','type','socialCode',
             // 'address','webAddress','businessScope','follow','contacted',
@@ -229,7 +233,7 @@ class CompanysController extends Controller
                 $businessCountOfMonth++;
             }
         }
-        $customersOfMonth = $customer->where('user_id',$user->id)->where('check',3)
+        $customersOfMonth = $customer->where('user_id',$user->id)->where('check',2)
         ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;
@@ -254,7 +258,7 @@ class CompanysController extends Controller
                 $businessCountOfDay++;
             }
         }
-        $customersOfDay = $customer->where('user_id',$user->id)
+        $customersOfDay = $customer->where('user_id',$user->id)->where('check',2)
         ->whereBetween('created_at',[Carbon::now()->startOfDay(),Carbon::now()->endOfDay()])->get();
         // 当天成交客户
         $cusCountOfDay = 0;

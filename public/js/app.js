@@ -411,7 +411,7 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
 
 
   if ($('.customers-index-page').length == 1) {
-    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check == 0){ }}\n            <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n            <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u5220\u9664</a>\n        {{#  }else if(d.check == 3){ }}\n            <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  }else if(d.check == 4){ }}\n            <a class=\"layui-btn layui-btn-warm layui-btn-xs\" lay-event=\"restore\">\u6062\u590D</a>\n        {{#  } }}\n        </script>";
+    var editBar = "<script type=\"text/html\" id=\"customersEdit\">\n        {{#  if(d.check == 0 || d.check == 1){ }}\n            <a class=\"layui-btn layui-btn-xs\" lay-event=\"edit\">\u4FEE\u6539</a>\n            <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">\u5220\u9664</a>\n        {{#  }else if(d.check == 2){ }}\n            <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"agent\">\u7EED\u7B7E</a>\n        {{#  }else if(d.check == 3){ }}\n            <a class=\"layui-btn layui-btn-warm layui-btn-xs\" lay-event=\"restore\">\u6062\u590D</a>\n        {{#  } }}\n        </script>";
     $('#customersEdit-box').html(editBar);
     table.init('customers-table', {
       //转化静态表格

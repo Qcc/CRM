@@ -39,7 +39,7 @@ class FollowsController extends Controller
             }
         }
         // 本月客户
-        $customersOfMonth = $customer->where('user_id',$user->id)->where('check',3)
+        $customersOfMonth = $customer->where('user_id',$user->id)->where('check',2)
         ->whereBetween('created_at',[Carbon::now()->startOfMonth(),Carbon::now()->endOfMonth()])->get();
         // 本月成交客户
         $cusCountOfMonth = 0;
@@ -51,7 +51,7 @@ class FollowsController extends Controller
         }
 
         // 上个月客户
-        $customersOfLastMonth = $customer->where('user_id',$user->id)
+        $customersOfLastMonth = $customer->where('user_id',$user->id)->where('check',2)
         ->whereBetween('created_at',[Carbon::now()->startOfMonth()->subMonths(1),Carbon::now()->startOfMonth()->subMonths(1)->endOfMonth()])->get();
         // 上个月成交金额
         $moneyOfLastMonth = 0;
@@ -87,9 +87,9 @@ class FollowsController extends Controller
         // 跟进到期 提前10天提醒
         $countdowns = $follow->with('company')->where('user_id',$user->id)->where('countdown_at','<',Carbon::now()->addDay(10))->orderBy('countdown_at','asc')->get();
         // 老客户维系 提前5天提醒
-        $relationships = $customer->with('company')->where('user_id',$user->id)->where('check',3)->where('relationship_at','<',Carbon::now()->addDay(5))->orderBy('relationship_at','asc')->get();
+        $relationships = $customer->with('company')->where('user_id',$user->id)->where('check',2)->where('relationship_at','<',Carbon::now()->addDay(5))->orderBy('relationship_at','asc')->get();
         // 售后续费到期 提前30天提醒
-        $expireds = $customer->with('company')->where('user_id',$user->id)->where('check',3)->where('expired_at','<',Carbon::now()->addDay(30))->orderBy('expired_at','asc')->get();
+        $expireds = $customer->with('company')->where('user_id',$user->id)->where('check',2)->where('expired_at','<',Carbon::now()->addDay(30))->orderBy('expired_at','asc')->get();
 
         return view('pages.follow.follow',compact('follows', 'achievement', 'schedules', 'countdowns', 'relationships', 'expireds'));
     }

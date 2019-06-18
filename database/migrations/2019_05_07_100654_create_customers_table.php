@@ -18,7 +18,7 @@ class CreateCustomersTable extends Migration
             $table->integer('user_id')->unsigned()->default(0)->index();
             $table->integer('company_id')->unsigned();
             $table->integer('follow_id')->unsigned();
-            // 'status' 签订合同状态: '0' 审核中, '1' 已驳回, '2' 成交客户, '3',
+            // 'status' 签订合同状态: '0' 审核中, '1' 已驳回, '2' 成交客户, '3'删除,
             $table->integer('check')->default(0)->comment('审核状态');
             $table->string('contact')->comment('关键联系人');
             $table->string('phone')->comment('电话');

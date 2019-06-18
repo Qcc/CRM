@@ -111,17 +111,18 @@ class CustomersController extends Controller
     public function check(Request $request, Customer $customer)
     {
         $this->authorize('manager', $customer);
-
         $count = 0;
         $ele = explode(',',$request->ids);
         foreach ($ele as $id) {
             if($request->type == 'approve'){
-                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>3]);
+                $res = $customer->where('id',$id)->where('check',0)->update(['check'=>2]);
+                // 目标公司客户已经成交
+                $customer->find($id)->company->update(['follow' => 3]);
                 if($res){
                     $count++;
                 }
             }else if($request->type == 'dismissed'){
-                $res = $customer->where('id',$id)->where('check','check')->update(['check'=>2]);
+                $res = $customer->where('id',$id)->where('check',0)->update(['check'=>1]);
                 if($res){
                     $count++;
                 }
@@ -145,7 +146,7 @@ class CustomersController extends Controller
         
         $customer = $customer->find($request->id);
         $this->authorize('destroy', $customer);
-        $customer->check = 4;
+        $customer->check = 3;
         $customer->save();
         $customer->delete();
         return back()->with('success', '订单已经删除!');
@@ -155,9 +156,13 @@ class CustomersController extends Controller
     {
         $customer = $customer->onlyTrashed()->find($request->id);
         $this->authorize('manager', $customer);
-        $customer->restore();
-        $customer->check = 0;
-        $customer->save();
+        if($customer){
+            $customer->restore();
+            $customer->check = 0;
+            $customer->save();
+        }else{
+            return back()->with('danger', '未查到订单数据!');
+        }
         return back()->with('success', '订单已经恢复!');
     }
     

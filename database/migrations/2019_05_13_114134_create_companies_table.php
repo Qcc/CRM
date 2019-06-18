@@ -32,7 +32,7 @@ class CreateCompaniesTable extends Migration
             $table->string('webAddress')->nullable()->comment('企业公示的网址');
             $table->string('email')->nullable()->comment('企业公示的邮箱');
             $table->string('businessScope')->nullable()->comment('经营范围');
-            // '0' 目标客户, '1' 锁定中待跟进 '2' 跟进中, '3'成交客户
+            // '0' 目标客户,   '1' 锁定中待跟进,   '2' 跟进中,   '3'成交客户
             $table->integer('follow')->default(0)->comment('跟进状态');
             $table->boolean('contacted')->default(false)->comment('跟进过');
             $table->timestamps();

@@ -44,20 +44,23 @@ class SendReportOfDay extends Command
      */
     public function handle(User $user,Company $company)
     {
-        // 缓存报表设置
-		$report = Cache::rememberForever('report', function (){
-            $r = \DB::table('settings')->where('name','report')->first();
-            return json_decode($r->data);
-        });
-        Log::info('获取配置信息，准备发送日报表');
-        if($report->repeat->day == 1){
-            $startTime = Carbon::now()->yesterday()->startOfDay();
-            $endTime = Carbon::now()->yesterday()->endOfDay();
-            //推送到队列执行，发送报表到邮件
-            dispatch(new SendReport($report->inbox, $report->employee, $startTime, $endTime,'商机日报'));
-            Log::info('推送到队列准备发送日报表');
-        }else{
-            Log::info('日报表未发送');
+        $at = Carbon::now();
+        if($at->dayOfWeek != 1 || $at->dayOfWeek != 7){
+            // 缓存报表设置
+            $report = Cache::rememberForever('report', function (){
+                $r = \DB::table('settings')->where('name','report')->first();
+                return json_decode($r->data);
+            });
+            Log::info('获取配置信息，准备发送日报表');
+            if($report->repeat->day == 1){
+                $startTime = $at->yesterday()->startOfDay();
+                $endTime = $at->yesterday()->endOfDay();
+                //推送到队列执行，发送报表到邮件
+                dispatch(new SendReport($report->inbox, $report->employee, $startTime, $endTime,'商机日报'));
+                Log::info('推送到队列准备发送日报表');
+            }else{
+                Log::info('日报表未发送');
+            }
         }
     }
 }
