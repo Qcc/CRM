@@ -41,7 +41,7 @@ class ImportCompanies implements ShouldQueue
            if($company){
             try {
                 $company = Company::updateOrCreate(
-                    ['name' =>  $company['name'], 'socialCode' => $company['socialCode']],
+                    ['name' =>  $company['name']],
                     ['boss'  => $company['boss'],
                      'money'  => $company['money'],
                      'moneyType'  => $company['moneyType'],
@@ -55,6 +55,7 @@ class ImportCompanies implements ShouldQueue
                      'morePhone'  => $company['morePhone'],
                      'address'  => $company['address'],
                      'webAddress'  => $company['webAddress'],
+                     'socialCode' => $company['socialCode'],
                      'email'  => $company['email'],
                      'businessScope'  => $company['businessScope']]
                 );

@@ -25,7 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->string('city')->nullable()->comment('所属市区');
             $table->string('area')->nullable()->comment('所属区县');
             $table->string('type')->nullable()->comment('公司类型');
-            $table->string('socialCode')->unique()->comment('统一社会信用代码');
+            $table->string('socialCode')->comment('统一社会信用代码');
             $table->string('phone')->nullable()->comment('企业公示的联系电话');
             $table->string('morePhone')->nullable()->comment('企业公示的联系电话（更多号码）');
             $table->string('address')->nullable()->comment('企业公示的地址');
