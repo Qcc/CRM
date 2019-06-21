@@ -56,6 +56,21 @@ class SendReport implements ShouldQueue
         $statistics = [];
         // 明细数据
         $details = [];
+        // 线索信息准确度
+        $clues = [];
+
+        // 整体信息准确度
+        // 拨打电话
+        $callCountAll = 0;
+        // 有效商机
+        $businessCountAll = 0;
+        // 无需求
+        $noNeedAll = 0;
+        // 号码不正确
+        $nomberWrongAll = 0;
+        // 空号 挂掉 没人接
+        $callNotThroughAll = 0;
+
         foreach ($users as $index => $user) {
             $user = User::find($user);
             if($user){
@@ -81,12 +96,32 @@ class SendReport implements ShouldQueue
                 $callCount = 0;
                 // 有效商机
                 $businessCount = 0;
+                // 无需求
+                $noNeed = 0;
+                // 号码不正确
+                $nomberWrong = 0;
+                // 空号 挂掉 没人接
+                $callNotThrough = 0;
+
                 foreach ($records as $r) {
                     if($r->familiar == true){
                         $callCount++;
                     }
+                    // 有效商机
                     if($r->feed == 1){
                         $businessCount++;
+                    }
+                    // 号码不正确
+                    if($r->feed == 2){
+                        $nomberWrong++;
+                    }
+                    // 无需求
+                    if($r->feed == 3){
+                        $noNeed++;
+                    }
+                    // 未接通
+                    if($r->feed == 4){
+                        $callNotThrough++;
                     }
                 }
                 // 详细信息
@@ -98,7 +133,6 @@ class SendReport implements ShouldQueue
                 array_push($details,$employee);
             
                 // 统计数据
-                // $line = (object)[];
                 $line = json_decode('{}');
                 $line->name = $user->name;
                 $line->callCount = $callCount;
@@ -108,8 +142,26 @@ class SendReport implements ShouldQueue
                 $line->cusEfficiency = $businessCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
                 $line->revenue = $revenue;
                 array_push($statistics, $line);
+
+                // 整体数据准确度
+                $callCountAll += $callCount;
+                $businessCountAll += $businessCount;
+                $noNeedAll += $noNeed;
+                $nomberWrongAll += $nomberWrong;
+                $callNotThroughAll += $callNotThrough;
             }
         }
+        
+        // 线索资料准确度 统计数据
+        $clue = json_decode('{}');
+            $clue->callCount =  $callCountAll;
+            $clue->businessCount = $businessCountAll;
+            $clue->nomberWrong = $nomberWrongAll;
+            $clue->noNeed = $noNeedAll;
+            $clue->callNotThrough = $callNotThroughAll;
+            $clue->accuracy = $callCountAll == 0 ? 0 : round(($businessCountAll + $noNeedAll) / $callCountAll,3)*100; 
+            array_push($clues, $clue);
+
         // 根据业绩排序
         usort($statistics, function($a, $b){
             return $a->revenue < $b->revenue;
@@ -129,7 +181,8 @@ class SendReport implements ShouldQueue
             Mail::send('emails.report',[
                 'scope'=>$this->startTime."~".$this->endTime, 
                 'statistics'=>$statistics,
-                'details'=>$details
+                'details'=>$details,
+                'clues'=>$clues,
             ],function($message) use($inbox)
             {
                 $message ->to($inbox)->subject($this->title.$this->startTime."~".$this->endTime);

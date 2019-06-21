@@ -115,6 +115,31 @@ a{
         @endforeach
         </tbody>
     </table>
+    <h5 >线索信息准确度统计</h5>
+    <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">拨打总数</th>
+                <th scope="col">有效商机</th>
+                <th scope="col">号码不正确</th>
+                <th scope="col">无需求</th>
+                <th scope="col">挂断无人接打不通</th>
+                <th scope="col" title="有效商机+无需求/总拨打数">准确率</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach($clues as $index => $clue)
+            <tr>
+              <td> {{ $clue->callCount }}</td>
+              <td> {{ $clue->businessCount }}</td>
+              <td> {{ $clue->nomberWrong }}</td>
+              <td> {{ $clue->noNeed }}</td>
+              <td> {{ $clue->callNotThrough }}</td>
+              <td> {{ $clue->accuracy }}%</td>
+            </tr>
+            @endforeach
+            </tbody>
+        </table>
     @foreach($details as $index => $employee)
     <h3>详细信息({{ $employee->user->name }})</h3>
     <h5 id="{{ $employee->user->name }}-callCount">拨打电话</h5>

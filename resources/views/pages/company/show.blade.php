@@ -18,9 +18,18 @@
                           </div>
                           <div class="layui-form-item">
                               <div class="layui-input-block" style="text-align: right;">
-                                <input type="radio" name="feed" value=1 title="有效商机" checked="">
-                                <input type="radio" name="feed" value=2 title="没有需要">
-                                <input type="radio" name="feed" value=3 title="号码不正确">
+                                <span title="商机有效，继续跟进">
+                                  <input type="radio" name="feed" value=1 title="有效商机" checked="">
+                                </span>
+                                <span title="电话接通,号码正确,没有需求">
+                                  <input type="radio" name="feed" value=2 title="没有需要">
+                                </span>
+                                <span title="电话接通，电话号码不正确">
+                                  <input type="radio" name="feed" value=3 title="号码不正确">
+                                </span>
+                                <span title="打不通，挂断，空号，没人接 未接通等">
+                                  <input type="radio" name="feed" value=4 title="未接通">
+                                </span>
                                 <button class="layui-btn" lay-submit="" lay-filter="record-btn">提交反馈</button>
                               </div>
                             </div>

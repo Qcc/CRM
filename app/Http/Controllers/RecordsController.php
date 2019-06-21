@@ -47,7 +47,9 @@ class RecordsController extends Controller
                 break;
                 case 2: $feed = '<p>电话号码正确，暂时没有需要。</p>';
                 break;
-                case 3: $feed = '<p>电话号码不正确，无法联系。</p>';
+                case 3: $feed = '<p>电话号码不正确，不是本人。</p>';
+                break;
+                case 4: $feed = '<p>空号，挂断，无人接，无法联系。</p>';
                 break;
             }
             $author = "<p class='pr'>跟进人:".$user->name."</p>";
