@@ -105,7 +105,7 @@ class SendReport implements ShouldQueue
                 $line->businessCount = $businessCount;
                 $line->busEfficiency = $callCount == 0 ? 0: round($businessCount / $callCount,3)*100;
                 $line->cusCount = $cusCount;
-                $line->cusEfficiency = $callCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
+                $line->cusEfficiency = $businessCount == 0 ? 0:round($cusCount / $businessCount,3)*100;            
                 $line->revenue = $revenue;
                 array_push($statistics, $line);
             }
