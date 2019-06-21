@@ -31,7 +31,10 @@ class CompanysController extends Controller
      */
     public function secrch(Request $request,Company $company)
     {
-        $companies = $company->count();
+        // 缓存数据总量
+		$companies = Cache::rememberForever('companies', function () use ($company){
+            return $company->count();
+        });
         if($request->all() == []){
             $companys=[];    
         }else{
@@ -172,6 +175,8 @@ class CompanysController extends Controller
             ];
             $user = Auth::user();
             Log::info($user->name."(".$user->email.")"." 上传了文件 ".$request->file->getClientOriginalName());
+            // 清除数据总量缓存
+            Cache::forget('companies');
         }
         return $data;
     }
