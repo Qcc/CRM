@@ -45,7 +45,7 @@ class SendReportOfDay extends Command
     public function handle(User $user,Company $company)
     {
         $at = Carbon::now();
-        if($at->dayOfWeek != 1 || $at->dayOfWeek != 7){
+        if($at->dayOfWeek != 1 && $at->dayOfWeek != 7){
             // 缓存报表设置
             $report = Cache::rememberForever('report', function (){
                 $r = \DB::table('settings')->where('name','report')->first();
