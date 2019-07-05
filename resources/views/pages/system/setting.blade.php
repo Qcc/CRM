@@ -281,6 +281,22 @@
             </div>
         </div>
     </div>
+    <div class="layui-row">
+      <div class="layui-col-xs12">
+          <div class="layui-card performance">
+              <div class="layui-card-header">邮件营销阅读数</div>
+              <div class="layui-card-body">
+                <div>
+                  <p>当前阅读数 {{ $emailCount?$emailCount->count:0 }}</p>
+                  <button class="layui-btn layui-btn-normal" onclick="event.preventDefault(); document.getElementById('reset-email-count').submit();">清零</button>
+                  <form id="reset-email-count" action="{{ route('resetEmailCount') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                    </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
 </div>
 <form id="sendReport" action="{{ route('report.send') }}" method="POST" style="display: none;">
     {{ csrf_field() }}

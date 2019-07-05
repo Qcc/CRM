@@ -13,7 +13,7 @@ class PagesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['root']]);
+        $this->middleware('auth', ['except' => ['root','receiveEmailCount']]);
     }
     public function root()
     {
@@ -47,7 +47,19 @@ class PagesController extends Controller
             $r = \DB::table('settings')->where('name','report')->first();
             return json_decode($r->data);
         });
-        return view('pages.system.setting',compact('level','notice','business', 'customer', 'report'));
+        
+        // 邮件阅读
+        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
+        $c = json_decode($emailsCount->data);
+        $emailCount = [
+            'count' => $c->count + Cache::get('receiveEmailCount'),
+        ];
+        \DB::table('settings')->where('name','emailCount')->update(["data"=>json_encode($emailCount)]);
+        // 清除计数器
+        Cache::forget('receiveEmailCount');
+        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
+        $emailCount = json_decode($emailsCount->data);
+        return view('pages.system.setting',compact('level','notice','business', 'customer', 'report','emailCount'));
     }
     
     public function store(Request $request)
@@ -186,5 +198,33 @@ class PagesController extends Controller
 			}
 		}
 		return $data;
-	}
+    }
+    public function receiveEmailCount(Request $request)
+    {
+        if($request->company != null){
+            Log::info("邮件阅读提醒 ".$request->company." 查看了邮件!");
+            if(Cache::increment('receiveEmailCount') > 100){
+                $count = \DB::table('settings')->where('name','emailCount')->first();
+                $emailCount = [
+                    'count' => $c->count + Cache::increment('receiveEmailCount'),
+                ];
+                \DB::table('settings')->where('name','emailCount')->update(["data"=>json_encode($emailCount)]);
+                // 清除计数器
+                Cache::forget('receiveEmailCount');
+            }
+
+        }
+        return "ok";
+    }
+    public function resetEmailCount(Request $request)
+    {
+            Log::info("清零邮件阅读计数器!");
+            $emailCount = [
+                'count' => 0,
+            ];
+            \DB::table('settings')->where('name','emailCount')->update(["data"=>json_encode($emailCount)]);
+            // 清除计数器
+            Cache::forget('receiveEmailCount');
+        return back()->with('success', '邮件已经清零!');
+    }
 }

@@ -80,6 +80,10 @@ class SeedSettingsData extends Migration
               "month" => "1",
             ]
         ];
+        // 邮件查阅统计
+        $emailCount = [
+            'count' => 0,
+        ];
         $settings = [
             [
                 'name' => 'level',
@@ -100,6 +104,10 @@ class SeedSettingsData extends Migration
             [
                 'name' => 'report',
                 'data' => json_encode($report),
+            ],
+            [
+                'name' => 'emailCount',
+                'data' => json_encode($emailCount),
             ],
         ];
         DB::table('settings')->insert($settings);

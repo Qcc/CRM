@@ -70,8 +70,12 @@ Route::post('customers/restore', 'CustomersController@restore')->name('customers
 
 // 上传普通图片
 Route::post('uploadImage', 'PagesController@uploadImage')->name('uploadImage');
+// 邮件阅读次数统计
+Route::get('system/receiveEmailCount', 'PagesController@receiveEmailCount')->name('receiveEmailCount');
 
 Route::group(['middleware' => ['permission:manager']], function () {
+    // 清零邮件计数器
+    Route::post('system/resetEmailCount', 'PagesController@resetEmailCount')->name('resetEmailCount');
     // 基础资料设置
     Route::get('user/settings', 'UsersController@settings')->name('user.settings');
     Route::get('system/users', 'UsersController@users')->name('system.users');
