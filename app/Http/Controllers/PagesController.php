@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Jobs\SendReport;
 use Illuminate\Support\Facades\Log;
 use App\Handlers\ImageUploadHandler;
+use App\Models\Edm;
 
 class PagesController extends Controller
 {
@@ -227,4 +228,19 @@ class PagesController extends Controller
             Cache::forget('receiveEmailCount');
         return back()->with('success', '邮件已经清零!');
     }
+    public function emailClick(Request $request)
+    {
+            Log::info("客户点击了邮件按钮!");
+            if($request->company != null){
+                if($request->product){
+                    Edm::create(['name' => $request->company,'product' => $request->product]);
+                }else if($request->Unsubscribe){
+                    Edm::create(['name' => $request->company,'Unsubscribe' => $request->Unsubscribe]);
+                }
+            }
+        return redirect('http://www.kouton.com',301);
+    }
 }
+// http://ktcrm.test/system/emailClick?company=XX公司&product=云会计
+// http://ktcrm.test/system/emailClick?company=XX公司&Unsubscribe=退订
+// http://ktcrm.test/system/emailClick?company=XX公司&Unsubscribe=投诉
