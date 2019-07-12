@@ -590,6 +590,39 @@ layui.use(['element', 'form', 'table', 'upload', 'util', 'laydate', 'layer'], fu
         password: [/^[\S]{6,25}$/, '密码必须6到25位，且不能出现空格']
       });
     });
+  } // 邮件营销页面
+
+
+  if ($('.edm-show-page').length == 1) {
+    table.init('edms-table', {
+      //转化静态表格
+      toolbar: '#toolbarEdm'
+    }); //头工具栏事件
+
+    table.on('toolbar(edms-table)', function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+
+      if (checkStatus.data.length == 0) {
+        layer.msg('未选择任何一行');
+        return false;
+      }
+
+      switch (obj.event) {
+        case 'deleteData':
+          var data = checkStatus.data;
+          var ids = [];
+
+          for (var i = 0; i < data.length; i++) {
+            ids.push(data[i].id);
+          }
+
+          $('#edm-ids').val(ids);
+          document.getElementById('edm-delete').submit();
+          break;
+      }
+
+      ;
+    });
   } // 个人设置页面
 
 

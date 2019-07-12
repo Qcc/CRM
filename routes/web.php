@@ -72,9 +72,13 @@ Route::post('customers/restore', 'CustomersController@restore')->name('customers
 Route::post('uploadImage', 'PagesController@uploadImage')->name('uploadImage');
 // 邮件阅读次数统计
 Route::get('system/receiveEmailCount', 'PagesController@receiveEmailCount')->name('receiveEmailCount');
+// 邮件内容按钮主动点击
 Route::get('system/emailClick', 'PagesController@emailClick')->name('emailClick');
 
 Route::group(['middleware' => ['permission:manager']], function () {
+    // 邮件营销
+    Route::get('system/edm/show', 'PagesController@edmShow')->name('edm.show');
+    Route::post('system/edm/delete', 'PagesController@edmDelete')->name('edm.delete');
     // 清零邮件计数器
     Route::post('system/resetEmailCount', 'PagesController@resetEmailCount')->name('resetEmailCount');
     // 基础资料设置

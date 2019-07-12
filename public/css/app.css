@@ -149,6 +149,7 @@
   border-color: #ffeeba;
 }
 
+.edm-show-page > .layui-body,
 .customer-show-page > .layui-body,
 .password-request-page > .layui-body,
 .register-page > .layui-body,
@@ -560,6 +561,7 @@
 
 .login-page .layui-body,
 .root-page .layui-body,
+.edm-show-page .layui-body,
 .user-settings-page .layui-body,
 .speechs-index-page .layui-body,
 .system-users-page .layui-body,

@@ -12,6 +12,7 @@
       <li class="layui-nav-item {{ active_class(if_route('customers.index') || if_route('customer.show'),'layui-this') }}"><a href="{{ route('customers.index') }}">我的客户</a></li>
       @endif
       @can('manager')
+      <li class="layui-nav-item {{ active_class(if_route('edm.show'),'layui-this') }}"><a href="{{ route('edm.show') }}">邮件营销</a></li>
       <li class="layui-nav-item {{ active_class(if_route('company.upload') || if_route('company.upload')|| if_route('system.users') || if_route('speechs.index') || if_route('settings.show'),'layui-this') }}">
           <a href="javascript:;">系统管理</a>
           <dl class="layui-nav-child">

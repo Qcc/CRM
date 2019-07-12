@@ -49,18 +49,8 @@ class PagesController extends Controller
             return json_decode($r->data);
         });
         
-        // 邮件阅读
-        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
-        $c = json_decode($emailsCount->data);
-        $emailCount = [
-            'count' => $c->count + Cache::get('receiveEmailCount'),
-        ];
-        \DB::table('settings')->where('name','emailCount')->update(["data"=>json_encode($emailCount)]);
-        // 清除计数器
-        Cache::forget('receiveEmailCount');
-        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
-        $emailCount = json_decode($emailsCount->data);
-        return view('pages.system.setting',compact('level','notice','business', 'customer', 'report','emailCount'));
+        
+        return view('pages.system.setting',compact('level','notice','business', 'customer', 'report'));
     }
     
     public function store(Request $request)
@@ -239,6 +229,34 @@ class PagesController extends Controller
                 }
             }
         return redirect('http://www.kouton.com',301);
+    }
+    public function edmShow(Request $request,Edm $edm)
+    {
+        // 邮件阅读
+        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
+        $c = json_decode($emailsCount->data);
+        $emailCount = [
+            'count' => $c->count + Cache::get('receiveEmailCount'),
+        ];
+        \DB::table('settings')->where('name','emailCount')->update(["data"=>json_encode($emailCount)]);
+        // 清除计数器
+        Cache::forget('receiveEmailCount');
+        $emailsCount = \DB::table('settings')->where('name','emailCount')->first();
+        $emailCount = json_decode($emailsCount->data);
+
+        $edms = $edm->orderBy('created_at','desc')->paginate(100);
+        return view('emails.show',compact('edms','emailCount'));
+    }
+    public function edmDelete(Request $request,Edm $edm)
+    {
+        if($request->ids){
+            $data = explode(',',$request->ids);
+            foreach ($data as $id) {
+                $e = $edm->find($id);
+                $e->delete();
+            }
+        }
+        return back()->with('success', '记录已删除!');
     }
 }
 // http://ktcrm.test/system/emailClick?company=XX公司&product=云会计
