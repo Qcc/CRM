@@ -14,7 +14,7 @@ class PagesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['root','receiveEmailCount']]);
+        $this->middleware('auth', ['except' => ['root','receiveEmailCount','emailClick']]);
     }
     public function root()
     {
