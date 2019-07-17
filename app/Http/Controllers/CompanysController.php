@@ -39,8 +39,7 @@ class CompanysController extends Controller
             $companys=[];    
         }else{
             // 关键字查询
-        $companys = Company::where('follow',0)
-            ->when($request->key, function ($query) use ($request) {
+        $companys = Company::when($request->key, function ($query) use ($request) {
                 $query->where(function($query) use ($request){ 
                     $query->where('name','like', '%'.$request->key.'%')
                           ->orWhere('businessScope','like', '%'.$request->key.'%');
@@ -302,7 +301,9 @@ class CompanysController extends Controller
             'notice' => $notice,
             'level' => $thisMonth,
         ];
-        return view('pages.company.follow',compact('companys','achievement'));
+        // 过去30天跟进历史记录
+        $historys = $record->where('user_id',$user->id)->with('company')->orderBy('created_at','desc')->paginate(20);
+        return view('pages.company.follow',compact('companys','achievement','historys'));
     }
     // 跟进陌生目标客户
     public function show(Request $request, Company $company, Speech $speech)

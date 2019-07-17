@@ -27,6 +27,7 @@
 .pr {
     text-align: right;
 }
+
 .pc {
     text-align: center;
 }
@@ -187,7 +188,7 @@
 
             img {
                 width: 100px;
-            height: 100px;
+                height: 100px;
             }
         }
 
@@ -375,6 +376,49 @@
                 color: #999;
             }
         }
+    }
+}
+
+.company-follow-page .historys {
+    .history-paginate {
+        .pagination {
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+            position: relative;
+            right: 10px;
+            .page-item {
+                width: 30px;
+            }
+            .page-link {
+                position: relative;
+                display: block;
+                padding: .5rem .75rem;
+                margin-left: -1px;
+                line-height: 1.25;
+                color: #999;
+            }
+
+            .active {
+                .page-link {
+                    color: #5FB878;
+                }
+            }
+        }
+
+
+        .page-item:first-child .page-link {
+            margin-left: 0;
+            border-top-left-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+        }
+    }
+
+    .history {
+        display: inline-block;
+        margin: 0 10px;
     }
 }
 
@@ -615,15 +659,18 @@
         }
     }
 }
-.logo{
+
+.logo {
     width: 180px;
     margin: 50px auto 20px;
     overflow: hidden;
-    img{
+
+    img {
         width: 180px;
         height: auto;
     }
 }
+
 .login-page,
 .root-page,
 .edm-show-page,
@@ -638,7 +685,8 @@
     }
 }
 
-.simditor-body, .layui-timeline-content{
+.simditor-body,
+.layui-timeline-content {
     img {
         max-width: 100%;
         height: auto;
@@ -707,31 +755,31 @@
 .rich-text-body h1 {
     font-size: 24px;
     font-weight: normal;
-    margin:10px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .rich-text-body h2 {
     font-size: 22px;
     font-weight: normal;
-    margin:10px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .rich-text-body h3 {
     font-size: 20px;
     font-weight: normal;
-    margin:10px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .rich-text-body h4 {
     font-size: 18px;
     font-weight: normal;
-    margin:10px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .rich-text-body h5 {
     font-size: 16px;
     font-weight: normal;
-    margin:10px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .rich-text-body table,

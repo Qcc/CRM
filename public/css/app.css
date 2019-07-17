@@ -366,6 +366,43 @@
   color: #999;
 }
 
+.company-follow-page .historys .history-paginate .pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  position: relative;
+  right: 10px;
+}
+
+.company-follow-page .historys .history-paginate .pagination .page-item {
+  width: 30px;
+}
+
+.company-follow-page .historys .history-paginate .pagination .page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #999;
+}
+
+.company-follow-page .historys .history-paginate .pagination .active .page-link {
+  color: #5FB878;
+}
+
+.company-follow-page .historys .history-paginate .page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.company-follow-page .historys .history {
+  display: inline-block;
+  margin: 0 10px;
+}
+
 .follow-show-page .simditor .simditor-body {
   min-height: 100px !important;
 }

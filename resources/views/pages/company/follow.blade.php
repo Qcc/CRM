@@ -59,8 +59,17 @@
         <div class="layui-progress" lay-showPercent="yes">
           <div class="layui-progress-bar layui-bg-red" lay-percent="{{ $achievement['businessCountOfDay'] }} / {{ $achievement['level']->effective }}"></div>
         </div>
-         
-        
+      </div>
+    </div>
+    <div class="layui-card">
+      <div class="layui-card-header">联系历史</div>
+      <div class="layui-card-body historys">
+          @foreach($historys as $history)
+          <div class="history" title="跟进时间 {{ $history->created_at }}"><a href="{{ route('company.secrch').'?key='.$history->company->name.'&contacted=on'}}">{{ $history->company->name }}</a></div>
+          @endforeach
+          <div class="history-paginate">
+            {{ $historys->links() }}
+          </div>
       </div>
     </div>
   </div>
